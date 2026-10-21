@@ -1,0 +1,1462 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flex Pulse</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one iPhone-width app shell over a soft ambient backdrop; glass cards; a floating capsule tab bar. Each tab maps to a SwiftUI view later. */
+:root {
+  --accent-l: #D9480F; --accent-d: #FF7A3D; --accent2-l: #E64980; --accent2-d: #F783AC;
+  --accent: var(--accent-l);
+  --accent-2: var(--accent2-l);
+  --on-accent: #FFFFFF;
+  --bg: #EEF0F4;
+  --surface: #FFFFFF;
+  --surface-2: rgba(120, 128, 145, 0.10);
+  --glass: rgba(255, 255, 255, 0.58);
+  --glass-strong: rgba(255, 255, 255, 0.80);
+  --glass-edge: rgba(255, 255, 255, 0.85);
+  --glass-shadow: 0 8px 28px rgba(30, 40, 70, 0.10), 0 1px 2px rgba(30, 40, 70, 0.06);
+  --fg: #14161B;
+  --muted: #646B76;
+  --hair: rgba(20, 30, 50, 0.10);
+  --good: #18864A; --warn: #B7791F; --bad: #C4302B;
+  --ph-drive: #8C95A5; --ph-load: #DDA015; --ph-return: #BCC3CE;
+  --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-round: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-num: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --r: 22px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --accent: var(--accent-d); --accent-2: var(--accent2-d); --on-accent: #120A05;
+    --bg: #0B0C10; --surface: #1A1C22; --surface-2: rgba(255, 255, 255, 0.07);
+    --glass: rgba(30, 32, 40, 0.52); --glass-strong: rgba(34, 36, 44, 0.82); --glass-edge: rgba(255, 255, 255, 0.14);
+    --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --fg: #F2F3F5; --muted: #9DA3AE; --hair: rgba(255, 255, 255, 0.10);
+    --good: #45CB82; --warn: #F2C14E; --bad: #FF6B66;
+    --ph-drive: #6E7889; --ph-load: #F2C14E; --ph-return: #4A5262;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --accent: var(--accent-d); --accent-2: var(--accent2-d); --on-accent: #120A05;
+  --bg: #0B0C10; --surface: #1A1C22; --surface-2: rgba(255, 255, 255, 0.07);
+  --glass: rgba(30, 32, 40, 0.52); --glass-strong: rgba(34, 36, 44, 0.82); --glass-edge: rgba(255, 255, 255, 0.14);
+  --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --fg: #F2F3F5; --muted: #9DA3AE; --hair: rgba(255, 255, 255, 0.10);
+  --good: #45CB82; --warn: #F2C14E; --bad: #FF6B66;
+  --ph-drive: #6E7889; --ph-load: #F2C14E; --ph-return: #4A5262;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { min-height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 16px; line-height: 1.35; -webkit-font-smoothing: antialiased; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.ambient { position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(55% 38% at 12% 6%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 72%),
+    radial-gradient(45% 32% at 92% 24%, color-mix(in srgb, var(--accent-2) 24%, transparent), transparent 72%),
+    radial-gradient(60% 40% at 30% 70%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 75%),
+    radial-gradient(50% 35% at 85% 95%, color-mix(in srgb, var(--accent-2) 16%, transparent), transparent 75%),
+    var(--bg); }
+
+.glass { background: var(--glass); -webkit-backdrop-filter: blur(22px) saturate(170%); backdrop-filter: blur(22px) saturate(170%);
+  border: 1px solid var(--glass-edge); box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-edge); border-radius: var(--r); }
+:root[data-glass="off"] .glass { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; border-color: var(--hair); box-shadow: none; }
+:root[data-glass="off"] .ambient { background: var(--bg); }
+@media (prefers-reduced-transparency: reduce) { .glass { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+
+.app { max-width: 480px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 8px calc(112px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 22px; }
+.topline { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 28px; padding-top: 6px; }
+.topline .date { color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+.pill { font-size: 12px; font-weight: 650; padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); white-space: nowrap; }
+h1 { font-family: var(--font-round); font-size: 34px; font-weight: 800; letter-spacing: -0.02em; margin: -14px 0 0; text-wrap: balance; }
+h2 { font-size: 13px; font-weight: 650; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 0 0 10px 6px; display: flex; justify-content: space-between; gap: 8px; }
+h2 span:last-child { text-transform: none; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+section { display: flex; flex-direction: column; min-width: 0; }
+.neg { color: var(--bad); }
+.foot { color: var(--muted); font-size: 13px; margin: 10px 6px 0; }
+.muted { color: var(--muted); }
+
+.btn { border: 0; border-radius: 999px; padding: 14px 20px; font-weight: 650; background: var(--surface-2); color: var(--fg); }
+.btn.primary { background: var(--accent); color: var(--on-accent); box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 35%, transparent), inset 0 1px 0 rgba(255,255,255,0.35); }
+.btn.glassy { background: var(--glass-strong); border: 1px solid var(--glass-edge); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.btn.danger { background: transparent; color: var(--bad); }
+.btn.block { width: 100%; }
+.btn.small { padding: 8px 14px; font-size: 14px; }
+.btn.big { padding: 18px; font-size: 17px; }
+.btn:disabled { opacity: 0.45; cursor: default; }
+.btnrow { display: flex; gap: 10px; flex-wrap: wrap; }
+.btnrow .btn { flex: 1 1 0; }
+@media (prefers-reduced-motion: no-preference) { .btn, .seg button, .tabbar button, .card { transition: transform 0.15s ease, background-color 0.2s ease; } .btn:active, .card:active { transform: scale(0.98); } }
+
+.seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; padding: 4px; gap: 4px; border-radius: 999px; }
+.seg button { border: 0; background: transparent; padding: 8px 6px; border-radius: 999px; font-size: 13px; font-weight: 650; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--glass-strong); color: var(--fg); box-shadow: 0 2px 8px rgba(0,0,0,0.12), inset 0 1px 0 var(--glass-edge); }
+
+.welcome { padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.welcome strong { font-family: var(--font-round); font-size: 19px; }
+.welcome p { margin: 0; color: var(--muted); font-size: 14px; }
+
+.hero { padding: 20px 18px 18px; display: flex; flex-direction: column; gap: 16px; }
+.hero .k { color: var(--muted); font-size: 13px; font-weight: 650; }
+.hero .big { font-family: var(--font-round); font-size: 48px; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1; margin-top: 4px; }
+.split { display: flex; height: 10px; border-radius: 6px; overflow: hidden; background: var(--surface-2); }
+.split span { display: block; height: 100%; }
+.bridge { display: grid; grid-template-columns: auto 1fr auto; gap: 8px 10px; font-size: 15px; align-items: center; }
+.bridge .sw { width: 10px; height: 10px; border-radius: 3px; }
+.bridge .v { text-align: right; font-variant-numeric: tabular-nums; }
+.bridge .total { border-top: 1px solid var(--hair); padding-top: 8px; font-weight: 750; }
+
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.tile { padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.tile .k { color: var(--muted); font-size: 12px; font-weight: 650; text-transform: uppercase; letter-spacing: 0.04em; }
+.tile .v { font-family: var(--font-round); font-size: 24px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.tile .s { color: var(--muted); font-size: 12px; }
+.tile .meter { height: 6px; border-radius: 4px; background: var(--surface-2); overflow: hidden; margin-top: 4px; }
+.tile .meter span { display: block; height: 100%; border-radius: 4px; }
+
+.bars { padding: 16px 12px 12px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; align-items: end; height: 180px; }
+.bars.six { grid-template-columns: repeat(6, 1fr); }
+.bar { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 5px; height: 100%; min-width: 0; }
+.bar .fill { width: 66%; max-width: 30px; background: linear-gradient(to top, color-mix(in srgb, var(--accent) 70%, transparent), var(--accent)); border-radius: 8px 8px 4px 4px; min-height: 3px; }
+.bar .fill.cost { background: linear-gradient(to top, color-mix(in srgb, var(--accent-2) 65%, transparent), var(--accent-2)); }
+.bar .fill.neg { background: var(--bad); }
+.bar .fill.zero { background: var(--hair); }
+.bar .amt { font-size: 10.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bar .day { font-size: 12px; color: var(--muted); font-weight: 650; }
+.bar.today .day { color: var(--accent); }
+
+/* Live block */
+.live { padding: 18px; display: flex; flex-direction: column; gap: 16px; border: 1.5px solid color-mix(in srgb, var(--accent) 60%, transparent) !important; box-shadow: 0 10px 34px color-mix(in srgb, var(--accent) 22%, transparent), inset 0 1px 0 var(--glass-edge) !important; }
+.live .head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.live .tag { color: var(--accent); font-size: 12px; font-weight: 750; text-transform: uppercase; letter-spacing: 0.06em; display: flex; align-items: center; gap: 6px; }
+.live .meta { color: var(--muted); font-size: 13px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+@media (prefers-reduced-motion: no-preference) { .dot { animation: pulse 1.6s ease-in-out infinite; } }
+@keyframes pulse { 50% { opacity: 0.25; } }
+.timers { display: grid; grid-template-columns: 1.25fr 1fr; gap: 10px; }
+.timer { background: var(--surface-2); border-radius: 18px; padding: 12px 14px; min-width: 0; }
+.timer .k { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+.timer .clock { font-family: var(--font-num); font-size: 30px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; margin-top: 2px; }
+.timer .s { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; margin-top: 2px; }
+.timer.off .clock { color: var(--muted); }
+.timer.route { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.livegrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.livegrid > div { background: var(--surface-2); border-radius: 14px; padding: 9px 10px; min-width: 0; }
+.livegrid .k { font-size: 10.5px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.livegrid .v { font-family: var(--font-round); font-size: 17px; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.steps li { display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; align-items: start; position: relative; padding-bottom: 12px; }
+.steps li:last-child { padding-bottom: 0; }
+.steps li::before { content: ""; position: absolute; left: 10px; top: 18px; bottom: -2px; width: 2px; background: var(--hair); }
+.steps li:last-child::before { display: none; }
+.steps li.done::before { background: color-mix(in srgb, var(--accent) 55%, transparent); }
+.steps .mk { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--hair); background: var(--glass-strong); display: grid; place-items: center; position: relative; z-index: 1; }
+.steps li.done .mk { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.steps li.done .mk svg { width: 12px; height: 12px; }
+.steps li.skip .mk { border-style: dashed; }
+.steps li.next .mk { border-color: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent); }
+.steps .lb { font-size: 14px; font-weight: 600; padding-top: 1px; }
+.steps li.todo .lb, .steps li.skip .lb { color: var(--muted); font-weight: 500; }
+.steps .lb small { display: block; font-weight: 500; color: var(--muted); font-size: 12px; }
+.steps .tm { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 2px; white-space: nowrap; }
+.action { background: var(--surface-2); border-radius: 20px; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.action .title { font-family: var(--font-round); font-weight: 800; font-size: 17px; }
+.inline { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.inline label { font-size: 14px; font-weight: 600; }
+.inline label small { display: block; font-weight: 500; color: var(--muted); font-size: 12px; }
+.inline input { border: 1px solid var(--hair); background: var(--glass-strong); border-radius: 12px; padding: 10px 12px; width: 140px; text-align: right; font-variant-numeric: tabular-nums; font-size: 17px; font-weight: 650; }
+.inline input.sm { width: 92px; font-size: 16px; }
+.linkrow { display: flex; justify-content: space-between; gap: 10px; }
+.linkbtn { border: 0; background: var(--surface-2); color: var(--fg); font-weight: 650; padding: 7px 14px; border-radius: 999px; font-size: 14px; }
+.confirm { background: var(--surface-2); border-radius: 18px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.sumgrid { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; font-size: 14px; font-variant-numeric: tabular-nums; }
+.sumgrid .n { text-align: right; font-weight: 650; }
+.sumgrid .hd { grid-column: 1 / -1; color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 6px; }
+
+/* Block cards */
+.daygroup { display: flex; flex-direction: column; gap: 10px; }
+.dayhead { display: flex; justify-content: space-between; align-items: baseline; padding: 0 6px; }
+.dayhead b { font-family: var(--font-round); font-size: 17px; }
+.dayhead span { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.card { width: 100%; text-align: left; padding: 14px 16px; display: flex; flex-direction: column; gap: 11px; color: var(--fg); }
+.card .top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.card .who { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.card .who b { font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.card .who span { color: var(--muted); font-size: 13px; }
+.card .amt { text-align: right; flex-shrink: 0; }
+.card .amt b { font-family: var(--font-round); font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; display: block; line-height: 1.1; }
+.card .amt span { color: var(--muted); font-size: 12px; }
+.timeline { display: flex; height: 8px; border-radius: 5px; overflow: hidden; gap: 2px; }
+.timeline span { display: block; height: 100%; border-radius: 3px; min-width: 3px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12px; font-weight: 650; padding: 4px 9px; border-radius: 999px; background: var(--surface-2); color: var(--fg); font-variant-numeric: tabular-nums; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.chip.good { background: color-mix(in srgb, var(--good) 16%, transparent); color: var(--good); }
+.chip.warn { background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn); }
+.chip.bad { background: color-mix(in srgb, var(--bad) 14%, transparent); color: var(--bad); }
+.chip.tip { background: color-mix(in srgb, var(--accent-2) 16%, transparent); color: var(--accent-2); }
+.chip.surge { background: var(--accent); color: var(--on-accent); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--muted); padding: 0 6px; }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.legend i { width: 9px; height: 9px; border-radius: 3px; display: inline-block; }
+
+/* Expenses */
+.elist { overflow: hidden; }
+.erow { width: 100%; display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: none; border: 0; border-top: 1px solid var(--hair); text-align: left; color: var(--fg); }
+.erow:first-child { border-top: 0; }
+.erow:active { background: var(--surface-2); }
+.icon { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; flex-shrink: 0; color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,0.35); }
+.icon svg { width: 20px; height: 20px; }
+.erow .mid { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.erow .mid b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.erow .mid span { color: var(--muted); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.erow .v { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.erow .v small { display: block; font-weight: 600; font-size: 11px; color: var(--muted); }
+.costcard { padding: 16px; display: grid; grid-template-columns: 148px 1fr; gap: 16px; align-items: center; }
+@media (max-width: 380px) { .costcard { grid-template-columns: 1fr; justify-items: center; } }
+.donut { width: 148px; height: 148px; }
+.donut text { fill: var(--fg); }
+.donut .sub { fill: var(--muted); }
+.costlegend { display: flex; flex-direction: column; gap: 7px; font-size: 13px; min-width: 0; width: 100%; }
+.costlegend div { display: grid; grid-template-columns: 10px 1fr auto; gap: 7px; align-items: center; }
+.costlegend i { width: 10px; height: 10px; border-radius: 3px; }
+.costlegend span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.costlegend b { font-variant-numeric: tabular-nums; }
+.costlegend .est { color: var(--muted); font-weight: 500; }
+.filters { display: flex; gap: 6px; overflow-x: auto; padding: 2px 2px 6px; scrollbar-width: none; }
+.filters::-webkit-scrollbar { display: none; }
+.fchip { border: 1px solid var(--hair); background: var(--glass-strong); border-radius: 999px; padding: 7px 12px; font-size: 13px; font-weight: 650; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
+.fchip i { width: 8px; height: 8px; border-radius: 50%; }
+.fchip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.taxcard { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.taxcard .row2 { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; font-size: 14px; font-variant-numeric: tabular-nums; }
+.taxcard .row2 .n { text-align: right; font-weight: 650; }
+.taxcard .hd { grid-column: 1 / -1; color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 8px; }
+.taxcard .tot { border-top: 1px solid var(--hair); padding-top: 6px; font-weight: 800 !important; }
+
+/* Guides and mileage */
+.guide { padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent) !important; background: color-mix(in srgb, var(--accent) 7%, var(--glass)) !important; }
+.guide .gt { display: flex; align-items: center; gap: 8px; font-weight: 750; font-size: 15px; color: var(--accent); }
+.guide .gt svg { width: 18px; height: 18px; flex-shrink: 0; }
+.guide ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: var(--fg); }
+.guide li::marker { color: var(--accent); }
+.milehead { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; }
+.hero .mid { font-family: var(--font-round); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1; margin-top: 4px; }
+.unit { font-size: 0.45em; font-weight: 700; color: var(--muted); margin-left: 4px; letter-spacing: 0; }
+.mrow { width: 100%; display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; background: none; border: 0; border-top: 1px solid var(--hair); text-align: left; color: var(--fg); }
+.mrow:first-child { border-top: 0; }
+.mrow:active { background: var(--surface-2); }
+.mtop { display: flex; align-items: center; gap: 12px; width: 100%; }
+.mtop .mid { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.mtop .mid b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mtop .mid span { color: var(--muted); font-size: 13px; }
+.mtop .v { font-weight: 750; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.mtop .v small { display: block; font-weight: 600; font-size: 11.5px; color: var(--muted); }
+.stackbar { width: 66%; max-width: 30px; display: flex; flex-direction: column; border-radius: 8px 8px 4px 4px; overflow: hidden; gap: 1px; }
+.stackbar span { display: block; width: 100%; }
+.seg.big2 button { padding: 10px 6px; font-size: 15px; }
+
+/* Places */
+.search { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px !important; }
+.search svg { width: 18px; height: 18px; color: var(--muted); flex-shrink: 0; }
+.search input { border: 0; background: transparent; flex: 1; min-width: 0; outline: none; font-size: 16px; }
+.place { width: 100%; text-align: left; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; color: var(--fg); }
+.place .top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.place .top b { font-size: 16px; }
+.place .top span { color: var(--muted); font-size: 13px; display: block; }
+.codes { display: flex; flex-wrap: wrap; gap: 8px; }
+.code { border: 1px solid var(--hair); background: var(--surface-2); border-radius: 12px; padding: 6px 10px; display: flex; flex-direction: column; gap: 1px; min-width: 72px; text-align: left; }
+.code small { font-size: 10.5px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+.code b { font-family: var(--font-num); font-size: 16px; letter-spacing: 0.04em; }
+.place .note { font-size: 13px; color: var(--muted); }
+.place .uses { font-size: 12px; color: var(--muted); white-space: nowrap; }
+
+/* Forms */
+.group { overflow: hidden; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; min-height: 50px; border-top: 1px solid var(--hair); }
+.row:first-child { border-top: 0; }
+.row .val { font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap; }
+.row .stack { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.row .sub { color: var(--muted); font-size: 13px; }
+button.row { width: 100%; background: none; border-left: 0; border-right: 0; border-bottom: 0; text-align: left; color: var(--fg); }
+button.row:first-child { border-top: 0; }
+.field { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; min-height: 52px; border-top: 1px solid var(--hair); }
+.field:first-child { border-top: 0; }
+.field label { flex: 1 1 auto; min-width: 0; }
+.field label small { display: block; color: var(--muted); font-size: 12px; }
+.field input, .field select, .field textarea { border: 1px solid var(--hair); background: var(--surface-2); border-radius: 12px; padding: 8px 11px; width: 128px; text-align: right; font-variant-numeric: tabular-nums; }
+.field input[type="text"], .field textarea { width: 180px; text-align: left; }
+.field textarea { resize: vertical; min-height: 60px; }
+.field input[type="datetime-local"] { width: 200px; text-align: left; }
+.field select { text-align: left; width: 170px; }
+.field input[type="checkbox"] { width: 24px; height: 24px; accent-color: var(--accent); }
+.codefield { display: grid; grid-template-columns: 130px 1fr 36px; gap: 8px; padding: 8px 16px; border-top: 1px solid var(--hair); align-items: center; }
+.codefield select, .codefield input { border: 1px solid var(--hair); background: var(--surface-2); border-radius: 12px; padding: 8px 10px; min-width: 0; width: 100%; }
+.codefield input { font-family: var(--font-num); }
+.iconbtn { border: 0; background: var(--surface-2); border-radius: 50%; width: 32px; height: 32px; display: grid; place-items: center; color: var(--muted); }
+.err { color: var(--bad); font-size: 13px; margin: 8px 6px 0; }
+.swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; padding: 14px 16px; }
+.swatch { aspect-ratio: 1; max-width: 100%; border-radius: 50%; border: 0; position: relative; box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 3px 10px rgba(0,0,0,0.15); }
+.swatch[aria-pressed="true"]::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 2.5px solid var(--fg); }
+.swatchname { padding: 0 16px 14px; color: var(--muted); font-size: 13px; }
+.star { color: var(--ph-load); }
+.stationpick { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 16px; }
+
+/* Sheet */
+.scrim { position: fixed; inset: 0; background: rgba(0,0,0,0.32); z-index: 40; display: flex; align-items: flex-end; justify-content: center; }
+.sheet { width: 100%; max-width: 480px; max-height: 92%; overflow-y: auto; border-radius: 30px 30px 0 0 !important; border-bottom: 0 !important; background: var(--glass-strong) !important; padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(22px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); display: flex; flex-direction: column; gap: 18px; }
+:root[data-glass="off"] .sheet { background: var(--bg) !important; }
+.grabber { width: 38px; height: 5px; border-radius: 3px; background: var(--hair); align-self: center; }
+.sheethead { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.sheethead h3 { margin: 0; font-family: var(--font-round); font-size: 19px; font-weight: 800; }
+.sheet .glass { background: var(--glass); }
+
+/* Floating capsule tab bar */
+.tabbar { position: fixed; z-index: 30; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); width: min(440px, calc(100% - 32px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px))); padding: 6px; border-radius: 999px !important; background: var(--glass-strong) !important; }
+.tabbar nav { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; }
+.tabbar button { border: 0; background: none; display: flex; flex-direction: column; align-items: center; gap: 1px; font-size: 10.5px; font-weight: 650; color: var(--muted); padding: 6px 0 5px; border-radius: 999px; min-width: 0; }
+.tabbar button svg { width: 23px; height: 23px; }
+.tabbar button[aria-current="page"] { color: var(--accent); background: color-mix(in srgb, var(--accent) 13%, transparent); }
+.livebadge { position: relative; display: inline-flex; }
+.livebadge::after { content: ""; position: absolute; top: -1px; right: -4px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--glass-strong); }
+.empty { padding: 26px 18px; text-align: center; color: var(--muted); }
+</style>
+<style>:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); } img { max-width: 100%; }</style>
+</head>
+<body>
+
+
+<div class="ambient" aria-hidden="true"></div>
+<div class="app" id="app"></div>
+<div class="tabbar glass"><nav id="tabs" aria-label="Sections"></nav></div>
+<div class="scrim" id="scrim" hidden></div>
+
+<script>
+/*
+  Flex Pulse v0.4: prototype for an Amazon Flex earnings tracker.
+  Plain HTML + JS so it can be hosted anywhere and opened as a Telegram Mini App.
+  When you host it yourself, add a script tag that loads telegram.org/js/telegram-web-app.js
+  above this script to switch on Telegram features.
+  Each tab becomes one SwiftUI view later: Today, Blocks, Money, Places, Settings.
+*/
+(function () {
+  const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+  const tgAtLeast = (v) => { try { return !!(tg && tg.isVersionAtLeast && tg.isVersionAtLeast(v)); } catch (e) { return false; } };
+  if (tg) { try { tg.ready(); tg.expand(); if (tgAtLeast('7.7')) tg.disableVerticalSwipes(); } catch (e) {} }
+  const haptic = (kind) => { try { tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred(kind || 'light'); } catch (e) {} };
+
+  const KEY = 'blockledger.v1';
+  const DAY = 864e5;
+
+  // Time phases, derived from milestones
+  const PHASES = [
+    { id: 'drive_to', name: 'To station', color: 'var(--ph-drive)' },
+    { id: 'load', name: 'At station', color: 'var(--ph-load)' },
+    { id: 'deliver', name: 'Route', color: 'var(--accent)' },
+    { id: 'return', name: 'Heading home', color: 'var(--ph-return)' }
+  ];
+  // Mileage legs
+  const LEGS = [
+    { id: 'to_station', name: 'Home to station' },
+    { id: 'route', name: 'Station to last stop' },
+    { id: 'home', name: 'Last stop to home' }
+  ];
+  // The guided sequence
+  const STEPS = [
+    { id: 'home_start', label: 'Left home', btn: 'Start block', odo: 'start' },
+    { id: 'station_arrive', label: 'Arrived at station', btn: 'Arrived at station', odo: 'station' },
+    { id: 'app_checkin', label: 'Checked in on the app', btn: 'Checked in on the app', optional: true },
+    { id: 'id_checkin', label: 'ID checked at station', btn: 'ID checked', optional: true },
+    { id: 'depart', label: 'Loaded, driving to 1st stop', btn: 'Loaded, leaving station', odo: 'depart', hint: 'Route timer and route miles start now.' },
+    { id: 'first_stop', label: 'Arrived at 1st stop', btn: 'At first stop', optional: true },
+    { id: 'last_stop', label: 'Last stop done', btn: 'Last stop done', odo: 'last', hint: 'Route timer and route miles stop here.' },
+    { id: 'home_end', label: 'Back home', btn: 'Home, finish block', odo: 'end' }
+  ];
+  const BASIS = {
+    total: { name: 'Whole trip', long: 'Whole trip, door to door' },
+    block: { name: 'Block time', long: 'Arrived at station to last stop' },
+    delivery: { name: 'Route', long: 'Leaving station to last stop' }
+  };
+  const PALETTES = {
+    hivis: { name: 'Hi-vis', l: '#D9480F', d: '#FF7A3D', l2: '#E64980', d2: '#F783AC' },
+    ocean: { name: 'Ocean', l: '#0B6BCB', d: '#5AA9FF', l2: '#12A4B8', d2: '#4FD8E8' },
+    mint: { name: 'Mint', l: '#0B8566', d: '#3DDBB0', l2: '#3F7FE0', d2: '#7FB2FF' },
+    grape: { name: 'Grape', l: '#7340DB', d: '#AE92FF', l2: '#D6336C', d2: '#FF85B0' },
+    rose: { name: 'Rose', l: '#C92A62', d: '#FF7FAA', l2: '#E8590C', d2: '#FFA15C' },
+    graphite: { name: 'Graphite', l: '#3E4654', d: '#D0D5DD', l2: '#7A8496', d2: '#8E99AD' }
+  };
+  // Expense categories. vehicle: covered by the vehicle profile estimate. stdDeduct: still deductible alongside the standard mileage rate.
+  const CATS = {
+    'Gas': { c: '#E8590C', vehicle: true, i: '<path d="M5 20V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15M4 20h12M7 8h6"/><path d="M15 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/>' },
+    'Maintenance': { c: '#1C7ED6', vehicle: true, i: '<path d="M14.5 6.5a4 4 0 0 0-5.3 5.3L4 17l3 3 5.2-5.2a4 4 0 0 0 5.3-5.3l-2.5 2.5-2.5-.5-.5-2.5z"/>' },
+    'Insurance': { c: '#0C8599', vehicle: true, i: '<path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/>' },
+    'Car payment': { c: '#5F3DC4', vehicle: true, i: '<rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10h18M7 15h4"/>' },
+    'Car wash': { c: '#74B816', i: '<path d="M12 3s5 5.5 5 9a5 5 0 0 1-10 0c0-3.5 5-9 5-9z"/>' },
+    'Phone': { c: '#9C36B5', stdDeduct: true, i: '<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/>' },
+    'Parking & tolls': { c: '#9C6644', stdDeduct: true, i: '<rect x="4" y="3" width="16" height="18" rx="4"/><path d="M10 17V7h3a3 3 0 0 1 0 6h-3"/>' },
+    'Equipment': { c: '#2B8A3E', stdDeduct: true, i: '<path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/>' },
+    'Food & drink': { c: '#D6336C', i: '<path d="M6 3v8a2 2 0 0 0 4 0V3M8 11v10M16 3c-1.7 1.5-2 4-2 6s1 3 2 3v9"/>' },
+    'Other': { c: '#868E96', i: '<circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/>' }
+  };
+  const CAT_NAMES = Object.keys(CATS);
+  const EST = { fuel: { name: 'Fuel', c: '#E8590C' }, wear: { name: 'Wear and maintenance', c: '#1C7ED6' }, dep: { name: 'Depreciation', c: '#F0B400' }, fixed: { name: 'Insurance, payment, fees', c: '#0C8599' } };
+  const CODE_LABELS = ['Gate', 'Building', 'Door', 'Locker', 'Mailroom', 'Elevator', 'Other'];
+  const DEFAULT_VEHICLE = { ownership: 'owned', mpg: 28, gasPrice: 4.25, wear: 0.08, insurance: 140, registration: 120, value: 18000, resale: 8000, milesLeft: 100000, interest: 45, lease: 380, monthlyMiles: 2500 };
+  const DEFAULT_SETTINGS = { irsRate: 0.76, basis: 'block', taxPct: 20, costMode: 'estimate', goal: 20, theme: 'system', palette: 'hivis', glass: true, taxLegs: { to_station: true, route: true, home: true }, vehicle: DEFAULT_VEHICLE };
+
+  // ---------- storage (this device only) ----------
+  let storageOk = true;
+  function load() { try { const raw = localStorage.getItem(KEY); return raw ? JSON.parse(raw) : null; } catch (e) { storageOk = false; return null; } }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { storageOk = false; } scheduleBackup(); }
+
+  // ---------- Telegram cloud backup (each user's own Telegram account) ----------
+  const CLOUD = 'bl_';
+  const cloudAvailable = () => !!(tg && tg.CloudStorage && tgAtLeast('6.9'));
+  let backupTimer = null, backupErr = false, lastBackup = null;
+  try { lastBackup = localStorage.getItem(KEY + '.backup'); } catch (e) {}
+  function backupLine() {
+    if (backupErr) return 'The last backup didn\'t go through. It will try again after your next change.';
+    return lastBackup ? `Last backed up ${shortDay(lastBackup)} at ${timeLabel(lastBackup)}. Nobody else can see it.` : 'Backs up a few seconds after each change. Nobody else can see it.';
+  }
+  function scheduleBackup() { if (!cloudAvailable()) return; clearTimeout(backupTimer); backupTimer = setTimeout(backupNow, 2500); }
+  function backupNow() {
+    if (!cloudAvailable()) return;
+    try {
+      const copy = Object.assign({}, state); delete copy.ui;
+      const json = JSON.stringify(copy); const parts = [];
+      for (let i = 0; i < json.length; i += 4000) parts.push(json.slice(i, i + 4000));
+      if (parts.length > 1000) { backupErr = true; return; }
+      const ts = new Date().toISOString(); let pending = parts.length + 1, failed = false;
+      const done = (err) => { if (err) failed = true; if (--pending === 0) {
+        backupErr = failed;
+        if (!failed) { lastBackup = ts; try { localStorage.setItem(KEY + '.backup', ts); } catch (e) {} pruneCloud(parts.length); }
+        const el = document.getElementById('backup-status'); if (el) el.textContent = backupLine();
+      } };
+      parts.forEach((p, i) => tg.CloudStorage.setItem(CLOUD + i, p, done));
+      tg.CloudStorage.setItem(CLOUD + 'meta', JSON.stringify({ n: parts.length, ts, v: 3 }), done);
+    } catch (e) { backupErr = true; }
+  }
+  function pruneCloud(n) { try { tg.CloudStorage.getKeys((err, keys) => { if (err || !keys) return; const extra = keys.filter(k => /^bl_\d+$/.test(k) && Number(k.slice(3)) >= n); if (extra.length) tg.CloudStorage.removeItems(extra, () => {}); }); } catch (e) {} }
+  function restoreFromCloud(cb) {
+    try {
+      tg.CloudStorage.getItem(CLOUD + 'meta', (err, meta) => {
+        if (err || !meta) return cb(null);
+        let m; try { m = JSON.parse(meta); } catch (e) { return cb(null); }
+        const keys = []; for (let i = 0; i < m.n; i++) keys.push(CLOUD + i);
+        tg.CloudStorage.getItems(keys, (err2, vals) => {
+          if (err2 || !vals) return cb(null);
+          try { cb(JSON.parse(keys.map(k => vals[k] || '').join('')), m.ts); } catch (e) { cb(null); }
+        });
+      });
+    } catch (e) { cb(null); }
+  }
+
+  const uid = () => Math.random().toString(36).slice(2, 10);
+  function at(n, h, m) { const d = new Date(); d.setDate(d.getDate() - n); d.setHours(h, m || 0, 0, 0); return d; }
+  const iso = (d) => new Date(d).toISOString();
+
+  // Build a finished block from a start time and minutes per phase
+  function makeBlock(o) {
+    const s = +o.leave;
+    const t1 = s + o.mins.drive_to * 6e4, t2 = t1 + o.mins.load * 6e4, t3 = t2 + o.mins.deliver * 6e4, t4 = t3 + o.mins.return * 6e4;
+    return { id: uid(), start: iso(t1), leave: iso(s), stationId: o.stationId, station: o.station, scheduledHrs: o.hrs, basePay: o.pay, tips: o.tips, grabbedAt: o.grabbed ? iso(o.grabbed) : null, blockStart: iso(t1 + 15 * 6e4),
+      legs: o.legs, miles: o.legs.to_station + o.legs.route + o.legs.home, mins: o.mins, packages: o.packages, stops: o.stops,
+      ms: { home_start: iso(s), station_arrive: iso(t1), app_checkin: iso(t1 + 6 * 6e4), id_checkin: iso(t1 + 11 * 6e4), depart: iso(t2), first_stop: iso(t2 + 18 * 6e4), last_stop: iso(t3), home_end: iso(t4) },
+      status: 'done', sample: true };
+  }
+  function sampleData() {
+    const st = [
+      { id: 's-north', name: 'North station', code: 'DNO1', base: 24, fav: true, sample: true },
+      { id: 's-south', name: 'South station', code: 'DSO2', base: 24, fav: false, sample: true },
+      { id: 's-wf', name: 'Whole Foods pickup', code: 'WF', base: 25, fav: false, sample: true }
+    ];
+    const B = (n, h, sid, hrs, pay, tips, legs, mins, pk, stops, leadH) => {
+      const s = st.find(x => x.id === sid); const leave = at(n, h);
+      return makeBlock({ leave, stationId: sid, station: s.name, hrs, pay, tips, legs, mins, packages: pk, stops, grabbed: leadH != null ? new Date(+leave - leadH * 3600e3) : null });
+    };
+    const blocks = [
+      B(1, 9, 's-north', 3.5, 84, 12, { to_station: 14, route: 46, home: 14 }, { drive_to: 28, load: 22, deliver: 161, return: 31 }, 38, 31, 72),
+      B(2, 15, 's-south', 3, 96, 0, { to_station: 12, route: 38, home: 11 }, { drive_to: 25, load: 18, deliver: 140, return: 27 }, 34, 28, 0.6),
+      B(2, 6, 's-wf', 2, 50, 14, { to_station: 6, route: 20, home: 6 }, { drive_to: 15, load: 12, deliver: 96, return: 18 }, 22, 14, 30),
+      B(4, 7, 's-north', 4, 96, 18, { to_station: 14, route: 59, home: 15 }, { drive_to: 30, load: 25, deliver: 190, return: 35 }, 46, 39, 71),
+      B(6, 18, 's-wf', 3, 81, 6, { to_station: 6, route: 42, home: 7 }, { drive_to: 24, load: 20, deliver: 128, return: 22 }, 31, 19, 2),
+      B(12, 10, 's-north', 4, 96, 9, { to_station: 14, route: 52, home: 14 }, { drive_to: 29, load: 24, deliver: 175, return: 30 }, 44, 36, 70)
+    ];
+    const places = [
+      { id: uid(), name: 'Maple Court Apartments', address: '1420 Maple Ave', city: 'Lakeview', codes: [{ label: 'Gate', value: '#4821' }, { label: 'Mailroom', value: '0915' }], notes: 'Packages go in the mailroom left of the leasing office.', uses: 6, lastUsed: iso(at(1, 11)), sample: true },
+      { id: uid(), name: 'Ridgeview Townhomes', address: '88 Ridgeview Ln', city: 'Hillcrest', codes: [{ label: 'Gate', value: '2580#' }], notes: 'Gate sticks, wait 5 seconds after the code.', uses: 3, lastUsed: iso(at(4, 13)), sample: true },
+      { id: uid(), name: 'The Linden', address: '301 3rd St S', city: 'Riverside', codes: [{ label: 'Building', value: '7734' }, { label: 'Locker', value: 'Hub: 1190' }], notes: 'Use the Amazon Hub locker in the lobby.', uses: 2, lastUsed: iso(at(6, 19)), sample: true }
+    ];
+    return {
+      stations: st, blocks, places,
+      expenses: [
+        { id: uid(), date: iso(at(1, 12)), category: 'Parking & tolls', amount: 6, note: 'Downtown meter', blockId: blocks[0].id, sample: true },
+        { id: uid(), date: iso(at(1, 13)), category: 'Food & drink', amount: 9.5, note: 'Lunch between stops', sample: true },
+        { id: uid(), date: iso(at(2, 20)), category: 'Phone', amount: 25, note: 'Phone plan, business share', sample: true },
+        { id: uid(), date: iso(at(3, 8)), category: 'Gas', amount: 48.2, note: 'Fill-up, 11.3 gal', sample: true },
+        { id: uid(), date: iso(at(4, 17)), category: 'Car wash', amount: 12, note: 'Monthly wash', sample: true },
+        { id: uid(), date: iso(at(10, 11)), category: 'Equipment', amount: 45, note: 'Folding hand truck', sample: true },
+        { id: uid(), date: iso(at(9, 9)), category: 'Maintenance', amount: 68, note: 'Oil change', sample: true }
+      ]
+    };
+  }
+  function seed() {
+    const s = sampleData();
+    return { version: 3, stations: s.stations, blocks: s.blocks, expenses: s.expenses, places: s.places, active: null, settings: JSON.parse(JSON.stringify(DEFAULT_SETTINGS)), ui: { tab: 'today', range: 7, welcomed: false, mPeriod: 'month', mCat: '' } };
+  }
+
+  // Bring older saved data forward
+  function migrate(s) {
+    if (!s) return seed();
+    if (s.version === 3) return s;
+    const old = s.settings || {};
+    const st = Object.assign(JSON.parse(JSON.stringify(DEFAULT_SETTINGS)), { goal: old.goal != null ? old.goal : 20, theme: old.theme || 'system', palette: old.palette || 'hivis', glass: old.glass !== false, basis: old.basis || 'block', taxPct: old.taxPct != null ? old.taxPct : 20, irsRate: old.irsRate || 0.76, costMode: old.subtractVehicle === false ? 'actual' : 'estimate' });
+    if (old.mpg) st.vehicle.mpg = old.mpg; if (old.gasPrice) st.vehicle.gasPrice = old.gasPrice; if (old.maintPerMile != null) st.vehicle.wear = old.maintPerMile;
+    const stations = [];
+    (s.blocks || []).forEach(b => {
+      if (b.station && !stations.find(x => x.name === b.station)) stations.push({ id: 's-' + uid(), name: b.station, code: '', base: null, fav: false, sample: !!b.sample });
+      const x = stations.find(y => y.name === b.station); if (x) b.stationId = x.id;
+      if (!b.legs) b.legs = { to_station: 0, route: 0, home: 0, unsplit: Number(b.miles) || 0 };
+    });
+    (s.expenses || []).forEach(e => { if (!CATS[e.category]) e.category = 'Other'; });
+    return { version: 3, stations, blocks: s.blocks || [], expenses: s.expenses || [], places: [], active: null, settings: st, ui: Object.assign({ tab: 'today', range: 7, welcomed: true, mPeriod: 'month', mCat: '' }, s.ui || {}) };
+  }
+
+  function initState(raw) {
+    const st = migrate(raw);
+    st.settings = Object.assign(JSON.parse(JSON.stringify(DEFAULT_SETTINGS)), st.settings);
+    st.settings.vehicle = Object.assign({}, DEFAULT_VEHICLE, st.settings.vehicle || {});
+    st.settings.taxLegs = Object.assign({ to_station: true, route: true, home: true }, st.settings.taxLegs || {});
+    st.ui = Object.assign({ tab: 'today', range: 7, welcomed: false, mPeriod: 'month', mCat: '', mView: 'costs', sTab: 'app' }, st.ui || {});
+    st.places = st.places || []; st.stations = st.stations || []; st.expenses = st.expenses || []; st.blocks = st.blocks || [];
+    if (st.active && !st.active.ms) st.active = null; // drop a v0.2 timer
+    return st;
+  }
+  const savedRaw = load();
+  let state = initState(savedRaw);
+
+  // ---------- appearance ----------
+  const root = document.documentElement;
+  const hostTheme = root.getAttribute('data-theme');
+  function applyAppearance() {
+    const s = state.settings; const p = PALETTES[s.palette] || PALETTES.hivis;
+    root.style.setProperty('--accent-l', p.l); root.style.setProperty('--accent-d', p.d);
+    root.style.setProperty('--accent2-l', p.l2); root.style.setProperty('--accent2-d', p.d2);
+    if (s.theme === 'light' || s.theme === 'dark') root.setAttribute('data-theme', s.theme);
+    else if (tg && tg.colorScheme) root.setAttribute('data-theme', tg.colorScheme);
+    else if (hostTheme) root.setAttribute('data-theme', hostTheme); else root.removeAttribute('data-theme');
+    root.setAttribute('data-glass', s.glass ? 'on' : 'off');
+    if (tg) { try { const c = isDark() ? '#0B0C10' : '#EEF0F4'; tg.setHeaderColor && tg.setHeaderColor(c); tg.setBackgroundColor && tg.setBackgroundColor(c); } catch (e) {} }
+  }
+  function isDark() { const t = root.getAttribute('data-theme'); if (t) return t === 'dark'; return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches); }
+  applyAppearance();
+
+  // ---------- vehicle cost ----------
+  const S = () => state.settings;
+  const V = () => state.settings.vehicle;
+  function cpmParts() {
+    const v = V();
+    const fuel = v.gasPrice > 0 && v.mpg > 0 ? v.gasPrice / v.mpg : 0;
+    const wear = Number(v.wear) || 0;
+    const dep = v.ownership === 'lease' ? 0 : Math.max(0, (Number(v.value) || 0) - (Number(v.resale) || 0)) / Math.max(1, Number(v.milesLeft) || 1);
+    const fixedMonthly = (Number(v.insurance) || 0) + (Number(v.registration) || 0) / 12 + (v.ownership === 'loan' ? Number(v.interest) || 0 : 0) + (v.ownership === 'lease' ? Number(v.lease) || 0 : 0);
+    const fixed = fixedMonthly / Math.max(1, Number(v.monthlyMiles) || 1);
+    return { fuel, wear, dep, fixed, fixedMonthly, total: fuel + wear + dep + fixed };
+  }
+  // Per-mile cost used in net. Estimate mode: everything. Actual mode: only depreciation (you log the rest).
+  const cpmUsed = () => { const p = cpmParts(); return S().costMode === 'estimate' ? p.total : p.dep; };
+  const expenseCounts = (e) => !(S().costMode === 'estimate' && CATS[e.category] && CATS[e.category].vehicle);
+
+  // ---------- block math ----------
+  const sumMins = (m) => PHASES.reduce((a, p) => a + (Number(m[p.id]) || 0), 0);
+  function basisMins(m, basis) {
+    if (basis === 'delivery') return Number(m.deliver) || 0;
+    if (basis === 'block') return (Number(m.load) || 0) + (Number(m.deliver) || 0);
+    return sumMins(m);
+  }
+  function minsFromMs(ms, now) {
+    const t = (k) => ms[k] ? Date.parse(ms[k]) : null;
+    const span = (a, b) => { const x = t(a); if (x == null) return 0; const y = t(b) != null ? t(b) : now; return Math.max(0, (y - x) / 6e4); };
+    return { drive_to: span('home_start', 'station_arrive'), load: span('station_arrive', 'depart'), deliver: span('depart', 'last_stop'), return: span('last_stop', 'home_end') };
+  }
+  function legsFromOdo(o, latest) {
+    const d = (a, b) => (a != null && b != null) ? Math.max(0, b - a) : 0;
+    const station = o.station, depart = o.depart != null ? o.depart : null;
+    return {
+      to_station: d(o.start, station != null ? station : (depart == null ? latest : null)),
+      route: d(depart, o.last != null ? o.last : (depart != null ? latest : null)),
+      home: d(o.last, o.end != null ? o.end : (o.last != null ? latest : null)),
+      between: d(station, depart)
+    };
+  }
+  const blockMiles = (b) => b.legs ? (Number(b.legs.to_station) || 0) + (Number(b.legs.route) || 0) + (Number(b.legs.home) || 0) + (Number(b.legs.unsplit) || 0) + (Number(b.legs.between) || 0) : Number(b.miles) || 0;
+  const linkedExp = (id) => state.expenses.filter(e => e.blockId === id && expenseCounts(e)).reduce((a, e) => a + Number(e.amount || 0), 0);
+  const gross = (b) => Number(b.basePay || 0) + Number(b.tips || 0);
+  const vehicleCost = (miles) => (Number(miles) || 0) * cpmUsed();
+  const blockNet = (b) => gross(b) - vehicleCost(blockMiles(b)) - linkedExp(b.id);
+  const perHour = (amount, mins) => mins > 0 ? amount / (mins / 60) : 0;
+  const irsFor = (d) => { d = new Date(d); return d.getFullYear() === 2026 && d < new Date(2026, 6, 1) ? 0.725 : Number(S().irsRate) || 0; };
+  function rateClass(r) { const g = Number(S().goal) || 0; if (!g) return ''; if (r >= g) return 'good'; if (r >= g * 0.8) return 'warn'; return 'bad'; }
+
+  // Surge vs base, per station
+  const stationById = (id) => state.stations.find(s => s.id === id);
+  const offerRate = (b) => b.scheduledHrs > 0 ? Number(b.basePay || 0) / b.scheduledHrs : 0;
+  const leadHours = (b) => b.grabbedAt && (b.blockStart || b.start) ? (Date.parse(b.blockStart || b.start) - Date.parse(b.grabbedAt)) / 3600e3 : null;
+  function stationBase(id) {
+    const s = stationById(id); if (s && s.base > 0) return { rate: Number(s.base), from: 'set' };
+    const rates = state.blocks.filter(b => b.stationId === id && leadHours(b) != null && leadHours(b) >= 48 && offerRate(b) > 0).map(offerRate).sort((a, b) => a - b);
+    if (rates.length >= 3) return { rate: rates[Math.floor(rates.length / 2)], from: 'history' };
+    return null;
+  }
+  function blockType(b) {
+    const base = stationBase(b.stationId); const r = offerRate(b);
+    if (!base || !r) return { kind: 'unknown', label: 'Type unknown' };
+    const diff = r - base.rate;
+    if (diff >= 0.5) return { kind: 'surge', label: `Surge +${money(diff, 0)}/hr` };
+    return { kind: 'base', label: 'Base' };
+  }
+  function leadLabel(h) {
+    if (h == null) return '';
+    if (h >= 48) return `Grabbed ${Math.round(h / 24)}d ahead`;
+    if (h >= 2) return `Grabbed ${Math.round(h)}h ahead`;
+    return `Grabbed ${Math.max(1, Math.round(h * 60))} min ahead`;
+  }
+
+  function inRange(iso, period) {
+    const d = new Date(iso), n = new Date();
+    if (period === 'month') return d.getFullYear() === n.getFullYear() && d.getMonth() === n.getMonth();
+    if (period === 'year') return d.getFullYear() === n.getFullYear();
+    if (typeof period === 'number') return period ? Date.parse(iso) >= Date.now() - period * DAY : true;
+    return true;
+  }
+
+  function periodStats(days) {
+    const blocks = state.blocks.filter(b => inRange(b.start, days));
+    const exps = state.expenses.filter(e => inRange(e.date, days) && expenseCounts(e));
+    const g = blocks.reduce((a, b) => a + gross(b), 0);
+    const miles = blocks.reduce((a, b) => a + blockMiles(b), 0);
+    const veh = vehicleCost(miles);
+    const ex = exps.reduce((a, e) => a + Number(e.amount || 0), 0);
+    const net = g - veh - ex;
+    const mins = blocks.reduce((a, b) => a + basisMins(b.mins, S().basis), 0);
+    const ded = taxDeduction(blocks);
+    const stdExtra = state.expenses.filter(e => inRange(e.date, days) && CATS[e.category] && CATS[e.category].stdDeduct).reduce((a, e) => a + Number(e.amount || 0), 0);
+    return { count: blocks.length, gross: g, tips: blocks.reduce((a, b) => a + Number(b.tips || 0), 0), miles, veh, ex, net, mins, deduction: ded.total, setAside: Math.max(0, g - ded.total - stdExtra) * (Number(S().taxPct) || 0) / 100 };
+  }
+  function taxDeduction(blocks) {
+    const out = { to_station: 0, route: 0, home: 0, unsplit: 0, total: 0, miles: { to_station: 0, route: 0, home: 0, unsplit: 0 } };
+    blocks.forEach(b => {
+      const r = irsFor(b.start); const l = b.legs || { unsplit: Number(b.miles) || 0 };
+      ['to_station', 'route', 'home'].forEach(k => { const m = Number(l[k]) || 0; out.miles[k] += m; if (S().taxLegs[k]) out[k] += m * r; });
+      const u = (Number(l.unsplit) || 0) + (Number(l.between) || 0); out.miles.unsplit += u; out.unsplit += u * r;
+    });
+    out.total = out.to_station + out.route + out.home + out.unsplit;
+    return out;
+  }
+
+  // ---------- formatting ----------
+  const money = (n, dp) => { const v = Number(n) || 0; const s = Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: dp === 0 ? 0 : 2, maximumFractionDigits: dp === 0 ? 0 : 2 }); return (v < 0 ? '−$' : '$') + s; };
+  const mi = (n) => (Math.round((Number(n) || 0) * 10) / 10).toLocaleString('en-US') + ' mi';
+  const dur = (mins) => { const m = Math.round(mins); const h = Math.floor(m / 60); return h ? `${h}h ${String(m % 60).padStart(2, '0')}m` : `${m}m`; };
+  const clock = (ms) => { const t = Math.max(0, Math.floor(ms / 1000)); const h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60; return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`; };
+  const dayKey = (iso) => new Date(iso).toDateString();
+  const dayLabel = (iso) => { const d = new Date(iso), t = new Date(); const diff = Math.round((new Date(t.toDateString()) - new Date(d.toDateString())) / DAY); if (diff === 0) return 'Today'; if (diff === 1) return 'Yesterday'; return d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' }); };
+  const shortDay = (iso) => { const l = dayLabel(iso); return l.includes(',') ? new Date(iso).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) : l; };
+  const timeLabel = (iso) => new Date(iso).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const toLocalInput = (v) => { if (!v) return ''; const d = new Date(v); const off = d.getTimezoneOffset() * 60000; return new Date(d - off).toISOString().slice(0, 16); };
+  const fromLocalInput = (v) => v ? new Date(v).toISOString() : null;
+  const hasSample = () => state.blocks.some(b => b.sample) || state.expenses.some(e => e.sample) || state.places.some(p => p.sample) || state.stations.some(s => s.sample);
+  const catIcon = (name) => { const c = CATS[name] || CATS.Other; return `<span class="icon" style="background:${c.c}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${c.i}</svg></span>`; };
+  const kv = (l, v, cls) => `<span class="${cls || ''}">${l}</span><span class="n ${cls || ''}">${v}</span>`;
+  const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>';
+
+  // ---------- shell ----------
+  const app = document.getElementById('app');
+  const scrim = document.getElementById('scrim');
+  const tabsEl = document.getElementById('tabs');
+  const ICONS = {
+    today: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>',
+    blocks: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>',
+    money: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 6.4"/></svg>',
+    places: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><rect x="9.5" y="8" width="5" height="4" rx="1"/><path d="M10.5 8V6.8a1.5 1.5 0 0 1 3 0V8"/></svg>',
+    settings: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>'
+  };
+  const TABS = [['today', 'Today'], ['blocks', 'Blocks'], ['money', 'Money'], ['places', 'Places'], ['settings', 'Settings']];
+
+  function renderTabs() {
+    tabsEl.innerHTML = TABS.map(([id, name]) => `<button type="button" data-tab="${id}" ${state.ui.tab === id ? 'aria-current="page"' : ''}><span class="${id === 'today' && state.active ? 'livebadge' : ''}">${ICONS[id]}</span>${name}</button>`).join('');
+  }
+  tabsEl.addEventListener('click', (e) => { const b = e.target.closest('[data-tab]'); if (!b) return; state.ui.tab = b.dataset.tab; save(); render(); window.scrollTo(0, 0); haptic('light'); });
+
+  function header(title) {
+    const d = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    return `<div class="topline"><span class="date">${d}</span>${hasSample() ? '<span class="pill">Sample data</span>' : ''}</div><h1>${title}</h1>`;
+  }
+
+  function render() {
+    renderTabs();
+    const t = state.ui.tab;
+    if (t === 'today') renderToday();
+    else if (t === 'blocks') renderBlocks();
+    else if (t === 'money') renderMoney();
+    else if (t === 'places') renderPlaces();
+    else renderSettings();
+  }
+
+  // ---------- Today ----------
+  function renderToday() {
+    const r = state.ui.range;
+    const st = periodStats(r);
+    const basis = S().basis;
+    let html = header('Today');
+    if (!state.ui.welcomed && hasSample()) {
+      html += `<section><div class="glass welcome"><strong>Welcome to Flex Pulse</strong><p>You're looking at example blocks, expenses and places so you can see how it works. Your own data stays on this device and nobody else can see it.</p><div class="btnrow"><button class="btn primary" type="button" data-act="fresh">Start fresh</button><button class="btn glassy" type="button" data-act="keep-sample">Explore the example</button></div></div></section>`;
+    }
+    html += state.active ? liveCard() : `<section><button class="btn primary block big" type="button" data-act="start">Start a block</button><p class="foot">Starts when you leave home. The app walks you through each step to the station, your route, and back.</p></section>`;
+
+    html += `<section><div class="seg glass" role="group" aria-label="Period">${[[7, '7 days'], [30, '30 days'], [0, 'All time']].map(([v, n]) => `<button type="button" data-range="${v}" aria-pressed="${r === v}">${n}</button>`).join('')}</div></section>`;
+
+    const keep = Math.max(0, st.net); const tot = Math.max(1, keep + st.veh + st.ex);
+    html += `<section><div class="glass hero"><div><div class="k">Net profit, ${r ? 'last ' + r + ' days' : 'all time'}</div><div class="big ${st.net < 0 ? 'neg' : ''}">${money(st.net)}</div></div>
+      <div class="split" role="img" aria-label="Where your pay went: kept ${money(keep, 0)}, vehicle ${money(st.veh, 0)}, expenses ${money(st.ex, 0)}">
+        <span style="width:${keep / tot * 100}%;background:var(--good)"></span><span style="width:${st.veh / tot * 100}%;background:var(--ph-drive)"></span><span style="width:${st.ex / tot * 100}%;background:var(--accent-2)"></span>
+      </div>
+      <div class="bridge">
+        <span></span><span>Pay and tips · ${st.count} blocks</span><span class="v">${money(st.gross)}</span>
+        <i class="sw" style="background:var(--ph-drive)"></i><span>Vehicle · ${mi(st.miles)} at ${money(cpmUsed())}</span><span class="v">−${money(st.veh)}</span>
+        <i class="sw" style="background:var(--accent-2)"></i><span>Other expenses</span><span class="v">−${money(st.ex)}</span>
+        <i class="sw" style="background:var(--good)"></i><span class="total">You kept</span><span class="v total">${money(st.net)}</span>
+      </div></div></section>`;
+
+    const hr = perHour(st.net, st.mins); const goal = Number(S().goal) || 0; const rc = rateClass(hr);
+    const meterColor = rc === 'good' ? 'var(--good)' : rc === 'warn' ? 'var(--warn)' : rc === 'bad' ? 'var(--bad)' : 'var(--accent)';
+    html += `<section><h2><span>Per hour and per mile</span></h2><div class="tiles">
+      <div class="glass tile"><span class="k">Net per hour</span><span class="v">${money(hr)}</span><span class="s">${goal ? (hr >= goal ? 'Above' : 'Below') + ' your ' + money(goal, 0) + ' goal' : BASIS[basis].name}</span>${goal ? `<span class="meter"><span style="width:${Math.min(100, hr / goal * 100)}%;background:${meterColor}"></span></span>` : ''}</div>
+      <div class="glass tile"><span class="k">Gross per hour</span><span class="v">${money(perHour(st.gross, st.mins))}</span><span class="s">${dur(st.mins)} ${BASIS[basis].name.toLowerCase()}</span></div>
+      <div class="glass tile"><span class="k">Net per mile</span><span class="v">${money(st.miles ? st.net / st.miles : 0)}</span><span class="s">${mi(st.miles)} driven</span></div>
+      <div class="glass tile"><span class="k">Set aside for tax</span><span class="v">${money(st.setAside, 0)}</span><span class="s">${S().taxPct}% after ${money(st.deduction, 0)} mileage deduction</span></div>
+    </div><p class="foot">Hourly uses "${BASIS[basis].long}". Tax figures are rough estimates, not tax advice.</p></section>`;
+    html += `<section><h2><span>Net by day</span><span>last 7 days</span></h2>${dayBars()}</section>`;
+    app.innerHTML = html;
+    if (state.active) tick();
+  }
+
+  function dayBars() {
+    const days = [];
+    for (let i = 6; i >= 0; i--) { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - i); days.push(d); }
+    const vals = days.map(d => {
+      const end = +d + DAY;
+      const bl = state.blocks.filter(b => { const t = Date.parse(b.start); return t >= +d && t < end; });
+      const ex = state.expenses.filter(e => { const t = Date.parse(e.date); return t >= +d && t < end && !e.blockId && expenseCounts(e); }).reduce((a, e) => a + Number(e.amount || 0), 0);
+      return bl.reduce((a, b) => a + blockNet(b), 0) - ex;
+    });
+    const max = Math.max(1, ...vals.map(Math.abs));
+    return `<div class="glass bars" role="img" aria-label="Net profit for each of the last 7 days">${days.map((d, i) => {
+      const v = vals[i]; const h = Math.round(Math.abs(v) / max * 100);
+      return `<div class="bar ${i === 6 ? 'today' : ''}"><span class="amt">${v ? money(v, 0) : ''}</span><span class="fill ${v < 0 ? 'neg' : v === 0 ? 'zero' : ''}" style="height:${v ? Math.max(h * 0.78, 3) : 2}%"></span><span class="day">${d.toLocaleDateString('en-US', { weekday: 'narrow' })}</span></div>`;
+    }).join('')}</div>`;
+  }
+
+  // ---------- Live block ----------
+  const nextStepIndex = (a) => STEPS.findIndex(s => !a.ms[s.id] && !(a.skipped || []).includes(s.id));
+  const latestOdo = (a) => { const vals = Object.values(a.odo).filter(v => v != null); if (a.odoNow != null) vals.push(a.odoNow); return vals.length ? Math.max(...vals) : null; };
+  const lastReading = (a) => { const order = ['end', 'last', 'depart', 'station', 'start']; for (const k of order) if (a.odo[k] != null) return a.odo[k]; return null; };
+
+  function liveCard() {
+    const a = state.active;
+    const ni = nextStepIndex(a);
+    const step = STEPS[ni];
+    const lastOdo = lastReading(a);
+    const prefill = a.odoNow != null ? a.odoNow : (step && step.odo === 'depart' && a.odo.station != null ? a.odo.station : '');
+    const stepsHtml = STEPS.map((s, i) => {
+      const done = !!a.ms[s.id]; const skip = (a.skipped || []).includes(s.id);
+      const cls = done ? 'done' : skip ? 'skip' : i === ni ? 'next' : 'todo';
+      const odoTxt = s.odo && a.odo[s.odo] != null ? ` · odo ${a.odo[s.odo].toLocaleString('en-US')}` : '';
+      return `<li class="${cls}"><span class="mk">${done ? CHECK : ''}</span><span class="lb">${s.label}${skip ? '<small>Skipped</small>' : done && odoTxt ? `<small>${odoTxt.slice(3)}</small>` : ''}</span><span class="tm">${done ? timeLabel(a.ms[s.id]) : ''}</span></li>`;
+    }).join('');
+
+    let action = '';
+    if (a.confirming) action = finishSummary();
+    else if (step) {
+      action = `<div class="action" id="lv-action">
+        <div class="title">Next: ${step.btn.replace(', finish block', '')}</div>
+        ${step.hint ? `<div class="muted" style="font-size:13px;margin-top:-6px">${step.hint}</div>` : ''}
+        ${step.odo ? `<div class="inline"><label for="lv-odo">Odometer now<small>${lastOdo != null ? 'Last reading ' + lastOdo.toLocaleString('en-US') : 'The number on your dashboard'}</small></label><input id="lv-odo" type="number" inputmode="decimal" step="0.1" min="0" value="${prefill}" placeholder="e.g. 48210"></div>` : ''}
+        ${step.id === 'depart' ? `<div class="inline"><label for="lv-pk">Packages</label><input class="sm" id="lv-pk" type="number" inputmode="numeric" min="0" value="${a.packages || ''}"></div><div class="inline"><label for="lv-stops">Stops on route</label><input class="sm" id="lv-stops" type="number" inputmode="numeric" min="0" value="${a.stops || ''}"></div>` : ''}
+        ${step.id === 'last_stop' ? `<div class="inline"><label for="lv-stops2">Stops completed</label><input class="sm" id="lv-stops2" type="number" inputmode="numeric" min="0" value="${a.stops || ''}"></div><div class="inline"><label for="lv-ret">Packages returned<small>Undeliverable, back to station</small></label><input class="sm" id="lv-ret" type="number" inputmode="numeric" min="0" value="${a.returned || 0}"></div>` : ''}
+        <p class="err" id="lv-err" hidden></p>
+        <button class="btn primary block big" type="button" data-act="next-step">${step.btn}</button>
+        <div class="linkrow">${step.optional ? '<button class="linkbtn" type="button" data-act="skip-step">Skip this step</button>' : '<span></span>'}<button class="linkbtn" type="button" data-act="undo-step">Undo last step</button></div>
+      </div>`;
+    }
+
+    return `<section><div class="glass live">
+      <div class="head"><span class="tag"><span class="dot"></span>Block in progress</span><span class="meta">${esc(a.station || 'Block')} · ${a.scheduledHrs}h · ${money(a.basePay, 0)}</span></div>
+      <div class="timers">
+        <div class="timer"><div class="k">Whole trip</div><div class="clock" id="lv-trip">0:00:00</div><div class="s" id="lv-tripmi">0 mi</div></div>
+        <div class="timer route" id="lv-routebox"><div class="k">Route</div><div class="clock" id="lv-route">0:00:00</div><div class="s" id="lv-routemi">Starts at station</div></div>
+      </div>
+      <div class="livegrid">
+        <div><div class="k">Stage</div><div class="v" id="lv-stage">0:00</div></div>
+        <div><div class="k">Live net</div><div class="v" id="lv-net">$0</div></div>
+        <div><div class="k">Net / hr</div><div class="v" id="lv-hr">—</div></div>
+        <div><div class="k">Tips</div><div class="v"><input id="lv-tips" type="number" inputmode="decimal" min="0" step="1" value="${a.tips || 0}" aria-label="Tips" style="width:100%;border:0;background:transparent;font:inherit;padding:0"></div></div>
+      </div>
+      <ol class="steps" aria-label="Block steps">${stepsHtml}</ol>
+      ${action}
+    </div></section>`;
+  }
+
+  function finishSummary() {
+    const a = state.active;
+    const m = minsFromMs(a.ms, Date.now());
+    const legs = legsFromOdo(a.odo, latestOdo(a));
+    const miles = legs.to_station + legs.route + legs.home + legs.between;
+    const net = Number(a.basePay) + Number(a.tips || 0) - vehicleCost(miles);
+    return `<div class="confirm"><strong style="font-family:var(--font-round);font-size:17px">Block summary</strong>
+      <div class="sumgrid">
+        <span class="hd">Time</span>
+        ${kv('Home to station', dur(m.drive_to))}${kv('At station', dur(m.load))}${kv('Route', dur(m.deliver))}${kv('Heading home', dur(m.return))}${kv('Whole trip', dur(sumMins(m)))}
+        <span class="hd">Miles</span>
+        ${kv('Home to station', mi(legs.to_station))}${kv('Station to last stop', mi(legs.route))}${kv('Last stop to home', mi(legs.home))}${kv('Total', mi(miles))}
+        <span class="hd">Money</span>
+        ${kv('Pay and tips', money(Number(a.basePay) + Number(a.tips || 0)))}${kv('Vehicle cost', '−' + money(vehicleCost(miles)))}${kv('Net', money(net))}
+      </div>
+      <div class="btnrow"><button class="btn primary" type="button" data-act="save-block">Save block</button><button class="btn glassy" type="button" data-act="undo-step">Back</button></div>
+      <button class="btn danger small" type="button" data-act="discard-block">Discard without saving</button></div>`;
+  }
+
+  function tick() {
+    const a = state.active; if (!a) return;
+    const el = (id) => document.getElementById(id); if (!el('lv-trip')) return;
+    const now = a.ms.home_end ? Date.parse(a.ms.home_end) : Date.now();
+    el('lv-trip').textContent = clock(now - Date.parse(a.ms.home_start));
+    const lat = latestOdo(a);
+    const tripMiles = a.odo.start != null && lat != null ? Math.max(0, lat - a.odo.start) : 0;
+    el('lv-tripmi').textContent = `${mi(tripMiles)} since home`;
+    const rb = el('lv-routebox');
+    if (a.ms.depart) {
+      const rEnd = a.ms.last_stop ? Date.parse(a.ms.last_stop) : Date.now();
+      el('lv-route').textContent = clock(rEnd - Date.parse(a.ms.depart));
+      const rMiles = a.odo.depart != null ? Math.max(0, (a.odo.last != null ? a.odo.last : (lat != null ? lat : a.odo.depart)) - a.odo.depart) : 0;
+      el('lv-routemi').textContent = `${mi(rMiles)} on route${a.ms.last_stop ? ' · done' : ''}`;
+      rb.classList.remove('off');
+    } else { el('lv-route').textContent = '0:00:00'; el('lv-routemi').textContent = 'Starts when you leave the station'; rb.classList.add('off'); }
+    const doneIds = STEPS.filter(s => a.ms[s.id]).map(s => a.ms[s.id]);
+    const lastMs = doneIds.length ? Math.max(...doneIds.map(Date.parse)) : Date.parse(a.ms.home_start);
+    el('lv-stage').textContent = clock(now - lastMs).replace(/^0:/, '');
+    const m = minsFromMs(a.ms, now);
+    const bm = basisMins(m, S().basis);
+    const net = Number(a.basePay || 0) + Number(a.tips || 0) - vehicleCost(tripMiles);
+    el('lv-net').textContent = money(net, 0);
+    el('lv-hr').textContent = bm >= 1 ? money(perHour(net, bm), 0) : '—';
+  }
+  setInterval(() => { if (state.active && state.ui.tab === 'today') tick(); }, 1000);
+
+  function nextStep() {
+    const a = state.active; const ni = nextStepIndex(a); const step = STEPS[ni]; if (!step) return;
+    if (step.odo) {
+      const v = parseFloat((document.getElementById('lv-odo') || {}).value);
+      const prev = lastReading(a);
+      if (!(v >= 0)) { showErr('lv-err', 'Enter the odometer reading so the app can split your miles.'); return; }
+      if (prev != null && v < prev) { showErr('lv-err', `That's lower than your last reading of ${prev.toLocaleString('en-US')}. Check the number.`); return; }
+      a.odo[step.odo] = v; a.odoNow = null;
+    }
+    if (step.id === 'depart') { a.packages = parseInt(val('lv-pk')) || 0; a.stops = parseInt(val('lv-stops')) || 0; }
+    if (step.id === 'last_stop') { const s2 = parseInt(val('lv-stops2')); if (s2 >= 0) a.stops = s2; a.returned = parseInt(val('lv-ret')) || 0; }
+    a.ms[step.id] = new Date().toISOString();
+    if (step.id === 'home_end') a.confirming = true;
+    save(); haptic(step.id === 'depart' || step.id === 'last_stop' ? 'medium' : 'light'); render();
+  }
+  function undoStep() {
+    const a = state.active;
+    a.confirming = false;
+    const doneSteps = STEPS.filter(s => a.ms[s.id] || (a.skipped || []).includes(s.id));
+    const last = doneSteps[doneSteps.length - 1];
+    if (!last || last.id === 'home_start') { render(); return; }
+    if ((a.skipped || []).includes(last.id) && !a.ms[last.id]) a.skipped = a.skipped.filter(x => x !== last.id);
+    else { delete a.ms[last.id]; if (last.odo) delete a.odo[last.odo]; }
+    save(); render();
+  }
+  function saveActive() {
+    const a = state.active;
+    const m = minsFromMs(a.ms, Date.parse(a.ms.home_end || new Date().toISOString())); PHASES.forEach(p => { m[p.id] = Math.round(m[p.id]); });
+    const legs = legsFromOdo(a.odo, latestOdo(a));
+    const blk = { id: uid(), start: a.ms.station_arrive || a.ms.home_start, leave: a.ms.home_start, stationId: a.stationId, station: a.station, scheduledHrs: a.scheduledHrs, basePay: a.basePay, tips: Number(a.tips) || 0,
+      grabbedAt: a.grabbedAt, blockStart: a.blockStart, legs, miles: legs.to_station + legs.route + legs.home + legs.between, mins: m, packages: a.packages || 0, stops: a.stops || 0, returned: a.returned || 0, ms: a.ms, odo: a.odo, status: 'done' };
+    state.blocks.push(blk); state.active = null; save(); haptic('heavy'); render();
+  }
+
+  // ---------- Blocks ----------
+  function timelineBar(m) {
+    const total = Math.max(1, sumMins(m));
+    return `<div class="timeline" role="img" aria-label="${PHASES.map(p => p.name + ' ' + dur(m[p.id] || 0)).join(', ')}">${PHASES.map(p => (m[p.id] > 0 ? `<span style="flex:${m[p.id] / total};background:${p.color}"></span>` : '')).join('')}</div>`;
+  }
+  function blockCard(b) {
+    const bm = basisMins(b.mins, S().basis); const n = blockNet(b); const hr = perHour(n, bm);
+    const leave = b.leave || b.start; const end = b.ms && b.ms.home_end ? b.ms.home_end : new Date(Date.parse(leave) + sumMins(b.mins) * 6e4).toISOString();
+    const bt = blockType(b); const lead = leadLabel(leadHours(b));
+    return `<button class="glass card" type="button" data-block="${b.id}">
+      <div class="top"><div class="who"><b>${esc(b.station || 'Block')}</b><span>${timeLabel(leave)} – ${timeLabel(end)} · ${b.scheduledHrs ? b.scheduledHrs + 'h block' : 'block'}</span></div>
+      <div class="amt"><b class="${n < 0 ? 'neg' : ''}">${money(n)}</b><span>net of ${money(gross(b))}</span></div></div>
+      ${timelineBar(b.mins)}
+      <div class="chips"><span class="chip ${rateClass(hr)}">${money(hr, 0)}/hr</span>${bt.kind === 'surge' ? `<span class="chip surge">${bt.label}</span>` : bt.kind === 'base' ? '<span class="chip">Base</span>' : ''}${lead ? `<span class="chip">${lead}</span>` : ''}<span class="chip">${mi(blockMiles(b))}</span>${b.stops ? `<span class="chip">${b.stops} stops</span>` : ''}${b.tips ? `<span class="chip tip">+${money(b.tips, 0)} tips</span>` : ''}</div>
+    </button>`;
+  }
+  function renderBlocks() {
+    let html = header('Blocks');
+    if (!state.blocks.length) {
+      html += `<section><div class="glass empty">No blocks yet. Start one from Today, or add a past block to fill in your history.</div></section><section><button class="btn glassy block" type="button" data-act="add-past">Add a past block</button></section>`;
+      app.innerHTML = html; return;
+    }
+    const all = periodStats(30);
+    const recent = state.blocks.filter(b => inRange(b.start, 30));
+    const surge = recent.filter(b => blockType(b).kind === 'surge').length;
+    html += `<section><div class="tiles">
+      <div class="glass tile"><span class="k">Blocks, 30 days</span><span class="v">${all.count}</span><span class="s">${surge} surge · ${dur(all.mins)} ${BASIS[S().basis].name.toLowerCase()}</span></div>
+      <div class="glass tile"><span class="k">Average net / hr</span><span class="v">${money(perHour(all.net, all.mins))}</span><span class="s">${S().goal ? 'Goal ' + money(S().goal, 0) : 'No goal set'}</span></div>
+    </div></section>`;
+    html += `<div class="legend" aria-hidden="true">${PHASES.map(p => `<span><i style="background:${p.color}"></i>${p.name}</span>`).join('')}</div>`;
+    const sorted = [...state.blocks].sort((a, b) => Date.parse(b.start) - Date.parse(a.start));
+    const groups = [];
+    sorted.forEach(b => { const k = dayKey(b.start); const g = groups[groups.length - 1]; if (g && g.k === k) g.items.push(b); else groups.push({ k, items: [b] }); });
+    groups.forEach(g => {
+      const dn = g.items.reduce((a, b) => a + blockNet(b), 0);
+      html += `<section class="daygroup"><div class="dayhead"><b>${esc(dayLabel(g.items[0].start))}</b><span>${money(dn)} net</span></div>${g.items.map(blockCard).join('')}</section>`;
+    });
+    html += `<section><button class="btn glassy block" type="button" data-act="add-past">Add a past block</button><p class="foot">Surge means the offer's $/hr beats that station's base by 50¢ or more. Set a station's base in Settings, or the app learns it from blocks grabbed 2+ days ahead.</p></section>`;
+    app.innerHTML = html;
+  }
+
+  function stationOptions(selId) {
+    const list = [...state.stations].sort((a, b) => (b.fav - a.fav) || a.name.localeCompare(b.name));
+    return `<option value="">Choose a station</option>${list.map(s => `<option value="${s.id}" ${s.id === selId ? 'selected' : ''}>${s.fav ? '★ ' : ''}${esc(s.name)}${s.code ? ' (' + esc(s.code) + ')' : ''}</option>`).join('')}<option value="__new">+ New station…</option>`;
+  }
+  function blockSheet(b) {
+    const isNew = !b;
+    const fav = state.stations.find(s => s.fav);
+    b = b || { id: null, leave: new Date(Date.now() - 5 * 3600e3).toISOString(), stationId: fav ? fav.id : '', scheduledHrs: 3.5, basePay: '', tips: 0, grabbedAt: null, legs: { to_station: '', route: '', home: '' }, mins: { drive_to: 25, load: 20, deliver: 150, return: 25 }, packages: '', stops: '' };
+    const legs = b.legs || { unsplit: b.miles };
+    const msList = b.ms ? STEPS.filter(s => b.ms[s.id]).map(s => `<div class="row"><span>${s.label}</span><span class="val">${timeLabel(b.ms[s.id])}</span></div>`).join('') : '';
+    openSheet(isNew ? 'Add a past block' : 'Edit block', `
+      <section><h2><span>Block</span></h2><div class="glass group">
+        <div class="field"><label for="f-leave">Left home</label><input id="f-leave" type="datetime-local" value="${toLocalInput(b.leave || b.start)}"></div>
+        <div class="field"><label for="f-station">Station</label><select id="f-station">${stationOptions(b.stationId)}</select></div>
+        <div class="field" id="f-newst-row" hidden><label for="f-newst">New station name</label><input id="f-newst" type="text" placeholder="e.g. North station"></div>
+        <div class="field"><label for="f-sched">Block length<small>Hours on the offer</small></label><input id="f-sched" type="number" inputmode="decimal" step="0.5" min="0" value="${b.scheduledHrs}"></div>
+        <div class="field"><label for="f-grab">Grabbed at<small>When you accepted the offer</small></label><input id="f-grab" type="datetime-local" value="${toLocalInput(b.grabbedAt)}"></div>
+      </div></section>
+      <section><h2><span>Pay</span></h2><div class="glass group">
+        <div class="field"><label for="f-pay">Offer pay ($)</label><input id="f-pay" type="number" inputmode="decimal" step="0.01" min="0" value="${b.basePay}"></div>
+        <div class="field"><label for="f-tips">Tips ($)</label><input id="f-tips" type="number" inputmode="decimal" step="0.01" min="0" value="${b.tips}"></div>
+        <div class="field"><label for="f-pk">Packages</label><input id="f-pk" type="number" inputmode="numeric" min="0" value="${b.packages || ''}"></div>
+        <div class="field"><label for="f-stops">Stops</label><input id="f-stops" type="number" inputmode="numeric" min="0" value="${b.stops || ''}"></div>
+      </div></section>
+      <section><h2><span>Miles by leg</span></h2><div class="glass group">
+        ${LEGS.map(l => `<div class="field"><label for="f-leg-${l.id}">${l.name}</label><input id="f-leg-${l.id}" type="number" inputmode="decimal" step="0.1" min="0" value="${legs[l.id] != null ? legs[l.id] : ''}"></div>`).join('')}
+        ${legs.unsplit ? `<div class="field"><label for="f-leg-unsplit">Not split<small>From before the app tracked legs</small></label><input id="f-leg-unsplit" type="number" inputmode="decimal" step="0.1" min="0" value="${legs.unsplit}"></div>` : ''}
+      </div></section>
+      <section><h2><span>Time in minutes</span></h2><div class="glass group">
+        ${PHASES.map(p => `<div class="field"><label for="f-${p.id}"><span style="display:inline-block;width:9px;height:9px;border-radius:3px;background:${p.color};margin-right:6px"></span>${p.name}</label><input id="f-${p.id}" type="number" inputmode="numeric" step="1" min="0" value="${Math.round(b.mins[p.id] || 0)}"></div>`).join('')}
+      </div><p class="err" id="f-err" hidden></p></section>
+      ${msList ? `<section><h2><span>Check-in log</span></h2><div class="glass group">${msList}</div></section>` : ''}
+      <button class="btn primary block" type="button" data-act="save-sheet-block" data-id="${b.id || ''}">${isNew ? 'Add block' : 'Save changes'}</button>
+      ${isNew ? '' : `<div id="del-slot"><button class="btn danger block" type="button" data-act="ask-del-block">Delete block</button></div>`}
+    `);
+  }
+  function resolveStation(selId, newId) {
+    if (selId === '__new') { const name = val(newId); if (!name) return null; const s = { id: 's-' + uid(), name, code: '', base: null, fav: !state.stations.length }; state.stations.push(s); return s; }
+    return stationById(selId) || null;
+  }
+
+  // ---------- Mileage view ----------
+  const LEG_COLORS = { to_station: 'var(--ph-drive)', route: 'var(--accent)', home: 'var(--ph-return)', other: 'var(--muted)' };
+  const LEG_NAMES = { to_station: 'Home to station', route: 'Station to last stop', home: 'Last stop to home', other: 'Not split' };
+  function legTotals(blocks) {
+    const t = { to_station: 0, route: 0, home: 0, other: 0 };
+    blocks.forEach(b => { const l = b.legs || { unsplit: Number(b.miles) || 0 }; t.to_station += Number(l.to_station) || 0; t.route += Number(l.route) || 0; t.home += Number(l.home) || 0; t.other += (Number(l.unsplit) || 0) + (Number(l.between) || 0); });
+    t.total = t.to_station + t.route + t.home + t.other;
+    return t;
+  }
+  function legBar(t, h) {
+    const tot = Math.max(0.0001, t.total);
+    return `<div class="split" style="height:${h || 10}px" role="img" aria-label="${['to_station', 'route', 'home', 'other'].filter(k => t[k] > 0).map(k => LEG_NAMES[k] + ' ' + mi(t[k])).join(', ')}">${['to_station', 'route', 'home', 'other'].map(k => t[k] > 0 ? `<span style="width:${t[k] / tot * 100}%;background:${LEG_COLORS[k]}"></span>` : '').join('')}</div>`;
+  }
+  function renderMileage(per) {
+    const blocks = state.blocks.filter(b => inRange(b.start, per));
+    const t = legTotals(blocks);
+    const stops = blocks.reduce((a, b) => a + (Number(b.stops) || 0), 0);
+    const ded = taxDeduction(blocks);
+    const pct = (v) => t.total ? Math.round(v / t.total * 100) + '%' : '0%';
+    let html = `<section><div class="glass hero">
+      <div class="milehead"><div><div class="k">Home to home</div><div class="big">${Math.round(t.total).toLocaleString('en-US')}<span class="unit">mi</span></div></div>
+      <div style="text-align:right"><div class="k">Route only</div><div class="mid">${Math.round(t.route).toLocaleString('en-US')}<span class="unit">mi</span></div><div class="k" style="font-weight:500">station to last stop</div></div></div>
+      ${legBar(t, 12)}
+      <div class="bridge">${['to_station', 'route', 'home', 'other'].filter(k => k !== 'other' || t.other > 0).map(k => `<i class="sw" style="background:${LEG_COLORS[k]}"></i><span>${LEG_NAMES[k]} <span class="muted">${pct(t[k])}</span></span><span class="v">${mi(t[k])}</span>`).join('')}</div>
+    </div></section>`;
+    html += `<section><div class="tiles">
+      <div class="glass tile"><span class="k">Miles per stop</span><span class="v">${stops ? (t.route / stops).toFixed(2) : '—'}</span><span class="s">${stops.toLocaleString('en-US')} stops on route</span></div>
+      <div class="glass tile"><span class="k">Route per block</span><span class="v">${blocks.length ? Math.round(t.route / blocks.length) : 0} mi</span><span class="s">${blocks.length} blocks</span></div>
+      <div class="glass tile"><span class="k">Mileage deduction</span><span class="v">${money(ded.total, 0)}</span><span class="s">Legs you chose in Taxes</span></div>
+      <div class="glass tile"><span class="k">Unpaid driving</span><span class="v">${pct(t.to_station + t.home)}</span><span class="s">To station and home</span></div>
+    </div></section>`;
+    html += `<section><h2><span>Miles per month</span><span>last 6 months</span></h2>${mileMonthBars()}<div class="legend" style="margin-top:10px">${['to_station', 'route', 'home'].map(k => `<span><i style="background:${LEG_COLORS[k]}"></i>${LEG_NAMES[k]}</span>`).join('')}</div></section>`;
+    const sorted = [...blocks].sort((a, b) => Date.parse(b.start) - Date.parse(a.start));
+    if (!sorted.length) { html += `<section><div class="glass empty">No blocks in this period yet. Miles appear here after your first block.</div></section>`; return html; }
+    const groups = [];
+    sorted.forEach(b => { const k = dayKey(b.start); const g = groups[groups.length - 1]; if (g && g.k === k) g.items.push(b); else groups.push({ k, items: [b] }); });
+    html += `<section><h2><span>Miles by block</span></h2></section>`;
+    groups.forEach(g => {
+      const dt = legTotals(g.items);
+      html += `<section class="daygroup" style="margin-top:-12px"><div class="dayhead"><b>${esc(dayLabel(g.items[0].start))}</b><span>${mi(dt.total)} · ${mi(dt.route)} route</span></div><div class="glass elist">${g.items.map(b => {
+        const bt = legTotals([b]);
+        return `<button class="mrow" type="button" data-block="${b.id}"><div class="mtop"><span class="mid"><b>${esc(b.station || 'Block')}</b><span>${timeLabel(b.leave || b.start)}${b.stops ? ' · ' + b.stops + ' stops · ' + (bt.route / b.stops).toFixed(2) + ' mi/stop' : ''}</span></span><span class="v">${mi(bt.total)}<small>${mi(bt.route)} route</small></span></div>${legBar(bt, 7)}</button>`;
+      }).join('')}</div></section>`;
+    });
+    return html;
+  }
+  function mileMonthBars() {
+    const months = []; const n = new Date();
+    for (let i = 5; i >= 0; i--) months.push(new Date(n.getFullYear(), n.getMonth() - i, 1));
+    const vals = months.map(m => { const end = new Date(m.getFullYear(), m.getMonth() + 1, 1); return legTotals(state.blocks.filter(b => { const x = Date.parse(b.start); return x >= +m && x < +end; })); });
+    const max = Math.max(1, ...vals.map(v => v.total));
+    return `<div class="glass bars six" role="img" aria-label="Miles driven each month for the last 6 months, split by leg">${months.map((m, i) => { const v = vals[i]; const h = v.total / max * 78;
+      return `<div class="bar ${i === 5 ? 'today' : ''}"><span class="amt">${v.total ? Math.round(v.total) + ' mi' : ''}</span>${v.total ? `<span class="stackbar" style="height:${Math.max(h, 3)}%">${['home', 'route', 'to_station', 'other'].map(k => v[k] > 0 ? `<span style="flex:${v[k]};background:${LEG_COLORS[k]}"></span>` : '').join('')}</span>` : '<span class="fill zero" style="height:2%"></span>'}<span class="day">${m.toLocaleDateString('en-US', { month: 'short' })}</span></div>`; }).join('')}</div>`;
+  }
+
+  // ---------- Money ----------
+  function donut(slices, total, label) {
+    const R = 54, C = 2 * Math.PI * R; let off = 0;
+    const segs = slices.filter(s => s.v > 0).map(s => { const len = total ? s.v / total * C : 0; const g = `<circle r="${R}" cx="74" cy="74" fill="none" stroke="${s.c}" stroke-width="20" stroke-dasharray="${Math.max(0, len - 1.5)} ${C}" stroke-dashoffset="${-off}" transform="rotate(-90 74 74)"/>`; off += len; return g; }).join('');
+    return `<svg class="donut" viewBox="0 0 148 148" role="img" aria-label="${esc(label)}"><circle r="${R}" cx="74" cy="74" fill="none" stroke="var(--hair)" stroke-width="20"/>${segs}<text x="74" y="72" text-anchor="middle" font-size="19" font-weight="800">${money(total, 0)}</text><text class="sub" x="74" y="91" text-anchor="middle" font-size="11">total cost</text></svg>`;
+  }
+  function costBreakdown(period) {
+    const blocks = state.blocks.filter(b => inRange(b.start, period));
+    const miles = blocks.reduce((a, b) => a + blockMiles(b), 0);
+    const p = cpmParts(); const est = S().costMode === 'estimate';
+    const slices = [];
+    if (est) { slices.push({ k: 'fuel', name: EST.fuel.name, c: EST.fuel.c, v: miles * p.fuel, est: true }, { k: 'wear', name: EST.wear.name, c: EST.wear.c, v: miles * p.wear, est: true }, { k: 'fixed', name: EST.fixed.name, c: EST.fixed.c, v: miles * p.fixed, est: true }); }
+    if (V().ownership !== 'lease') slices.push({ k: 'dep', name: EST.dep.name, c: EST.dep.c, v: miles * p.dep, est: true });
+    const byCat = {};
+    state.expenses.filter(e => inRange(e.date, period) && expenseCounts(e)).forEach(e => { byCat[e.category] = (byCat[e.category] || 0) + Number(e.amount || 0); });
+    Object.entries(byCat).forEach(([c, v]) => slices.push({ k: c, name: c, c: (CATS[c] || CATS.Other).c, v }));
+    slices.sort((a, b) => b.v - a.v);
+    return { slices, total: slices.reduce((a, s) => a + s.v, 0), miles };
+  }
+  function renderMoney() {
+    const per = state.ui.mPeriod; const cat = state.ui.mCat;
+    const view = state.ui.mView || 'costs';
+    let html = header('Money');
+    html += `<section><div class="seg glass big2" role="tablist" aria-label="Money view">${[['costs', 'Costs'], ['mileage', 'Mileage']].map(([k, n]) => `<button type="button" role="tab" data-mview="${k}" aria-pressed="${view === k}" aria-selected="${view === k}">${n}</button>`).join('')}</div>
+      <div class="seg" role="group" aria-label="Period" style="margin-top:10px">${[['month', 'This month'], ['year', 'This year'], ['all', 'All time']].map(([k, n]) => `<button type="button" data-mperiod="${k}" aria-pressed="${per === k}">${n}</button>`).join('')}</div></section>`;
+    if (view === 'mileage') { html += renderMileage(per); app.innerHTML = html; return; }
+    const cb = costBreakdown(per);
+    html += `<section><h2><span>What it costs to drive</span><span>${mi(cb.miles)}</span></h2><div class="glass costcard">${donut(cb.slices, cb.total, 'Costs by category')}
+      <div class="costlegend">${cb.slices.length ? cb.slices.slice(0, 8).map(s => `<div><i style="background:${s.c}"></i><span>${esc(s.name)}${s.est ? ' <span class="est">est.</span>' : ''}</span><b>${money(s.v, 0)}</b></div>`).join('') : '<div class="muted">No costs yet for this period.</div>'}</div>
+    </div><p class="foot">${S().costMode === 'estimate' ? '"est." comes from your vehicle profile and block miles. Logged gas, maintenance, insurance and car payments are kept for your records but not counted twice.' : 'Using your logged expenses, plus depreciation from your vehicle profile.'}</p></section>`;
+
+    html += `<section><h2><span>Cost per month</span><span>last 6 months</span></h2>${monthBars()}</section>`;
+    html += taxCard();
+
+    // list
+    const used = Array.from(new Set(state.expenses.map(e => e.category)));
+    html += `<section><h2><span>Expenses</span></h2><div class="filters" role="group" aria-label="Filter by category"><button type="button" class="fchip" data-mcat="" aria-pressed="${!cat}">All</button>${CAT_NAMES.filter(c => used.includes(c)).map(c => `<button type="button" class="fchip" data-mcat="${esc(c)}" aria-pressed="${cat === c}"><i style="background:${CATS[c].c}"></i>${esc(c)}</button>`).join('')}</div>
+      <button class="btn primary block" type="button" data-act="add-exp" style="margin-top:6px">Add expense</button></section>`;
+    const list = state.expenses.filter(e => inRange(e.date, per) && (!cat || e.category === cat)).sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
+    if (!list.length) html += `<section><div class="glass empty">No expenses for this filter.</div></section>`;
+    const groups = [];
+    list.forEach(e => { const k = dayKey(e.date); const g = groups[groups.length - 1]; if (g && g.k === k) g.items.push(e); else groups.push({ k, items: [e] }); });
+    groups.forEach(g => {
+      const t = g.items.reduce((a, e) => a + Number(e.amount || 0), 0);
+      html += `<section class="daygroup"><div class="dayhead"><b>${esc(dayLabel(g.items[0].date))}</b><span>${money(t)}</span></div><div class="glass elist">${g.items.map(e => {
+        const blk = e.blockId ? state.blocks.find(b => b.id === e.blockId) : null;
+        return `<button class="erow" type="button" data-exp="${e.id}">${catIcon(e.category)}<span class="mid"><b>${esc(e.note || e.category)}</b><span>${esc(e.category)}${blk ? ' · ' + esc(blk.station || 'block') : ''} · ${timeLabel(e.date)}</span></span><span class="v">${money(e.amount)}${expenseCounts(e) ? '' : '<small>in estimate</small>'}</span></button>`;
+      }).join('')}</div></section>`;
+    });
+    app.innerHTML = html;
+  }
+  function monthBars() {
+    const months = []; const n = new Date();
+    for (let i = 5; i >= 0; i--) months.push(new Date(n.getFullYear(), n.getMonth() - i, 1));
+    const vals = months.map(m => {
+      const end = new Date(m.getFullYear(), m.getMonth() + 1, 1);
+      const inM = (iso) => { const t = Date.parse(iso); return t >= +m && t < +end; };
+      const miles = state.blocks.filter(b => inM(b.start)).reduce((a, b) => a + blockMiles(b), 0);
+      const ex = state.expenses.filter(e => inM(e.date) && expenseCounts(e)).reduce((a, e) => a + Number(e.amount || 0), 0);
+      return miles * cpmUsed() + ex;
+    });
+    const max = Math.max(1, ...vals);
+    return `<div class="glass bars six" role="img" aria-label="Total driving cost for each of the last 6 months">${months.map((m, i) => { const v = vals[i]; return `<div class="bar ${i === 5 ? 'today' : ''}"><span class="amt">${v ? money(v, 0) : ''}</span><span class="fill cost ${v ? '' : 'zero'}" style="height:${v ? Math.max(v / max * 78, 3) : 2}%"></span><span class="day">${m.toLocaleDateString('en-US', { month: 'short' })}</span></div>`; }).join('')}</div>`;
+  }
+  function taxCard() {
+    const yr = new Date().getFullYear();
+    const blocks = state.blocks.filter(b => new Date(b.start).getFullYear() === yr);
+    const d = taxDeduction(blocks);
+    const stops = blocks.reduce((a, b) => a + (Number(b.stops) || 0), 0), pk = blocks.reduce((a, b) => a + (Number(b.packages) || 0), 0);
+    const g = blocks.reduce((a, b) => a + gross(b), 0);
+    const byCat = {}; state.expenses.filter(e => new Date(e.date).getFullYear() === yr).forEach(e => { byCat[e.category] = (byCat[e.category] || 0) + Number(e.amount || 0); });
+    const p = cpmParts(); const miles = blocks.reduce((a, b) => a + blockMiles(b), 0);
+    const legRow = (k, name) => kv(name + (S().taxLegs[k] ? '' : ' <span class="muted">(not deducted)</span>'), mi(d.miles[k]));
+    return `<section><h2><span>Tax year ${yr}</span><span>estimate</span></h2><div class="glass taxcard"><div class="row2">
+      <span class="hd">Mileage by leg</span>
+      ${legRow('to_station', 'Home to station')}${legRow('route', 'Station to last stop')}${legRow('home', 'Last stop to home')}
+      ${d.miles.unsplit ? kv('Not split', mi(d.miles.unsplit)) : ''}
+      ${kv('Mileage deduction', money(d.total, 0), 'tot')}
+      <span class="hd">Work done</span>
+      ${kv('Blocks', blocks.length)}${kv('Stops', stops.toLocaleString('en-US'))}${kv('Packages', pk.toLocaleString('en-US'))}${kv('Pay and tips', money(g, 0))}
+      <span class="hd">Logged expenses by category</span>
+      ${Object.keys(byCat).length ? Object.entries(byCat).sort((a, b) => b[1] - a[1]).map(([c, v]) => kv(esc(c), money(v, 0))).join('') : '<span class="muted">None yet</span><span></span>'}
+      <span class="hd">Vehicle, from your profile</span>
+      ${kv('Depreciation', money(miles * p.dep, 0))}${kv('Insurance, payment, fees share', money(miles * p.fixed, 0))}
+    </div><p class="foot" style="margin:0">Uses the IRS rate for each block's date. Which legs and costs you can deduct depends on your situation, so confirm with a tax professional.</p></div></section>`;
+  }
+
+  function expSheet(e) {
+    const isNew = !e;
+    e = e || { id: null, date: new Date().toISOString(), category: 'Parking & tolls', amount: '', note: '', blockId: '' };
+    const blocks = [...state.blocks].sort((a, b) => Date.parse(b.start) - Date.parse(a.start)).slice(0, 15);
+    openSheet(isNew ? 'Add expense' : 'Edit expense', `
+      <section><div class="glass group">
+        <div class="field"><label for="e-amount">Amount ($)</label><input id="e-amount" type="number" inputmode="decimal" step="0.01" min="0" value="${e.amount}"></div>
+        <div class="field"><label for="e-cat">Category</label><select id="e-cat">${CAT_NAMES.map(c => `<option ${c === e.category ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
+        <div class="field"><label for="e-date">Date</label><input id="e-date" type="datetime-local" value="${toLocalInput(e.date)}"></div>
+        <div class="field"><label for="e-note">Note</label><input id="e-note" type="text" value="${esc(e.note)}" placeholder="Optional"></div>
+        <div class="field"><label for="e-block">Link to a block<small>Counts against that block's net</small></label><select id="e-block"><option value="">Not linked</option>${blocks.map(b => `<option value="${b.id}" ${b.id === e.blockId ? 'selected' : ''}>${esc(shortDay(b.start))} · ${esc(b.station || 'Block')}</option>`).join('')}</select></div>
+      </div><p class="err" id="e-err" hidden></p></section>
+      <button class="btn primary block" type="button" data-act="save-exp" data-id="${e.id || ''}">${isNew ? 'Add expense' : 'Save changes'}</button>
+      ${isNew ? '' : `<div id="del-slot"><button class="btn danger block" type="button" data-act="ask-del-exp">Delete expense</button></div>`}
+    `);
+  }
+
+  // ---------- Places ----------
+  const revealed = new Set();
+  function renderPlaces() {
+    let html = header('Places');
+    html += `<section><div class="glass search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="pl-q" type="search" placeholder="Search address, name or city" value="${esc(state.ui.plq || '')}" aria-label="Search places"></div></section>`;
+    html += `<section><button class="btn primary block" type="button" data-act="add-place">Save a place</button></section>`;
+    html += `<div id="pl-list">${placeList()}</div>`;
+    html += `<section><p class="foot">Codes are hidden until you tap them. They stay on this device only.</p></section>`;
+    app.innerHTML = html;
+  }
+  function placeList() {
+    const q = (state.ui.plq || '').toLowerCase().trim();
+    const list = state.places.filter(p => !q || [p.name, p.address, p.city, p.notes].join(' ').toLowerCase().includes(q)).sort((a, b) => (Date.parse(b.lastUsed || 0) || 0) - (Date.parse(a.lastUsed || 0) || 0));
+    if (!state.places.length) return `<section><div class="glass empty">No places yet. Save gate, building and locker codes by address so they're ready next time you're sent there.</div></section>`;
+    if (!list.length) return `<section><div class="glass empty">Nothing matches "${esc(q)}".</div></section>`;
+    return `<section class="daygroup">${list.map(p => `<div class="glass place">
+      <div class="top"><button type="button" data-place="${p.id}" style="all:unset;cursor:pointer;flex:1;min-width:0"><b>${esc(p.name || p.address)}</b><span>${esc(p.address)}${p.city ? ', ' + esc(p.city) : ''}</span></button><span class="uses">${p.uses ? 'Used ' + p.uses + '×' : ''}${p.lastUsed ? '<br>' + esc(shortDay(p.lastUsed)) : ''}</span></div>
+      ${p.codes && p.codes.length ? `<div class="codes">${p.codes.map((c, i) => { const k = p.id + ':' + i; const show = revealed.has(k); return `<button type="button" class="code" data-reveal="${k}" aria-label="${esc(c.label)} code, ${show ? esc(c.value) : 'hidden, tap to show'}"><small>${esc(c.label)}</small><b>${show ? esc(c.value) : '••••'}</b></button>`; }).join('')}</div>` : ''}
+      ${p.notes ? `<div class="note">${esc(p.notes)}</div>` : ''}
+      <div class="btnrow"><button class="btn small glassy" type="button" data-used="${p.id}">Mark used</button><button class="btn small" type="button" data-place="${p.id}">Edit</button></div>
+    </div>`).join('')}</section>`;
+  }
+  function placeSheet(p) {
+    const isNew = !p;
+    p = p || { id: null, name: '', address: '', city: '', codes: [{ label: 'Gate', value: '' }], notes: '' };
+    const codeRow = (c, i) => `<div class="codefield" data-coderow="${i}"><select aria-label="Code type">${CODE_LABELS.map(l => `<option ${l === c.label ? 'selected' : ''}>${l}</option>`).join('')}</select><input type="text" value="${esc(c.value)}" placeholder="Code" aria-label="Code" autocomplete="off"><button class="iconbtn" type="button" data-act="del-code" aria-label="Remove code">×</button></div>`;
+    openSheet(isNew ? 'Save a place' : 'Edit place', `
+      <section><div class="glass group">
+        <div class="field"><label for="p-addr">Address</label><input id="p-addr" type="text" value="${esc(p.address)}" placeholder="1420 Maple Ave"></div>
+        <div class="field"><label for="p-city">City</label><input id="p-city" type="text" value="${esc(p.city)}" placeholder="City"></div>
+        <div class="field"><label for="p-name">Name<small>Complex or building, optional</small></label><input id="p-name" type="text" value="${esc(p.name)}" placeholder="Maple Court Apartments"></div>
+      </div></section>
+      <section><h2><span>Codes</span></h2><div class="glass group" id="p-codes">${(p.codes.length ? p.codes : [{ label: 'Gate', value: '' }]).map(codeRow).join('')}</div>
+        <button class="btn glassy small" type="button" data-act="add-code" style="margin-top:10px;align-self:flex-start">Add another code</button></section>
+      <section><div class="glass group"><div class="field"><label for="p-notes">Notes<small>Where to leave packages, dogs, tricky gates</small></label><textarea id="p-notes" placeholder="Optional">${esc(p.notes)}</textarea></div></div><p class="err" id="p-err" hidden></p></section>
+      <button class="btn primary block" type="button" data-act="save-place" data-id="${p.id || ''}">${isNew ? 'Save place' : 'Save changes'}</button>
+      ${isNew ? '' : `<div id="del-slot"><button class="btn danger block" type="button" data-act="ask-del-place">Delete place</button></div>`}
+    `);
+    scrim._codeRow = codeRow;
+  }
+
+  // ---------- Settings ----------
+  const STABS = [['app', 'App'], ['car', 'Car'], ['taxes', 'Taxes'], ['stations', 'Stations']];
+  const guide = (title, points) => `<div class="glass guide"><div class="gt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>${title}</div><ul>${points.map(p => `<li>${p}</li>`).join('')}</ul></div>`;
+  function renderSettings() {
+    const tab = state.ui.sTab || 'app';
+    let html = header('Settings');
+    html += `<section><div class="seg glass" role="tablist" aria-label="Settings sections">${STABS.map(([k, n]) => `<button type="button" role="tab" data-stab="${k}" aria-pressed="${tab === k}" aria-selected="${tab === k}">${n}</button>`).join('')}</div></section>`;
+    if (tab === 'car') html += settingsCar();
+    else if (tab === 'taxes') html += settingsTaxes();
+    else if (tab === 'stations') html += settingsStations();
+    else html += settingsApp();
+    html += `<section><p class="foot">Flex Pulse v0.4 prototype.</p></section>`;
+    app.innerHTML = html;
+  }
+
+  function settingsApp() {
+    const s = S();
+    const cloud = cloudAvailable();
+    return `<section><h2><span>Appearance</span></h2>
+      <div class="seg glass" role="group" aria-label="Theme">${[['system', tg ? 'Telegram' : 'System'], ['light', 'Light'], ['dark', 'Dark']].map(([k, n]) => `<button type="button" data-theme-set="${k}" aria-pressed="${s.theme === k}">${n}</button>`).join('')}</div>
+      <div class="glass group" style="margin-top:12px">
+        <div class="swatches" role="group" aria-label="Colour palette">${Object.entries(PALETTES).map(([k, pp]) => `<button type="button" class="swatch" data-palette="${k}" aria-pressed="${s.palette === k}" aria-label="${pp.name}" style="background:linear-gradient(135deg, ${isDark() ? pp.d : pp.l} 55%, ${isDark() ? pp.d2 : pp.l2})"></button>`).join('')}</div>
+        <div class="swatchname">Palette: ${PALETTES[s.palette].name}</div>
+        <div class="field"><label for="s-glass">Glass effect<small>Turn off for solid cards and longer battery life</small></label><input id="s-glass" data-set="glass" type="checkbox" ${s.glass ? 'checked' : ''}></div>
+      </div><p class="foot">${tg ? 'Telegram follows the light or dark theme you use in Telegram.' : 'System follows your phone\'s light or dark setting.'}</p></section>
+    <section><h2><span>Your data</span></h2><div class="glass group">
+        <div class="row"><span class="stack"><span>${cloud ? 'Saved on this phone and backed up to your Telegram account' : 'Saved on this device only'}</span><span class="sub" id="backup-status">${cloud ? backupLine() : (storageOk ? 'Nobody else can see it. Friends who open the same link get their own empty tracker. Clearing this browser\'s data erases it.' : 'This browser blocks storage, so changes last until you close the page.')}</span></span></div>
+        ${cloud ? '<button class="row" type="button" data-act="backup-now"><span>Back up now</span><span class="muted">›</span></button>' : ''}
+      </div><div class="btnrow" style="margin-top:12px">${hasSample() ? '<button class="btn glassy" type="button" data-act="clear-sample">Remove sample data</button>' : '<button class="btn glassy" type="button" data-act="load-sample">Show sample data</button>'}<button class="btn danger" type="button" data-act="ask-reset">Erase everything</button></div><div id="reset-slot"></div></section>
+    ${guide('Getting started', ['Set up your car in <b>Car</b> so net profit reflects what driving really costs you.', 'Add your usual station in <b>Stations</b> and star it. Set your net-per-hour goal there too.', 'On a block day, tap <b>Start a block</b> on Today when you leave home and follow the steps.', 'Check <b>Money</b> for costs and mileage. Its tax-year card has what you need at tax time.'])}`;
+  }
+
+  function settingsCar() {
+    const v = V(); const s = S(); const p = cpmParts();
+    return `${guide('How car costs work', ['Every mile has a cost: fuel, wear, the value your car loses, and a share of insurance and payments.', 'The app adds these up into a <b>true cost per mile</b> and subtracts it from each block, so net profit is real money kept.', 'Only your block miles are charged. Personal driving is left out using "All driving per month".'])}
+    <section><h2><span>Ownership</span></h2>
+      <div class="seg glass" role="group" aria-label="Ownership">${[['owned', 'Owned'], ['loan', 'Loan'], ['lease', 'Lease']].map(([k, n]) => `<button type="button" data-own="${k}" aria-pressed="${v.ownership === k}">${n}</button>`).join('')}</div>
+      <p class="foot">${v.ownership === 'lease' ? 'Leased: you don\'t own the car, so the lease payment takes the place of depreciation.' : v.ownership === 'loan' ? 'Loan: the car is yours, so it loses value like any owned car. Only the interest part of your payment is a cost; the rest is paying for the car.' : 'Owned outright: the main hidden cost is the value your car loses as you add miles.'}</p></section>
+    <section><h2><span>Running costs</span></h2><div class="glass group">
+        <div class="field"><label for="v-mpg">Fuel economy<small>Miles per gallon. Check your dash or fill-up math.</small></label><input id="v-mpg" data-veh="mpg" type="number" inputmode="decimal" step="0.5" min="1" value="${v.mpg}"></div>
+        <div class="field"><label for="v-gas">Gas price<small>Dollars per gallon you usually pay</small></label><input id="v-gas" data-veh="gasPrice" type="number" inputmode="decimal" step="0.01" min="0" value="${v.gasPrice}"></div>
+        <div class="field"><label for="v-wear">Wear and maintenance<small>Dollars per mile for tires, oil, brakes. $0.06–0.10 is common.</small></label><input id="v-wear" data-veh="wear" type="number" inputmode="decimal" step="0.01" min="0" value="${v.wear}"></div>
+      </div></section>
+    <section><h2><span>Fixed costs</span></h2><div class="glass group">
+        <div class="field"><label for="v-ins">Insurance<small>Dollars per month</small></label><input id="v-ins" data-veh="insurance" type="number" inputmode="decimal" step="1" min="0" value="${v.insurance}"></div>
+        <div class="field"><label for="v-reg">Registration and fees<small>Dollars per year</small></label><input id="v-reg" data-veh="registration" type="number" inputmode="decimal" step="1" min="0" value="${v.registration}"></div>
+        ${v.ownership === 'lease' ? `<div class="field"><label for="v-lease">Lease payment<small>Dollars per month</small></label><input id="v-lease" data-veh="lease" type="number" inputmode="decimal" step="1" min="0" value="${v.lease}"></div>` : ''}
+        ${v.ownership === 'loan' ? `<div class="field"><label for="v-int">Loan interest<small>Dollars per month. Your lender's statement shows it.</small></label><input id="v-int" data-veh="interest" type="number" inputmode="decimal" step="1" min="0" value="${v.interest}"></div>` : ''}
+        <div class="field"><label for="v-mm">All driving per month<small>Total miles including personal trips. Used to split fixed costs fairly.</small></label><input id="v-mm" data-veh="monthlyMiles" type="number" inputmode="decimal" step="100" min="1" value="${v.monthlyMiles}"></div>
+      </div></section>
+    ${v.ownership !== 'lease' ? `<section><h2><span>Depreciation</span></h2><div class="glass group">
+        <div class="field"><label for="v-val">Car's value today<small>Dollars. A quick check on a pricing site works.</small></label><input id="v-val" data-veh="value" type="number" inputmode="decimal" step="100" min="0" value="${v.value}"></div>
+        <div class="field"><label for="v-res">Value when you sell<small>Dollars, your best guess</small></label><input id="v-res" data-veh="resale" type="number" inputmode="decimal" step="100" min="0" value="${v.resale}"></div>
+        <div class="field"><label for="v-left">Miles until you sell<small>Roughly how many more miles you'll put on it</small></label><input id="v-left" data-veh="milesLeft" type="number" inputmode="decimal" step="1000" min="1" value="${v.milesLeft}"></div>
+      </div><p class="foot">The value it loses is spread over those miles. A gig car wears out by miles driven, not by months, so this is the fairest way.</p></section>` : ''}
+    <section><h2><span>Your true cost per mile</span></h2><div class="glass group" id="v-cpm">${cpmTable(p)}</div></section>
+    <section><h2><span>How costs are counted</span></h2><div class="seg glass" role="group" aria-label="Cost mode">${[['estimate', 'Per-mile estimate'], ['actual', 'My receipts']].map(([k, n]) => `<button type="button" data-costmode="${k}" aria-pressed="${s.costMode === k}">${n}</button>`).join('')}</div><p class="foot">${s.costMode === 'estimate' ? '<b>Recommended.</b> Net uses the cost per mile above. Gas, repairs, insurance and payments you log are kept as records but not counted twice.' : 'Net uses the gas, repairs, insurance and payments you log as expenses, plus depreciation per mile. Pick this only if you log every receipt.'}</p></section>`;
+  }
+
+  function settingsTaxes() {
+    const s = S();
+    return `${guide('How the tax estimate works', ['Each block\'s miles are multiplied by the IRS standard mileage rate for that date. That rate already includes gas, wear and depreciation.', 'Parking, tolls, phone and equipment can usually be deducted on top. Gas and repairs cannot when you use the standard rate.', 'Every leg is tracked separately, so you or your tax pro can decide which legs count.', 'This is an estimate to plan with, not tax advice.'])}
+    <section><h2><span>Mileage rate</span></h2><div class="glass group">
+        <div class="field"><label for="s-irs">IRS business rate<small>$0.76 per mile from July 1, 2026. Blocks from January to June use $0.725 automatically.</small></label><input id="s-irs" data-set="irsRate" type="number" inputmode="decimal" step="0.005" min="0" value="${s.irsRate}"></div>
+      </div></section>
+    <section><h2><span>Which legs to deduct</span></h2><div class="glass group">
+        ${LEGS.map(l => `<div class="field"><label for="s-leg-${l.id}">${l.name}<small>${l.id === 'route' ? 'Delivery driving. Almost always deductible.' : l.id === 'to_station' ? 'Can count as commuting. Ask your tax pro.' : 'Can count as commuting. Ask your tax pro.'}</small></label><input id="s-leg-${l.id}" data-leg="${l.id}" type="checkbox" ${s.taxLegs[l.id] ? 'checked' : ''}></div>`).join('')}
+      </div></section>
+    <section><h2><span>Money to set aside</span></h2><div class="glass group">
+        <div class="field"><label for="s-tax">Set aside<small>Percent of pay after deductions. Many gig drivers save 20–30%.</small></label><input id="s-tax" data-set="taxPct" type="number" inputmode="numeric" step="1" min="0" max="60" value="${s.taxPct}"></div>
+      </div><p class="foot">Shown on Today as "Set aside for tax". At tax time, open Money and use the Tax year card.</p></section>`;
+  }
+
+  function settingsStations() {
+    const s = S();
+    return `${guide('Goals, work time and surge', ['Your <b>net per hour goal</b> colours every $/hr: green at or above it, amber within 20%, red below.', '<b>Work time</b> decides which hours count when the app works out $/hr.', 'Each station has a <b>base pay</b> per hour. Offers paying at least 50¢/hr more are marked Surge.', 'Don\'t know the base yet? Leave it empty. The app learns it from blocks you grabbed 2+ days ahead, which usually pay base.'])}
+    <section><h2><span>Your goal</span></h2><div class="glass group">
+        <div class="field"><label for="s-goal">Net per hour goal<small>Dollars you want to keep per hour, after car costs</small></label><input id="s-goal" data-set="goal" type="number" inputmode="decimal" step="1" min="0" value="${s.goal}"></div>
+      </div></section>
+    <section><h2><span>What counts as work time</span></h2><div class="seg glass" role="group" aria-label="Hourly basis">${Object.entries(BASIS).map(([k, b]) => `<button type="button" data-basis="${k}" aria-pressed="${s.basis === k}">${b.name}</button>`).join('')}</div><p class="foot">${BASIS[s.basis].long}. ${s.basis === 'total' ? 'The most honest number, since driving to the station is unpaid time.' : s.basis === 'block' ? 'Closest to the hours Amazon pays you for.' : 'Shows how fast you deliver once you\'re loaded.'}</p></section>
+    <section><h2><span>Stations</span></h2><div class="glass group">${state.stations.length ? state.stations.map(st => { const b = stationBase(st.id); const n = state.blocks.filter(x => x.stationId === st.id).length; return `<button class="row" type="button" data-station="${st.id}"><span class="stack"><span>${st.fav ? '<span class="star">★</span> ' : ''}${esc(st.name)}${st.code ? ' <span class="muted">' + esc(st.code) + '</span>' : ''}</span><span class="sub">${b ? 'Base ' + money(b.rate) + '/hr' + (b.from === 'history' ? ', learned' : '') : 'Base not known yet'} · ${n} block${n === 1 ? '' : 's'}</span></span><span class="muted">›</span></button>`; }).join('') : '<div class="row"><span class="muted">No stations yet. Add the one you usually work from.</span></div>'}</div>
+      <button class="btn glassy small" type="button" data-act="add-station" style="margin-top:10px;align-self:flex-start">Add station</button></section>`;
+  }
+
+  function cpmTable(p) {
+    const r = (n, v) => `<div class="row"><span>${n}</span><span class="val">${money(v, 3)}/mi</span></div>`;
+    return `${r('Fuel', p.fuel)}${r('Wear and maintenance', p.wear)}${V().ownership !== 'lease' ? r('Depreciation', p.dep) : ''}${r('Insurance, ' + (V().ownership === 'lease' ? 'lease' : V().ownership === 'loan' ? 'interest' : 'fees') + ' share', p.fixed)}<div class="row"><span style="font-weight:750">True cost per mile</span><span class="val" style="font-size:17px">${money(p.total, 3)}/mi</span></div>`;
+  }
+
+  function stationSheet(st) {
+    const isNew = !st;
+    st = st || { id: null, name: '', code: '', base: '', fav: false };
+    const learned = st.id ? (() => { const s = stationById(st.id); const keep = s.base; s.base = null; const b = stationBase(st.id); s.base = keep; return b; })() : null;
+    openSheet(isNew ? 'Add station' : 'Edit station', `
+      <section><div class="glass group">
+        <div class="field"><label for="st-name">Name</label><input id="st-name" type="text" value="${esc(st.name)}" placeholder="North station"></div>
+        <div class="field"><label for="st-code">Station code<small>Optional, like the code in the Flex app</small></label><input id="st-code" type="text" value="${esc(st.code)}" placeholder="DNO1"></div>
+        <div class="field"><label for="st-base">Base pay ($/hr)<small>${learned ? 'Learned so far: ' + money(learned.rate) + '/hr' : 'Leave empty and the app learns it'}</small></label><input id="st-base" type="number" inputmode="decimal" step="0.5" min="0" value="${st.base || ''}"></div>
+        <div class="field"><label for="st-fav">Favorite<small>Shown first when you start a block</small></label><input id="st-fav" type="checkbox" ${st.fav ? 'checked' : ''}></div>
+      </div><p class="err" id="st-err" hidden></p></section>
+      <button class="btn primary block" type="button" data-act="save-station" data-id="${st.id || ''}">${isNew ? 'Add station' : 'Save changes'}</button>
+      ${isNew ? '' : `<div id="del-slot"><button class="btn danger block" type="button" data-act="ask-del-station">Delete station</button></div>`}`);
+  }
+
+  // ---------- sheet ----------
+  function openSheet(title, body) {
+    scrim.innerHTML = `<div class="sheet glass" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="grabber"></div><div class="sheethead"><h3>${esc(title)}</h3><button class="linkbtn" type="button" data-act="close-sheet">Cancel</button></div>${body}</div>`;
+    scrim.hidden = false;
+    if (tg && tgAtLeast('6.1')) { try { tg.BackButton.show(); } catch (e) {} }
+  }
+  function closeSheet() { scrim.hidden = true; scrim.innerHTML = ''; if (tg && tgAtLeast('6.1')) { try { tg.BackButton.hide(); } catch (e) {} } }
+  if (tg && tgAtLeast('6.1')) { try { tg.BackButton.onClick(() => closeSheet()); } catch (e) {} }
+  scrim.addEventListener('click', (e) => { if (e.target === scrim) closeSheet(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !scrim.hidden) closeSheet(); });
+
+  function startSheet() {
+    const fav = [...state.stations].sort((a, b) => (b.fav - a.fav))[0];
+    const soon = new Date(Date.now() + 45 * 6e4); soon.setMinutes(soon.getMinutes() < 30 ? 30 : 60, 0, 0);
+    openSheet('Start a block', `
+      <section><h2><span>Station</span></h2><div class="glass group">
+        <div class="field"><label for="n-station">Station</label><select id="n-station">${stationOptions(fav ? fav.id : '')}</select></div>
+        <div class="field" id="n-newst-row" hidden><label for="n-newst">New station name</label><input id="n-newst" type="text" placeholder="e.g. North station"></div>
+      </div></section>
+      <section><h2><span>The offer</span></h2><div class="glass group">
+        <div class="field"><label for="n-pay">Offer pay ($)</label><input id="n-pay" type="number" inputmode="decimal" step="0.01" min="0" placeholder="84.00"></div>
+        <div class="field"><label for="n-sched">Block length<small>Hours on the offer</small></label><input id="n-sched" type="number" inputmode="decimal" step="0.5" min="0" value="3.5"></div>
+        <div class="field"><label for="n-bstart">Block starts</label><input id="n-bstart" type="datetime-local" value="${toLocalInput(soon)}"></div>
+        <div class="field"><label for="n-grab">Grabbed at<small>When you accepted it. Used to spot surge and release timing.</small></label><input id="n-grab" type="datetime-local" value=""></div>
+      </div></section>
+      <section><h2><span>Leaving home</span></h2><div class="glass group">
+        <div class="field"><label for="n-odo">Odometer now<small>The number on your dashboard</small></label><input id="n-odo" type="number" inputmode="decimal" step="0.1" min="0" value="${lastEndOdo() != null ? lastEndOdo() : ''}" placeholder="48210"></div>
+      </div><p class="err" id="n-err" hidden></p></section>
+      <button class="btn primary block big" type="button" data-act="begin">Start block, leaving home</button>`);
+  }
+  const lastEndOdo = () => { const b = [...state.blocks].filter(x => x.odo && x.odo.end != null).sort((a, c) => Date.parse(c.start) - Date.parse(a.start))[0]; return b ? b.odo.end : null; };
+
+  const num = (id) => { const el = document.getElementById(id); return el ? parseFloat(el.value) : NaN; };
+  const val = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+  const showErr = (id, msg) => { const el = document.getElementById(id); if (el) { el.textContent = msg; el.hidden = false; } };
+
+  // ---------- actions ----------
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('button'); if (!t) return;
+    const d = t.dataset;
+    if (d.range !== undefined) { state.ui.range = Number(d.range); save(); render(); return; }
+    if (d.mview) { state.ui.mView = d.mview; save(); render(); window.scrollTo(0, 0); return; }
+    if (d.stab) { state.ui.sTab = d.stab; save(); render(); window.scrollTo(0, 0); return; }
+    if (d.mperiod) { state.ui.mPeriod = d.mperiod; save(); render(); return; }
+    if (d.mcat !== undefined) { state.ui.mCat = d.mcat; save(); render(); return; }
+    if (d.basis) { state.settings.basis = d.basis; save(); render(); return; }
+    if (d.costmode) { state.settings.costMode = d.costmode; save(); render(); return; }
+    if (d.own) { state.settings.vehicle.ownership = d.own; save(); render(); return; }
+    if (d.themeSet) { state.settings.theme = d.themeSet; save(); applyAppearance(); render(); return; }
+    if (d.palette) { state.settings.palette = d.palette; save(); applyAppearance(); render(); haptic('light'); return; }
+    if (d.block) { blockSheet(state.blocks.find(b => b.id === d.block)); return; }
+    if (d.exp) { expSheet(state.expenses.find(x => x.id === d.exp)); return; }
+    if (d.station) { stationSheet(stationById(d.station)); return; }
+    if (d.place) { placeSheet(state.places.find(p => p.id === d.place)); return; }
+    if (d.reveal) { revealed.has(d.reveal) ? revealed.delete(d.reveal) : revealed.add(d.reveal); document.getElementById('pl-list').innerHTML = placeList(); return; }
+    if (d.used) { const p = state.places.find(x => x.id === d.used); p.uses = (p.uses || 0) + 1; p.lastUsed = new Date().toISOString(); save(); document.getElementById('pl-list').innerHTML = placeList(); haptic('light'); return; }
+
+    switch (d.act) {
+      case 'fresh': clearSample(); state.ui.welcomed = true; save(); render(); break;
+      case 'keep-sample': state.ui.welcomed = true; save(); render(); break;
+      case 'start': startSheet(); break;
+      case 'begin': {
+        const st = resolveStation(val('n-station'), 'n-newst');
+        const pay = num('n-pay'); const odo = num('n-odo');
+        if (!st) { showErr('n-err', 'Choose a station, or add a new one.'); return; }
+        if (!(pay > 0)) { showErr('n-err', 'Enter the offer pay so the app can work out your hourly rate.'); return; }
+        if (!(odo >= 0)) { showErr('n-err', 'Enter your odometer so the app can track miles from home.'); return; }
+        const now = new Date().toISOString();
+        state.active = { stationId: st.id, station: st.name, basePay: pay, scheduledHrs: num('n-sched') || 0, blockStart: fromLocalInput(val('n-bstart')), grabbedAt: fromLocalInput(val('n-grab')), tips: 0, packages: 0, stops: 0, ms: { home_start: now }, odo: { start: odo }, odoNow: null, skipped: [] };
+        state.ui.welcomed = true; state.ui.tab = 'today';
+        save(); closeSheet(); haptic('medium'); render(); break;
+      }
+      case 'next-step': nextStep(); break;
+      case 'skip-step': { const a = state.active; const s = STEPS[nextStepIndex(a)]; if (s && s.optional) { a.skipped = (a.skipped || []).concat(s.id); save(); render(); } break; }
+      case 'undo-step': undoStep(); break;
+      case 'save-block': saveActive(); break;
+      case 'discard-block': state.active = null; save(); render(); break;
+      case 'add-past': blockSheet(null); break;
+      case 'save-sheet-block': {
+        const pay = num('f-pay');
+        if (val('f-pay') === '' || !(pay >= 0)) { showErr('f-err', 'Enter the offer pay for this block.'); return; }
+        const leaveV = val('f-leave'); if (!leaveV) { showErr('f-err', 'Pick when you left home.'); return; }
+        const st = resolveStation(val('f-station'), 'f-newst');
+        const mins = {}; PHASES.forEach(p => { mins[p.id] = Math.max(0, num('f-' + p.id) || 0); });
+        const legs = {}; LEGS.forEach(l => { legs[l.id] = Math.max(0, num('f-leg-' + l.id) || 0); }); if (document.getElementById('f-leg-unsplit')) legs.unsplit = Math.max(0, num('f-leg-unsplit') || 0);
+        const leave = fromLocalInput(leaveV);
+        const data = { leave, start: new Date(Date.parse(leave) + mins.drive_to * 6e4).toISOString(), stationId: st ? st.id : '', station: st ? st.name : '', scheduledHrs: num('f-sched') || 0, basePay: pay, tips: Math.max(0, num('f-tips') || 0), grabbedAt: fromLocalInput(val('f-grab')), packages: parseInt(val('f-pk')) || 0, stops: parseInt(val('f-stops')) || 0, legs, mins };
+        data.miles = blockMiles(data);
+        if (d.id) { const b = state.blocks.find(x => x.id === d.id); Object.assign(b, data); delete b.sample; if (!b.blockStart || b.ms == null) b.blockStart = data.start; }
+        else state.blocks.push(Object.assign({ id: uid(), status: 'done', blockStart: data.start }, data));
+        save(); closeSheet(); render(); break;
+      }
+      case 'ask-del-block': confirmDelete('Delete this block?', 'Expenses linked to it stay, but become unlinked.', 'del-block', scrim.querySelector('[data-act="save-sheet-block"]').dataset.id); break;
+      case 'del-block': { const id = d.id; state.blocks = state.blocks.filter(b => b.id !== id); state.expenses.forEach(x => { if (x.blockId === id) x.blockId = ''; }); save(); closeSheet(); render(); break; }
+      case 'add-exp': expSheet(null); break;
+      case 'save-exp': {
+        const amt = num('e-amount'); if (!(amt > 0)) { showErr('e-err', 'Enter an amount above $0.'); return; }
+        const dateV = val('e-date'); if (!dateV) { showErr('e-err', 'Pick a date.'); return; }
+        const data = { amount: amt, category: val('e-cat'), date: fromLocalInput(dateV), note: val('e-note'), blockId: val('e-block') };
+        if (d.id) { const x = state.expenses.find(y => y.id === d.id); Object.assign(x, data); delete x.sample; } else state.expenses.push(Object.assign({ id: uid() }, data));
+        save(); closeSheet(); render(); break;
+      }
+      case 'ask-del-exp': confirmDelete('Delete this expense?', '', 'del-exp', scrim.querySelector('[data-act="save-exp"]').dataset.id); break;
+      case 'del-exp': state.expenses = state.expenses.filter(x => x.id !== d.id); save(); closeSheet(); render(); break;
+      case 'add-station': stationSheet(null); break;
+      case 'save-station': {
+        const name = val('st-name'); if (!name) { showErr('st-err', 'Give the station a name.'); return; }
+        const data = { name, code: val('st-code'), base: num('st-base') > 0 ? num('st-base') : null, fav: document.getElementById('st-fav').checked };
+        if (d.id) { const s = stationById(d.id); Object.assign(s, data); delete s.sample; state.blocks.forEach(b => { if (b.stationId === s.id) b.station = s.name; }); }
+        else state.stations.push(Object.assign({ id: 's-' + uid() }, data));
+        save(); closeSheet(); render(); break;
+      }
+      case 'ask-del-station': confirmDelete('Delete this station?', 'Past blocks keep the station name.', 'del-station', scrim.querySelector('[data-act="save-station"]').dataset.id); break;
+      case 'del-station': state.stations = state.stations.filter(s => s.id !== d.id); save(); closeSheet(); render(); break;
+      case 'add-place': placeSheet(null); break;
+      case 'add-code': { const box = document.getElementById('p-codes'); const i = box.children.length; box.insertAdjacentHTML('beforeend', scrim._codeRow({ label: 'Door', value: '' }, i)); break; }
+      case 'del-code': { const row = t.closest('.codefield'); if (row) row.remove(); break; }
+      case 'save-place': {
+        const address = val('p-addr'); if (!address) { showErr('p-err', 'Add the address so you can find this place again.'); return; }
+        const codes = Array.from(document.querySelectorAll('#p-codes .codefield')).map(r => ({ label: r.querySelector('select').value, value: r.querySelector('input').value.trim() })).filter(c => c.value);
+        const data = { address, city: val('p-city'), name: val('p-name'), codes, notes: val('p-notes') };
+        if (d.id) { const p = state.places.find(x => x.id === d.id); Object.assign(p, data); delete p.sample; } else state.places.push(Object.assign({ id: uid(), uses: 0, lastUsed: new Date().toISOString() }, data));
+        save(); closeSheet(); render(); break;
+      }
+      case 'ask-del-place': confirmDelete('Delete this place?', 'Its codes are removed from this device.', 'del-place', scrim.querySelector('[data-act="save-place"]').dataset.id); break;
+      case 'del-place': state.places = state.places.filter(p => p.id !== d.id); save(); closeSheet(); render(); break;
+      case 'clear-sample': clearSample(); state.ui.welcomed = true; save(); render(); break;
+      case 'load-sample': { const s = sampleData(); state.stations = state.stations.concat(s.stations.filter(x => !stationById(x.id))); state.blocks = state.blocks.concat(s.blocks); state.expenses = state.expenses.concat(s.expenses); state.places = state.places.concat(s.places); save(); render(); break; }
+      case 'ask-reset': document.getElementById('reset-slot').innerHTML = `<div class="confirm" style="margin-top:12px"><strong>Erase all blocks, expenses, places and settings?</strong><span class="muted" style="font-size:14px">This can't be undone.</span><div class="btnrow"><button class="btn glassy" type="button" data-act="cancel-reset">Cancel</button><button class="btn danger" type="button" data-act="reset">Erase everything</button></div></div>`; break;
+      case 'cancel-reset': document.getElementById('reset-slot').innerHTML = ''; break;
+      case 'reset': state = { version: 3, stations: [], blocks: [], expenses: [], places: [], active: null, settings: JSON.parse(JSON.stringify(DEFAULT_SETTINGS)), ui: { tab: 'settings', range: 7, welcomed: true, mPeriod: 'month', mCat: '' } }; save(); applyAppearance(); render(); break;
+      case 'close-sheet': closeSheet(); break;
+      case 'backup-now': backupNow(); break;
+    }
+  });
+  function clearSample() {
+    state.blocks = state.blocks.filter(b => !b.sample); state.expenses = state.expenses.filter(x => !x.sample);
+    state.places = state.places.filter(p => !p.sample); state.stations = state.stations.filter(s => !s.sample || state.blocks.some(b => b.stationId === s.id));
+  }
+  function confirmDelete(title, sub, act, id) {
+    document.getElementById('del-slot').innerHTML = `<div class="confirm"><strong>${title}</strong>${sub ? `<span class="muted" style="font-size:14px">${sub}</span>` : ''}<div class="btnrow"><button class="btn glassy" type="button" data-act="close-sheet">Keep it</button><button class="btn danger" type="button" data-act="${act}" data-id="${id}">Delete</button></div></div>`;
+  }
+
+  document.addEventListener('change', (e) => {
+    const t = e.target;
+    if ((t.id === 'n-station' || t.id === 'f-station')) { const row = document.getElementById(t.id === 'n-station' ? 'n-newst-row' : 'f-newst-row'); if (row) row.hidden = t.value !== '__new'; }
+  });
+  document.addEventListener('input', (e) => {
+    const t = e.target;
+    if (t.id === 'lv-odo' && state.active) { const v = parseFloat(t.value); state.active.odoNow = v >= 0 ? v : null; save(); tick(); return; }
+    if (t.id === 'lv-tips' && state.active) { state.active.tips = Math.max(0, parseFloat(t.value) || 0); save(); tick(); return; }
+    if (t.id === 'pl-q') { state.ui.plq = t.value; document.getElementById('pl-list').innerHTML = placeList(); return; }
+    if (t.dataset.veh) { state.settings.vehicle[t.dataset.veh] = parseFloat(t.value) || 0; save(); const c = document.getElementById('v-cpm'); if (c) c.innerHTML = cpmTable(cpmParts()); return; }
+    if (t.dataset.leg) { state.settings.taxLegs[t.dataset.leg] = t.checked; save(); return; }
+    if (t.dataset.set) {
+      const k = t.dataset.set;
+      state.settings[k] = t.type === 'checkbox' ? t.checked : (parseFloat(t.value) || 0);
+      save();
+      if (k === 'glass') { applyAppearance(); render(); }
+    }
+  });
+
+  if (window.matchMedia) { try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (state.settings.theme === 'system') render(); }); } catch (e) {} }
+  if (tg) { try { tg.onEvent('themeChanged', () => { applyAppearance(); render(); }); } catch (e) {} }
+  if (!savedRaw && cloudAvailable()) {
+    app.innerHTML = '<div class="glass empty" style="margin-top:40px">Checking your Telegram backup…</div>';
+    restoreFromCloud((data, ts) => {
+      if (data) { state = initState(data); state.ui.welcomed = true; lastBackup = ts || null; }
+      save(); applyAppearance(); render();
+    });
+  } else render();
+})();
+</script>
+
+</body>
+</html>
