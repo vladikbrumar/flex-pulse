@@ -7,7 +7,9 @@ A tracker for Amazon Flex drivers, built as a Telegram Mini App.
 - True cost per mile from your car (owned, loan or lease), including depreciation
 - Surge vs base per station, and how far ahead each block was grabbed
 - Expenses, a mileage view and a tax-year summary
+- Booked blocks, and how many hours you can still book this week and today
 - Saved gate, building and locker codes by address
+- English and Ukrainian, with a short first-launch guide and 1-minute setup
 
 ## How it runs
 `index.html` is the whole app: plain HTML, CSS and JavaScript, no build step. GitHub Pages serves it, and the Telegram bot opens it as a Mini App.
