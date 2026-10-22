@@ -626,6 +626,81 @@ details.morebox.inner .steps { margin-top: 10px; }
 .linkrow.quiet .linkbtn { background: transparent; color: var(--muted); padding: 8px 2px; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
 .warnbox { background: color-mix(in srgb, var(--warn) 14%, var(--surface-2)); }
 .place .btnrow .linkbtn { align-self: center; }
+.areapick { display: flex; flex-direction: column; gap: 8px; }
+.areapick .alab { font-size: 14px; font-weight: 600; }
+.areapick .alab small { display: block; font-weight: 500; color: var(--muted); font-size: 13px; margin-top: 1px; }
+.areanew { display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; color: var(--muted); }
+.areanew input { border: 1px solid var(--hair); background: var(--glass-strong); border-radius: 12px; padding: 10px 12px; font-size: 16px; color: var(--fg); }
+.chip.area { background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); }
+.arow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--hair); }
+.arow:first-child { border-top: 0; }
+.arow .mid { display: flex; flex-direction: column; min-width: 0; }
+.arow .mid span { color: var(--muted); font-size: 13.5px; }
+
+/* v0.11 areas */
+.areapick { display: flex; flex-direction: column; gap: 10px; }
+.achips { display: flex; flex-wrap: wrap; gap: 8px; }
+.achip { min-height: 44px; padding: 0 15px; border-radius: 999px; border: 1px solid var(--hair); background: var(--glass-strong); color: var(--fg); font-size: 15px; font-weight: 650; display: inline-flex; align-items: center; gap: 6px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.achip[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+.achip .ack { display: inline-flex; }
+.achip .ack svg { width: 15px; height: 15px; }
+.achip.more { background: transparent; border-style: dashed; color: var(--muted); }
+.aall { width: 100%; font-size: 12.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 4px; }
+.anewlab { font-size: 13.5px; color: var(--muted); margin-bottom: -4px; }
+.aadd { display: flex; gap: 8px; align-items: center; }
+.aadd input { flex: 1; min-width: 0; min-height: 44px; border: 1px solid var(--hair); background: var(--glass-strong); border-radius: 14px; padding: 0 12px; font-size: 16px; color: var(--fg); }
+.aadd .btn { min-height: 44px; flex-shrink: 0; max-width: 55%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ahint { font-size: 13.5px; color: var(--muted); }
+.keptline { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-round); font-size: 18px; font-weight: 800; padding-top: 10px; border-top: 1px solid var(--hair); }
+.keptline b { font-variant-numeric: tabular-nums; }
+.arow.few b { font-weight: 650; }
+.fewtag { font-size: 12.5px; color: var(--muted); font-weight: 600; white-space: nowrap; }
+.amedit { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-top: 1px solid var(--hair); }
+.amedit:first-child { border-top: 0; }
+.amedit input { min-height: 44px; border: 1px solid var(--hair); background: var(--surface-2); border-radius: 12px; padding: 0 12px; font-size: 16px; color: var(--fg); }
+.confirm:has(.areapick) { gap: 9px; }
+.areapick { gap: 8px; }
+.anewlab { margin-bottom: -3px; }
+
+/* v0.12 area map */
+.mapwrap { position: relative; z-index: 0; isolation: isolate; overflow: hidden; border-radius: 22px; }
+.mapsvg { display: block; width: 100%; height: auto; }
+.mapsvg .mbub { cursor: pointer; }
+.mapsvg .mlab { font-family: var(--font); font-size: 12.5px; font-weight: 700; fill: var(--fg); paint-order: stroke; stroke: var(--bg); stroke-width: 3.5px; stroke-linejoin: round; }
+.mapempty { padding: 40px 16px; text-align: center; color: var(--muted); font-size: 14px; }
+.mapcard { margin-top: 10px; padding: 12px 14px; border-radius: 16px; background: var(--surface-2); display: flex; flex-direction: column; gap: 3px; font-size: 14px; }
+.mapcard.muted { color: var(--muted); }
+.mctop { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.mctop b { font-size: 16px; }
+.mcsub { color: var(--muted); font-size: 13.5px; }
+.mcsub.small { font-size: 12.5px; }
+.mapview { position: fixed; inset: 0; z-index: 70; background: var(--bg); display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.mapview[hidden] { display: none !important; }
+.mvtop { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; font-family: var(--font-round); font-size: 18px; }
+.mvmap { flex: 1 1 auto; min-height: 200px; margin: 0 16px; background: var(--surface-2); }
+.mvsvg, .mvleaf { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.mvsvg .mapsvg { max-height: 100%; }
+.mvleafbox { position: absolute; inset: 0; }
+.mvbottom { flex: 0 1 auto; max-height: 46vh; overflow-y: auto; padding: 4px 16px 14px; display: flex; flex-direction: column; gap: 8px; }
+.mvplace { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 16px; background: var(--surface-2); font-size: 14px; }
+.mvplace > span { color: var(--muted); }
+.mvrow { display: flex; flex-direction: column; gap: 6px; padding-top: 8px; border-top: 1px solid var(--hair); }
+.mvrow span { color: var(--muted); font-size: 13.5px; }
+.mvnote { color: var(--bad); font-size: 13.5px; }
+.mvattr { color: var(--muted); font-size: 12px; text-align: center; }
+.pinbar { position: absolute; top: 10px; left: 10px; right: 10px; z-index: 1000; background: var(--glass-strong); border-radius: 14px; padding: 10px 12px; font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+.leaflet-tooltip.mlabel { background: var(--bg); color: var(--fg); border: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.25); font-weight: 700; font-size: 12.5px; padding: 2px 6px; }
+.leaflet-tooltip.mlabel::before { display: none; }
+:root[data-theme="dark"] .mvleaf .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9); }
+/* real map under the bubbles: quiet near-white style, colour stays on the bubbles */
+.mapsolid { background: var(--surface); border: 1px solid var(--hair); }
+.imsvg { position: relative; }
+.imleaf { position: absolute; inset: 0; z-index: 1; background: var(--surface); }
+.mapwrap .leaflet-container { background: var(--surface); font-family: var(--font); }
+.mapwrap .leaflet-tile-pane { filter: grayscale(1) brightness(1.08) contrast(0.85); }
+:root[data-theme="dark"] .mapwrap .leaflet-tile-pane { filter: grayscale(1) invert(1) brightness(0.88) contrast(0.85); }
+.mapwrap .leaflet-control-attribution { font-size: 10.5px; background: color-mix(in srgb, var(--surface) 85%, transparent); color: var(--muted); }
+.mapwrap .leaflet-control-attribution a { color: var(--muted); }
 </style>
 <style>:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); } img { max-width: 100%; }</style>
 </head>
@@ -656,7 +731,7 @@ details.morebox.inner .steps { margin-top: 10px; }
 
   // ---------- language ----------
   let lang = 'en';
-  const UK = {"To station": "До станції", "At station": "На станції", "Route": "Маршрут", "Heading home": "Дорога додому", "Station to last stop": "Від станції до останньої зупинки", "Your delivery route": "Ваш маршрут доставки", "Home to station": "Від дому до станції", "Driving to the station": "Дорога на станцію", "Last stop to home": "Від останньої зупинки додому", "Driving home after the last stop": "Дорога додому після останньої зупинки", "Left home": "Виїхав з дому", "Arrived at station": "Прибув на станцію", "At the station?": "Ви на станції?", "Checked in on the app": "Чекін у застосунку", "Checked in on the Flex app?": "Зробили чекін у застосунку Flex?", "Checked in": "Чекін зроблено", "ID checked at station": "ID перевірено на станції", "ID scanned at the station?": "ID відскановано на станції?", "ID checked": "ID перевірено", "Loaded, left station": "Завантажився, виїхав зі станції", "Loaded and leaving the station?": "Завантажилися й виїжджаєте зі станції?", "Leaving station": "Виїжджаю зі станції", "Route timer and route miles start now.": "Таймер маршруту й милі маршруту починаються зараз.", "Last stop done": "Остання зупинка", "Last stop delivered?": "Останню зупинку доставлено?", "Route timer and route miles stop here.": "Тут таймер маршруту й милі маршруту зупиняються.", "Back home": "Вдома", "Back home?": "Уже вдома?", "Finish block": "Завершити блок", "Whole trip": "Уся поїздка", "From leaving home until you're back. The most honest number, because driving to the station is unpaid.": "Від виїзду з дому до повернення. Найчесніше число, бо дорога на станцію не оплачується.", "Block time": "Час блоку", "From arriving at the station to your last stop. Closest to the hours Amazon pays for.": "Від прибуття на станцію до останньої зупинки. Найближче до годин, які оплачує Amazon.", "Route only": "Лише маршрут", "From leaving the station to your last stop. Shows how fast you deliver.": "Від виїзду зі станції до останньої зупинки. Показує, як швидко ви доставляєте.", "Owned outright": "Повністю своя", "Fully paid off. Your main hidden cost is the value the car loses as you add miles.": "Повністю виплачена. Головна прихована витрата — вартість, яку авто втрачає з кожною милею.", "Loan": "Кредит", "You're paying it off. The car still loses value, and only the interest part of your payment is a cost.": "Ви її виплачуєте. Авто все одно втрачає вартість, а витратою є лише відсотки в платежі.", "Lease": "Лізинг", "You don't own it. The lease payment takes the place of depreciation.": "Авто не ваше. Лізинговий платіж замінює амортизацію.", "Per-mile estimate (recommended)": "Оцінка за милю (рекомендовано)", "Net uses your true cost per mile. Gas, repairs, insurance and payments you log are kept as records, not counted twice.": "Чистий прибуток рахується за реальною вартістю милі. Бензин, ремонт, страховка й платежі, які ви вносите, зберігаються як записи й не рахуються двічі.", "My logged expenses": "Мої внесені витрати", "Net uses the gas, repairs, insurance and payments you log, plus depreciation. Pick this only if you log every receipt.": "Чистий прибуток рахується за внесеними витратами на бензин, ремонт, страховку й платежі, плюс амортизація. Обирайте, лише якщо вносите кожен чек.", "Hi-vis": "Сигнальна", "Ocean": "Океан", "Mint": "М'ята", "Grape": "Виноград", "Rose": "Троянда", "Graphite": "Графіт", "Sunset": "Захід сонця", "Forest": "Ліс", "Amber": "Бурштин", "Sky": "Небо", "Lagoon": "Лагуна", "Cobalt": "Кобальт", "Gas": "Бензин", "Maintenance": "Обслуговування", "Insurance": "Страховка", "Car payment": "Платіж за авто", "Car wash": "Мийка", "Phone": "Телефон", "Parking & tolls": "Паркування й платні дороги", "Equipment": "Обладнання", "Food & drink": "Їжа й напої", "Other": "Інше", "Fuel": "Пальне", "Wear and maintenance": "Знос і обслуговування", "Depreciation": "Амортизація", "Insurance, payment, fees": "Страховка, платежі, збори", "Gate": "Ворота", "Building": "Будинок", "Door": "Двері", "Locker": "Локер", "Mailroom": "Поштова кімната", "Elevator": "Ліфт", "North station": "Північна станція", "South station": "Південна станція", "Whole Foods pickup": "Видача Whole Foods", "Phone plan, business share": "Тариф телефону, робоча частка", "Car insurance": "Страховка авто", "Packages go in the mailroom left of the leasing office.": "Посилки — у поштову кімнату ліворуч від офісу оренди.", "Gate sticks, wait 5 seconds after the code.": "Ворота заїдають, зачекайте 5 секунд після коду.", "Use the Amazon Hub locker in the lobby.": "Використовуйте локер Amazon Hub у холі.", "Downtown meter": "Паркомат у центрі", "Lunch between stops": "Обід між зупинками", "Fill-up, 11.3 gal": "Заправка, 11,3 гал", "Monthly wash": "Щомісячна мийка", "Folding hand truck": "Складний візок", "Oil change": "Заміна оливи", "The last backup didn't go through. It will try again after your next change.": "Останнє резервне копіювання не вдалося. Повторимо після наступної зміни.", "Last backed up {d} at {t}. Nobody else can see it.": "Остання копія: {d} о {t}. Ніхто інший її не бачить.", "Backs up a few seconds after each change. Nobody else can see it.": "Копія зберігається за кілька секунд після кожної зміни. Ніхто інший її не бачить.", "Grabbed {n}d ahead": "Взято за {n} дн.", "Grabbed {n}h ahead": "Взято за {n} год", "Grabbed {n} min ahead": "Взято за {n} хв", "/hr": "/год", "/mi": "/милю", "Today": "Сьогодні", "Yesterday": "Учора", "Blocks": "Блоки", "Money": "Гроші", "Places": "Місця", "Settings": "Налаштування", "Sample data": "Приклад", "7 days": "7 днів", "30 days": "30 днів", "All time": "Увесь час", "Welcome to Flex Pulse": "Вітаємо у Flex Pulse", "You're looking at example blocks, expenses and places so you can see how it works. Your own data stays on your phone and in your own Telegram backup. Nobody else can see it.": "Тут приклади блоків, витрат і місць, щоб ви побачили, як усе працює. Ваші дані зберігаються на телефоні та у вашій власній копії в Telegram. Ніхто інший їх не бачить.", "Start fresh": "Почати з нуля", "Explore the example": "Переглянути приклад", "Start a block": "Почати блок", "Tap when you leave home. The app walks you through the station, your route, and back.": "Натисніть, коли виїжджаєте з дому. Застосунок проведе вас через станцію, маршрут і назад.", "You kept today": "Вам залишилось сьогодні", "You kept, last {n} days": "Вам залишилось за {n} днів", "You kept, all time": "Вам залишилось за весь час", "Using typical car costs · Set yours": "Типові витрати на авто · Вказати свої", "A tank of gas covers many blocks, so each block is charged only for the miles it drove.": "Одного баку вистачає на багато блоків, тож кожен блок платить лише за свої милі.", "Monthly bills are spread evenly over each month.": "Щомісячні рахунки рівномірно розподілені на весь місяць.", "Period": "Період", "Where your pay went": "Куди пішли ваші гроші", "Pay and tips · {n} {blocks}": "Оплата й чайові · {n} {blocks}", "Car cost · {mi}": "Витрати на авто · {mi}", "Other expenses": "Інші витрати", "You kept": "Вам залишилось", "No blocks today yet. Your money shows up here after your first block.": "Сьогодні ще немає блоків. Гроші з'являться тут після першого блоку.", "No blocks in this period yet.": "За цей період блоків ще немає.", "Bills and expenses in this period: {v}. They come off what you make once you drive.": "Рахунки й витрати за цей період: {v}. Вони віднімуться від заробітку, коли ви поїдете.", "Per hour": "За годину", "Above your {g} goal": "Вище за ціль {g}", "Below your {g} goal": "Нижче за ціль {g}", "Per mile": "За милю", "{mi} driven": "проїхано {mi}", "Before costs, per hour": "До витрат, за годину", "Put aside for taxes": "Відкласти на податки", "{pct}% of profit after deductions": "{pct}% прибутку після відрахувань", "Kept per day": "Залишилось за день", "last 7 days": "останні 7 днів", "More numbers": "Більше цифр", "Money kept on each of the last 7 days": "Скільки залишилось за кожен з останніх 7 днів", "Skipped": "Пропущено", "odometer {n}": "одометр {n}", "Packages": "Посилки", "Stops on route": "Зупинок на маршруті", "Stops completed": "Виконано зупинок", "Packages returned": "Повернуто посилок", "Undeliverable, back to station": "Не доставлено, назад на станцію", "Next": "Далі", "Odometer now": "Одометр зараз", "Type the miles on your dashboard": "Введіть милі з приладової панелі", "Last reading {n}": "Останнє показання {n}", "+ Add packages and stops (optional)": "+ Додати посилки й зупинки (необов'язково)", "Skip this step": "Пропустити крок", "Cancel this block": "Скасувати цей блок", "Undo last step": "Скасувати останній крок", "All steps done": "Усі кроки виконано", "Step {n} of {t}": "Крок {n} з {t}", "Block in progress": "Блок триває", "Block": "Блок", "Codes": "Коди", "This step": "Цей крок", "Kept so far": "Залишилось поки", "Show all steps": "Показати всі кроки", "Block steps": "Кроки блоку", "Block summary": "Підсумок блоку", "Tips ($)": "Чайові ($)", "Add them now, or later in Blocks": "Додайте зараз або пізніше в Блоках", "Pay and tips": "Оплата й чайові", "Car cost": "Витрати на авто", "Miles": "Милі", "Total": "Разом", "Time": "Час", "Save block": "Зберегти блок", "Discard without saving": "Скасувати без збереження", "{mi} since home": "{mi} від дому", "{mi} on route": "{mi} на маршруті", "Miles counted at your last stop": "Милі порахуємо на останній зупинці", "Starts when you leave the station": "Почнеться, коли виїдете зі станції", "Type the odometer reading first. The app uses it to split your miles.": "Спершу введіть показник одометра. За ним застосунок ділить ваші милі.", "That's lower than your last reading of {n}. Check the number.": "Це менше за останнє показання {n}. Перевірте число.", "{n} miles since your last reading. Is that right?": "{n} миль від останнього показника. Це правильно?", "Fix it": "Виправити", "Yes, it's right": "Так, правильно", "Tomorrow": "Завтра", "Pick your station, or type a new one, to continue.": "Щоб продовжити, оберіть станцію або введіть нову.", "Type the pay to continue.": "Щоб продовжити, введіть оплату.", "Type your odometer to continue.": "Щоб продовжити, введіть показник одометра.", "Type the pay to see what it works out to per hour.": "Введіть оплату, щоб побачити, скільки це за годину.", "Surge +{v}/hr": "Підвищена +{v}/год", "Surge": "Підвищена", "This station's base pay": "Базова оплата цієї станції", "Where are you working today?": "Де ви працюєте сьогодні?", "Station": "Станція", "Base {v}": "База {v}", "Type the station you work from. You only do this once.": "Введіть станцію, з якої ви працюєте. Це потрібно зробити лише раз.", "Or type a new station": "Або введіть нову станцію", "Station name": "Назва станції", "Save station": "Зберегти станцію", "The offer": "Пропозиція", "Offer pay ($)": "Оплата ($)", "The pay shown in the Flex app": "Оплата, яку показує застосунок Flex", "Block length": "Тривалість блоку", "More details (optional)": "Більше деталей (необов'язково)", "Starts at": "Початок о", "Grabbed at": "Взято о", "Helps the app spot surge pay. You can add it later in Blocks.": "Допомагає помітити підвищену оплату. Можна додати пізніше в Блоках.", "3 days ahead": "За 3 дні", "Clear": "Очистити", "Released 72 hours before the start. Usually base pay.": "Відкривається за 72 години до початку. Зазвичай базова оплата.", "Picked up close to the start, usually at a higher rate. The block is marked as surge.": "Взято незадовго до початку, зазвичай за вищою ставкою. Блок позначено як підвищений.", "Odometer": "Одометр", "What does your odometer say right now?": "Що показує одометр зараз?", "Last time you got home": "Коли ви востаннє повернулися додому", "Use it": "Використати", "Change it if you drove since then.": "Змініть, якщо відтоді їздили.", "Check your dashboard before you drive off.": "Подивіться на панель приладів перед виїздом.", "Leave home": "Виїжджаю з дому", "Step {n} of 3": "Крок {n} з 3", "Back": "Назад", "today": "сьогодні", "tomorrow": "завтра", "{h} hours left this week": "Цього тижня лишилось {h} год", "h left": "год лишилось", "Hours you can book": "Вільні години", "{h} h left this week": "Цього тижня лишилось {h} год", "Today you can still book {h} h": "Сьогодні можна ще взяти {h} год", "See the week in Blocks": "Тиждень у Блоках", "{w} h a week · {d} h a day": "{w} год/тиж · {d} год/день", "{r} h worked · {b} h booked ahead": "{r} год відпрацьовано · {b} год заброньовано", "+{h} h frees up {d} at {t}": "+{h} год звільниться {d} о {t}", "Hours you can still book each day this week": "Години, які ще можна взяти щодня цього тижня", "Each bar is the most you could book that day on its own. Booking on one day lowers what is left on the others.": "Кожен стовпчик — максимум, який можна взяти саме того дня. Бронювання в один день зменшує залишок в інші.", "Hours you can still book": "Можна ще взяти", "Worked or booked": "Відпрацьовано або заброньовано", "Worked and booked blocks both count, by block length, in any rolling 7 days. Amazon doesn't publish exact limits, so check the Flex app if an offer won't accept. Change the limits in Settings → Work.": "Відпрацьовані й заброньовані блоки рахуються за тривалістю в будь-яких 7 днях поспіль. Amazon не публікує точних лімітів, тож якщо пропозиція не приймається, перевірте застосунок Flex. Ліміти змінюються в Налаштуваннях → Робота.", "Coming up": "Найближчі блоки", "Add blocks you booked in the Flex app. Hours left stays accurate, and starting them is one tap.": "Додайте блоки, заброньовані у Flex. Залишок годин буде точним, а почати блок можна одним дотиком.", "Add a booked block": "Додати заброньований блок", "starts in {m} min": "почнеться за {m} хв", "started {m} min ago": "почався {m} хв тому", "Not logged yet": "Ще не внесено", "Leave home for this block": "Виїжджаю на цей блок", "See all {n} in Blocks": "Усі {n} у Блоках", "Booked block": "Заброньований блок", "New station name": "Назва нової станції", "e.g. North station": "напр. Північна станція", "Block starts": "Початок блоку", "When you accepted the offer": "Коли ви прийняли пропозицію", "Surge block": "Підвищений блок", "Mark it if you picked it up as surge": "Позначте, якщо взяли його як підвищений", "Add block": "Додати блок", "Save changes": "Зберегти зміни", "Log it as done": "Внести як виконаний", "Remove block": "Прибрати блок", "Choose a station, or add a new one.": "Оберіть станцію або додайте нову.", "Pick when the block starts.": "Оберіть, коли починається блок.", "Enter the offer pay.": "Введіть оплату.", "{h} block": "блок {h}", "net of {v}": "чисті з {v}", "Base": "Базовий", "+{v} tips": "+{v} чайові", "No blocks yet. Start one from Today, or add a past block to fill in your history.": "Ще немає блоків. Почніть блок на вкладці «Сьогодні» або додайте минулий, щоб заповнити історію.", "Add a past block": "Додати минулий блок", "Your blocks": "Ваші блоки", "Blocks, 30 days": "Блоки, 30 днів", "{n} surge": "{n} з підвищеною", "Average net / hr": "Середні чисті / год", "Goal {g}": "Ціль {g}", "No goal set": "Ціль не задана", "{v} net": "{v} чистими", "Surge means the offer pays at least 50¢/hr more than that station's base. Set a base in Settings → Work, or the app learns it from blocks grabbed 2+ days ahead.": "Підвищена — коли пропозиція платить щонайменше на 50¢/год більше за базову ставку станції. Вкажіть базову ставку в Налаштуваннях → Робота, або застосунок дізнається її з блоків, узятих за 2+ дні.", "Choose a station": "Оберіть станцію", "+ New station…": "+ Нова станція…", "Edit block": "Редагувати блок", "Start time on the offer": "Час початку в пропозиції", "Hours on the offer": "Годин у пропозиції", "Pay": "Оплата", "Stops": "Зупинки", "Miles by leg": "Милі за відрізками", "Not split": "Не розділено", "From before the app tracked legs": "З часу, коли застосунок ще не ділив відрізки", "Time in minutes": "Час у хвилинах", "Check-in log": "Журнал чекінів", "Delete block": "Видалити блок", "Costs by category": "Витрати за категоріями", "total cost": "усього витрат", "This month": "Цей місяць", "This year": "Цей рік", "Money view": "Перегляд грошей", "Costs": "Витрати", "Mileage": "Пробіг", "Taxes": "Податки", "Add an expense": "Додати витрату", "Your expenses": "Ваші витрати", "Filter by category": "Фільтр за категорією", "All": "Усі", "No expenses for this filter.": "Немає витрат для цього фільтра.", "Nothing logged yet. Tap a button above to add your first expense.": "Поки нічого не записано. Натисніть кнопку вище, щоб додати першу витрату.", "Already in your car cost": "Вже у вартості авто", "monthly": "щомісяця", "Where your money goes": "Куди йдуть гроші", "est.": "оцінка", "No costs yet for this period.": "За цей період витрат ще немає.", "\"est.\" comes from your car settings and block miles. Gas, maintenance, insurance and car payments you log are kept as records but not counted twice.": "«Оцінка» береться з налаштувань авто й миль блоків. Бензин, обслуговування, страховка й платежі за авто, які ви вносите, зберігаються як записи й не рахуються двічі.", "Using your logged expenses, plus depreciation from your car settings.": "Рахуються ваші внесені витрати плюс амортизація з налаштувань авто.", "Cost per month": "Витрати за місяць", "last 6 months": "останні 6 місяців", "Total driving cost for each of the last 6 months": "Загальні витрати на їзду за кожен з останніх 6 місяців", "Monthly payments": "Щомісячні платежі", "{v} a month": "{v} на місяць", "Every month on the {d}": "Щомісяця, {d}-го числа", "spotted by the app": "знайдено застосунком", "Not monthly? Undo": "Не щомісячний? Скасувати", "Bills that repeat, like a car payment or phone plan. Turn on \"Repeats every month\" when you add one, or the app spots them after 3 months on the same day.": "Рахунки, що повторюються, як-от платіж за авто чи тариф телефону. Увімкніть «Повторюється щомісяця», коли додаєте такий, або застосунок помітить його після 3 місяців того самого числа.", "Where your miles go": "Куди йдуть ваші милі", "Home to home": "Від дому до дому", "Everything you drove for blocks": "Усе, що ви проїхали для блоків", "Made up of": "З них", "Miles per stop": "Миль на зупинку", "{n} on route": "{n} на маршруті", "Route per block": "Маршрут на блок", "Mileage deduction": "Відрахування за пробіг", "Details in the Taxes tab": "Докладно у вкладці «Податки»", "Unpaid driving": "Неоплачувана їзда", "To station and home": "До станції й додому", "Miles per month": "Миль на місяць", "No blocks in this period yet. Miles appear here after your first block.": "За цей період ще немає блоків. Милі з'являться після першого блоку.", "Miles by block": "Милі за блоками", "Route part": "Частина маршруту", "{v} mi per stop": "{v} милі на зупинку", "{v} route": "{v} маршрут", "{r} of {t} on route": "{r} з {t} на маршруті", "Miles each month: home to home and route only": "Милі щомісяця: від дому до дому й лише маршрут", "Deductible on top of mileage": "Відраховується окремо від пробігу", "Costs the mileage rate doesn't cover. These lower your taxable profit.": "Витрати, які ставка за пробіг не покриває. Вони зменшують оподатковуваний прибуток.", "Covered by the mileage rate": "Покрито ставкою за пробіг", "Already part of the per-mile rate, so they aren't deducted again. Keep the receipts anyway.": "Уже входять у ставку за милю, тож повторно не відраховуються. Чеки все одно зберігайте.", "Ask a tax pro": "Спитайте податкового фахівця", "These depend on your situation. For a car loan, the interest part can sometimes count.": "Залежить від вашої ситуації. За кредитом на авто іноді враховуються відсотки.", "Usually not deductible": "Зазвичай не відраховується", "Meals while you drive locally aren't a business expense.": "Їжа під час місцевих поїздок не є робочою витратою.", "Other deductions": "Інші відрахування", "Taxable profit": "Оподатковуваний прибуток", "Tax year": "Податковий рік", "About {p}% of your taxable profit in {y}. Change the percent in Settings → Taxes.": "Приблизно {p}% оподатковуваного прибутку за {y}. Відсоток змінюється в Налаштуваннях → Податки.", "Tax year {y}": "Податковий рік {y}", "estimate": "оцінка", "taxable profit": "оподатковуваний прибуток", "How your income splits for taxes": "Як ваш дохід ділиться для податків", "Income": "Дохід", "Social Security & Medicare": "Соцстрах і Medicare", "Self-employment tax, estimated": "Податок самозайнятих, оцінка", "Deductible miles": "Милі до відрахування", "of {t} driven for blocks": "з {t}, проїханих для блоків", "What these numbers mean": "Що означають ці числа", "<b>Income</b> is everything Amazon paid you this year, tips included. Amazon reports it on a 1099 form, so the two should match.": "<b>Дохід</b> — усе, що Amazon заплатив вам цього року, разом із чайовими. Amazon вказує його у формі 1099, тож суми мають збігатися.", "<b>Mileage deduction</b> is your business miles times the IRS standard rate. It stands in for gas, repairs, insurance and depreciation, so those aren't deducted again.": "<b>Відрахування за пробіг</b> — ваші робочі милі, помножені на стандартну ставку IRS. Воно замінює бензин, ремонт, страховку й амортизацію, тож їх повторно не відраховують.", "<b>Other deductions</b> are costs the mileage rate doesn't cover, like parking, tolls, your phone's business share and equipment.": "<b>Інші відрахування</b> — витрати, які ставка за пробіг не покриває: паркування, платні дороги, робоча частка телефону й обладнання.", "<b>Taxable profit</b> is income minus deductions. Your taxes are worked out from this number.": "<b>Оподатковуваний прибуток</b> — дохід мінус відрахування. Податки рахуються саме з цього числа.", "<b>Self-employment tax</b> is Social Security and Medicare, which contractors pay themselves: about 15.3% of 92.35% of profit. Income tax comes on top.": "<b>Податок самозайнятих</b> — це Social Security і Medicare, які підрядники платять самі: близько 15,3% від 92,35% прибутку. Податок на дохід — додатково.", "<b>Quarterly payments:</b> if you expect to owe $1,000 or more for the year, the IRS expects estimated payments in April, June, September and January.": "<b>Квартальні платежі:</b> якщо за рік ви очікуєте заборгувати $1 000 або більше, IRS очікує авансові платежі у квітні, червні, вересні та січні.", "Offer pay": "Оплата за пропозиціями", "Tips": "Чайові", "Total income": "Усього доходу", "Compare the total with the 1099 form Amazon sends you early next year. If they differ, a block or tip may be missing here.": "Порівняйте суму з формою 1099, яку Amazon надішле на початку наступного року. Якщо вони різняться, тут може бракувати блоку чи чайових.", "Deducted": "Відраховується", "Not deducted": "Не відраховується", "Total, home to home": "Разом, від дому до дому", "Standard mileage deduction": "Стандартне відрахування за пробіг", "Work done": "Виконана робота", "Each block uses the IRS rate for its date: 72.5¢ a mile before July 1, 2026 and {r} after. Route miles almost always count. Driving between home and the station can count as commuting, so choose which legs to include in Settings → Taxes.": "Для кожного блоку береться ставка IRS на його дату: 72,5¢ за милю до 1 липня 2026 і {r} після. Милі маршруту майже завжди враховуються. Дорога між домом і станцією може вважатися дорогою на роботу, тож оберіть відрізки в Налаштування → Податки.", "Expenses": "Витрати", "No expenses logged this year.": "Цього року витрат не внесено.", "What your car really cost": "Скільки насправді коштувало авто", "Insurance, payment, fees share": "Частка страховки, платежів, зборів", "Your real cost of driving for blocks, from your Car settings. It's for your own planning. With the standard mileage rate these aren't deducted again.": "Ваша реальна вартість їзди для блоків за налаштуваннями авто. Це для вашого планування. При стандартній ставці за пробіг ці витрати повторно не відраховуються.", "Estimates to help you plan, not tax advice. A tax professional can confirm what applies to you.": "Оцінки для планування, а не податкова порада. Податковий фахівець підтвердить, що стосується саме вас.", "Add expense": "Додати витрату", "Edit expense": "Редагувати витрату", "Amount ($)": "Сума ($)", "Category": "Категорія", "Date": "Дата", "Note": "Примітка", "Optional": "Необов'язково", "Repeats every month": "Повторюється щомісяця", "The app spotted this as a monthly payment. Turn off if that's wrong.": "Застосунок визначив це як щомісячний платіж. Вимкніть, якщо це не так.", "Adds it automatically on the same day each month": "Додається автоматично того самого числа щомісяця", "Link to a block": "Прив'язати до блоку", "Counts against that block's net": "Віднімається від чистого прибутку блоку", "Not linked": "Не прив'язано", "Delete expense": "Видалити витрату", "Enter an amount above $0.": "Введіть суму більше $0.", "Pick a date.": "Оберіть дату.", "Search address, name or city": "Пошук за адресою, назвою чи містом", "Search places": "Пошук місць", "‹ Back to your block": "‹ Назад до блоку", "Save a place": "Зберегти місце", "Codes are hidden until you tap them. They stay on your phone and in your own Telegram backup.": "Коди приховані, доки ви їх не торкнетеся. Вони зберігаються на телефоні та у вашій копії в Telegram.", "No places yet. Save gate, building and locker codes by address so they're ready next time you're sent there.": "Ще немає місць. Зберігайте коди воріт, будинків і локерів за адресою, щоб вони були під рукою наступного разу.", "Nothing matches \"{q}\".": "Нічого не знайдено за «{q}».", "Used {n}×": "Використано {n}×", "{label} code, hidden, tap to show": "Код «{label}» прихований, торкніться, щоб показати", "Mark used": "Позначити використаним", "Edit": "Змінити", "Code type": "Тип коду", "Code": "Код", "Remove code": "Видалити код", "Edit place": "Редагувати місце", "Address": "Адреса", "City": "Місто", "Name": "Назва", "Complex or building, optional": "Комплекс чи будинок, необов'язково", "Add another code": "Додати ще код", "Notes": "Нотатки", "Where to leave packages, dogs, tricky gates": "Де залишати посилки, собаки, складні ворота", "Save place": "Зберегти місце", "Delete place": "Видалити місце", "App": "Застосунок", "Car": "Авто", "Work": "Робота", "Settings sections": "Розділи налаштувань", "Flex Pulse v0.9 prototype.": "Flex Pulse v0.9, прототип.", "Getting started": "З чого почати", "In <b>Car</b>, type your miles per gallon and gas price so your profit is real.": "В <b>Авто</b> введіть милі на галон і ціну пального, щоб прибуток був реальним.", "In <b>Work</b>, add your usual station and star it. Your $/hr goal and hour limits are there too.": "У <b>Роботі</b> додайте свою станцію й позначте її зірочкою. Там же ціль $/год і ліміти годин.", "On a block day, tap <b>Start a block</b> on Today when you leave home and follow the steps.": "У день блоку натисніть <b>Почати блок</b> на вкладці «Сьогодні», коли виїжджаєте з дому, і йдіть за кроками.", "Open <b>Money</b> to see costs and mileage. The Taxes tab has what you need at tax time.": "Відкрийте <b>Гроші</b>, щоб бачити витрати й пробіг. Вкладка Податки має все потрібне для податків.", "Help": "Довідка", "Show the guide": "Показати посібник", "A one-minute tour of how everything works": "Хвилинний огляд того, як усе працює", "Language": "Мова", "Appearance": "Вигляд", "Theme": "Тема", "Telegram": "Telegram", "System": "Системна", "Light": "Світла", "Dark": "Темна", "Colour palette": "Кольорова палітра", "Palette: {name}": "Палітра: {name}", "Glass effect": "Ефект скла", "Turn off for solid cards and longer battery life": "Вимкніть для суцільних карток і довшої роботи батареї", "Telegram follows the light or dark theme you use in Telegram.": "«Telegram» повторює світлу чи темну тему, яку ви використовуєте в Telegram.", "System follows your phone's light or dark setting.": "«Системна» повторює світлий чи темний режим телефона.", "Your data": "Ваші дані", "Saved on this phone and backed up to your Telegram account": "Збережено на цьому телефоні й скопійовано у ваш акаунт Telegram", "Saved on this device only": "Збережено лише на цьому пристрої", "Nobody else can see it. Friends who open the same link get their own empty tracker. Clearing this browser's data erases it.": "Ніхто інший їх не бачить. Друзі за тим самим посиланням отримують власний порожній трекер. Очищення даних браузера їх видалить.", "This browser blocks storage, so changes last until you close the page.": "Цей браузер блокує збереження, тож зміни діють, доки сторінка відкрита.", "Back up now": "Зберегти копію зараз", "Remove sample data": "Видалити приклад", "Show sample data": "Показати приклад", "Erase everything": "Стерти все", "Ownership": "Володіння", "Learn from my records (recommended)": "Визначати з моїх записів (рекомендовано)", "Starts at a typical $0.08 a mile and shifts toward your own costs as you log maintenance and record odometer readings.": "Починається з типових $0,08 за милю й наближається до ваших реальних витрат, коли ви вносите обслуговування й показання одометра.", "Set it myself": "Задати самостійно", "Type your own cost per mile.": "Введіть власну вартість милі.", "Cost per mile": "Вартість милі", "Tires, oil, brakes, repairs. $0.06–0.10 is common.": "Шини, олива, гальма, ремонт. Зазвичай $0,06–0,10.", "from {m} of maintenance over {mi} of driving": "з {m} на обслуговування за {mi} їзди", "typical rate for now. Log oil changes, tires and repairs as Maintenance and it adjusts.": "поки що типова ставка. Вносьте заміну оливи, шини й ремонт як «Обслуговування», і вона підлаштується.", "Fixed costs": "Постійні витрати", "Dollars per month": "Доларів на місяць", "Registration and fees": "Реєстрація й збори", "Dollars per year": "Доларів на рік", "Lease payment": "Лізинговий платіж", "Loan interest": "Відсотки за кредитом", "Dollars per month. Your lender's statement shows it.": "Доларів на місяць. Це видно у виписці кредитора.", "Tip: add insurance and car payments as monthly expenses in Money too, so they show up in your records automatically.": "Порада: додайте страховку й платежі за авто як щомісячні витрати в «Грошах», щоб вони автоматично з'являлися в записах.", "All driving per month": "Увесь пробіг за місяць", "Learn from my odometer (recommended)": "Визначати з одометра (рекомендовано)", "Uses the odometer readings from your blocks, including personal driving in between.": "Використовує показання одометра з ваших блоків, включно з особистими поїздками між ними.", "Type your total monthly miles, personal driving included.": "Введіть увесь пробіг за місяць, разом з особистими поїздками.", "All driving, personal included": "Уся їзда, разом з особистою", "Used until the app has a week of odometer readings": "Використовується, доки застосунок не має показань одометра за тиждень", "a month, from {d} days of odometer readings": "на місяць, за {d} днів показань одометра", "Fixed costs are split by this number, so only your block share is charged to blocks.": "Постійні витрати діляться на це число, тож блокам нараховується лише їхня частка.", "Car's value today": "Вартість авто зараз", "Dollars. A quick check on a pricing site works.": "Доларів. Достатньо швидко глянути на сайті оцінки авто.", "Value when you sell": "Вартість при продажу", "Dollars, your best guess": "Доларів, ваше припущення", "Miles until you sell": "Миль до продажу", "Roughly how many more miles you'll put on it": "Приблизно скільки ще миль ви на ній проїдете", "The value it loses is spread over those miles. A gig car wears out by miles driven, not by months, so this is the fairest way.": "Втрачена вартість розподіляється на ці милі. Робоче авто зношується милями, а не місяцями, тож так найчесніше.", "How costs are counted": "Як рахуються витрати", "How car costs work": "Як рахуються витрати на авто", "Every mile has a cost: fuel, wear, the value your car loses, and a share of insurance and payments.": "Кожна миля має ціну: пальне, знос, вартість, яку втрачає авто, і частка страховки та платежів.", "The app adds these up into a <b>true cost per mile</b> and subtracts it from each block, so net profit is real money kept.": "Застосунок складає це в <b>реальну вартість милі</b> й віднімає її від кожного блоку, тож чистий прибуток — це гроші, які справді залишаються.", "Only your block miles are charged. Personal driving is left out.": "Рахуються лише милі блоків. Особисті поїздки не враховуються.", "Fuel is the part that matters most. The rest starts from typical values you can change under Advanced.": "Найважливіше — пальне. Решта починається з типових значень, які можна змінити в розділі Додатково.", "Fuel economy": "Витрата пального", "Miles per gallon. Check your dash or fill-up math.": "Миль на галон. Дивіться на панелі або порахуйте за заправками.", "Gas price": "Ціна бензину", "Dollars per gallon you usually pay": "Доларів за галон, які ви зазвичай платите", "Your true cost per mile": "Ваша реальна вартість милі", "Insurance, wear, payments and the value your car loses are under Advanced car costs.": "Страховка, знос, платежі та втрата вартості авто — у розділі Додаткові витрати на авто.", "Advanced car costs": "Додаткові витрати на авто", "Insurance and lease share": "Частка страховки й лізингу", "Insurance and interest share": "Частка страховки й відсотків", "Insurance and fees share": "Частка страховки й зборів", "True cost per mile": "Реальна вартість милі", "How the tax estimate works": "Як рахується податкова оцінка", "Each block's miles are multiplied by the IRS standard mileage rate for that date. That rate already includes gas, wear and depreciation.": "Милі кожного блоку множаться на стандартну ставку IRS за пробіг на ту дату. Ця ставка вже включає бензин, знос і амортизацію.", "Parking, tolls, phone and equipment can usually be deducted on top. Gas and repairs cannot when you use the standard rate.": "Паркування, платні дороги, телефон і обладнання зазвичай можна відрахувати додатково. Бензин і ремонт — ні, якщо ви використовуєте стандартну ставку.", "Every leg is tracked separately, so you or your tax pro can decide which legs count.": "Кожен відрізок рахується окремо, тож ви чи ваш податковий фахівець вирішите, які враховувати.", "This is an estimate to plan with, not tax advice.": "Це оцінка для планування, а не податкова порада.", "Money to put aside": "Гроші, які варто відкласти", "Put aside": "Відкладати", "Percent of your profit after deductions. Many gig drivers save 20–30%.": "Відсоток прибутку після відрахувань. Багато водіїв відкладають 20–30%.", "Shown in Money → Taxes, and on Today under More numbers.": "Показується в Гроші → Податки та на Сьогодні в розділі Більше цифр.", "Which legs to deduct": "Які відрізки відраховувати", "Delivery driving. Almost always deductible.": "Їзда з доставкою. Майже завжди відраховується.", "Can count as commuting. Ask your tax pro.": "Може вважатися дорогою на роботу. Спитайте податкового фахівця.", "Mileage rate": "Ставка за пробіг", "IRS business rate": "Бізнес-ставка IRS", "$0.76 per mile from July 1, 2026. Blocks from January to June use $0.725 automatically.": "$0,76 за милю з 1 липня 2026. Для блоків із січня по червень автоматично береться $0,725.", "Stations, goal and hour limits": "Станції, ціль і ліміти годин", "Add the station you work from and star it. It is picked for you when you start a block.": "Додайте свою станцію й позначте зірочкою. Вона обирається сама, коли ви починаєте блок.", "Each station has a <b>base pay</b> per hour. Offers paying at least 50¢/hr more are marked Surge. Leave it empty and the app learns it.": "Кожна станція має <b>базову оплату</b> за годину. Пропозиції, що платять щонайменше на 50¢/год більше, позначаються як підвищені. Залиште порожнім, і застосунок дізнається її сам.", "Your <b>$/hr goal</b> colours every rate: green at or above it, amber within 20%, red below.": "Ваша <b>ціль $/год</b> фарбує кожну ставку: зелений — на рівні чи вище, жовтий — у межах 20%, червоний — нижче.", "<b>Hour limits</b> power the \"hours left this week\" count on Today.": "<b>Ліміти годин</b> рахують «лишилось цього тижня» на екрані Сьогодні.", "Your stations": "Ваші станції", "learned": "визначено", "Base pay not known yet": "Базова оплата ще невідома", "No stations yet. Add the one you usually work from.": "Ще немає станцій. Додайте ту, з якої зазвичай працюєте.", "Add station": "Додати станцію", "Your goal": "Ваша ціль", "Net per hour goal": "Ціль чистих за годину", "Dollars you want to keep per hour, after car costs": "Скільки доларів за годину хочете залишати після витрат на авто", "Hour limits": "Ліміти годин", "Hours in any 7 days": "Годин за будь-які 7 днів", "Most US drivers report 40. It can rise during peak season.": "Більшість водіїв у США бачать 40. У пікові сезони може зростати.", "Hours in one day": "Годин за один день", "Often 8, sometimes up to 10 in peak season.": "Зазвичай 8, у пікові сезони іноді до 10.", "Amazon doesn't publish these limits, so match what your Flex app allows.": "Amazon не публікує ці ліміти, тож орієнтуйтеся на те, що дозволяє ваш застосунок Flex.", "What counts as work time": "Що вважати робочим часом", "Used for every per-hour number in the app.": "Використовується для всіх погодинних чисел у застосунку.", "Edit station": "Редагувати станцію", "Station code": "Код станції", "Optional, like the code in the Flex app": "Необов'язково, як код у застосунку Flex", "Base pay ($/hr)": "Базова оплата ($/год)", "Learned so far: {v}": "Визначено поки що: {v}", "Leave empty and the app learns it": "Залиште порожнім, і застосунок визначить її", "Favorite": "Улюблена", "Shown first when you start a block": "Показується першою, коли починаєте блок", "Delete station": "Видалити станцію", "Cancel": "Скасувати", "Keep it": "Залишити", "Delete": "Видалити", "Start a block when you leave home": "Починайте блок, коли виїжджаєте з дому", "Tap <b>Start a block</b> on Today.": "Натисніть <b>Почати блок</b> на вкладці «Сьогодні».", "Pick your station, enter the offer pay and block length.": "Оберіть станцію, введіть оплату й тривалість блоку.", "Type your odometer and tap <b>Leave home</b>.": "Введіть показання одометра й натисніть <b>Виїжджаю з дому</b>.", "Tap each step as it happens": "Натискайте кожен крок, коли він відбувається", "One big button always shows the next step.": "Одна велика кнопка завжди показує наступний крок.", "The odometer is asked only 4 times: leaving home, leaving the station, last stop and back home.": "Одометр потрібен лише 4 рази: виїзд з дому, виїзд зі станції, остання зупинка й повернення додому.", "Two timers run for you: the whole trip, and your route from the station to the last stop.": "Два таймери працюють самі: уся поїздка і маршрут від станції до останньої зупинки.", "See what you really keep": "Бачите, що справді залишається", "Today shows what you kept after gas, wear and your car's other costs.": "Сьогодні показує, скільки вам залишилось після пального, зносу та інших витрат на авто.", "<b>Money</b> shows your costs, your miles, and how much to put aside for taxes.": "<b>Гроші</b> показують витрати, милі й скільки відкласти на податки.", "Save gate and locker codes": "Зберігайте коди воріт і локерів", "In <b>Places</b>, save codes by address for buildings you visit again.": "У розділі <b>Місця</b> зберігайте коди за адресою для будинків, куди повертаєтеся.", "During a block, the <b>Codes</b> button takes you straight there.": "Під час блоку кнопка <b>Коди</b> веде одразу туди.", "Offer": "Пропозиція", "Close": "Закрити", "Continue": "Продовжити", "Track every block like a business: time, miles, real costs and what you actually keep.": "Ведіть кожен блок як бізнес: час, милі, реальні витрати й те, що справді залишається.", "Begin with an empty tracker for your own blocks.": "Почніть з порожнього трекера для власних блоків.", "Look around with sample blocks first. Remove them anytime in Settings.": "Спершу подивіться на прикладах. Видалити їх можна будь-коли в Налаштуваннях.", "Want a quick tour?": "Короткий огляд?", "4 short screens. You can open it again anytime in Settings → App.": "4 короткі екрани. Відкрити знову можна будь-коли в Налаштуваннях → Застосунок.", "Show me around": "Покажіть мені", "Skip the tour": "Пропустити огляд", "Skip": "Пропустити", "Setup {n} of 2": "Налаштування {n} з 2", "Which station do you work from?": "З якої станції ви працюєте?", "Type its name, like \"North station\" or the code from the Flex app. You can add more later in Settings → Work.": "Введіть назву, наприклад «Північна станція», або код із застосунку Flex. Інші можна додати пізніше в Налаштуваннях → Робота.", "Your car": "Ваше авто", "These two numbers make your profit real. The rest starts from typical values. Change anything later in Settings → Car.": "Ці два числа роблять прибуток реальним. Решта починається з типових значень. Змінити все можна пізніше в Налаштуваннях → Авто.", "Miles per gallon": "Миль на галон", "Not sure? Leave them empty and the app uses typical values ({m} mpg, {g} a gallon).": "Не впевнені? Залиште порожнім, і застосунок візьме типові значення ({m} миль/галон, {g} за галон).", "Finish": "Готово", "Done": "Готово", "Set up in 1 minute": "Налаштувати за 1 хвилину", "Skip for now": "Поки пропустити", "Guide": "Посібник", "Cancel this block?": "Скасувати цей блок?", "Nothing is saved. Start again when you leave home.": "Нічого не збережеться. Почніть знову, коли виїжджатимете з дому.", "Cancel block": "Скасувати блок", "Discard this block?": "Видалити цей блок?", "Its time and miles won't be saved.": "Його час і милі не збережуться.", "Discard": "Видалити", "Enter the offer pay for this block.": "Введіть оплату за цей блок.", "Pick when you left home.": "Оберіть, коли ви виїхали з дому.", "Delete this block?": "Видалити цей блок?", "Expenses linked to it stay, but become unlinked.": "Прив'язані витрати залишаться, але без прив'язки.", "Delete this expense?": "Видалити цю витрату?", "Only this month is removed. The monthly payment keeps going.": "Видаляється лише цей місяць. Щомісячний платіж триває.", "Give the station a name.": "Дайте станції назву.", "Delete this station?": "Видалити цю станцію?", "Past blocks keep the station name.": "Минулі блоки збережуть назву станції.", "Add the address so you can find this place again.": "Додайте адресу, щоб знову знайти це місце.", "Delete this place?": "Видалити це місце?", "Its codes are removed from your phone and your backup.": "Його коди буде видалено з телефона й резервної копії.", "Erase all blocks, expenses, places and settings?": "Стерти всі блоки, витрати, місця й налаштування?", "This can't be undone.": "Це не можна скасувати.", "Remove this booked block?": "Прибрати цей заброньований блок?", "Cancel it in the Flex app too, so the hours free up there.": "Скасуйте його й у застосунку Flex, щоб години звільнилися і там.", "Checking your Telegram backup…": "Перевіряємо вашу копію в Telegram…"};
+  const UK = {"To station": "До станції", "At station": "На станції", "Route": "Маршрут", "Heading home": "Дорога додому", "Station to last stop": "Від станції до останньої зупинки", "Your delivery route": "Ваш маршрут доставки", "Home to station": "Від дому до станції", "Driving to the station": "Дорога на станцію", "Last stop to home": "Від останньої зупинки додому", "Driving home after the last stop": "Дорога додому після останньої зупинки", "Left home": "Виїхав з дому", "Arrived at station": "Прибув на станцію", "At the station?": "Ви на станції?", "Checked in on the app": "Чекін у застосунку", "Checked in on the Flex app?": "Зробили чекін у застосунку Flex?", "Checked in": "Чекін зроблено", "ID checked at station": "ID перевірено на станції", "ID scanned at the station?": "ID відскановано на станції?", "ID checked": "ID перевірено", "Loaded, left station": "Завантажився, виїхав зі станції", "Loaded and leaving the station?": "Завантажилися й виїжджаєте зі станції?", "Leaving station": "Виїжджаю зі станції", "Route timer and route miles start now.": "Таймер маршруту й милі маршруту починаються зараз.", "Last stop done": "Остання зупинка", "Last stop delivered?": "Останню зупинку доставлено?", "Route timer and route miles stop here.": "Тут таймер маршруту й милі маршруту зупиняються.", "Back home": "Вдома", "Back home?": "Уже вдома?", "Finish block": "Завершити блок", "Whole trip": "Уся поїздка", "From leaving home until you're back. The most honest number, because driving to the station is unpaid.": "Від виїзду з дому до повернення. Найчесніше число, бо дорога на станцію не оплачується.", "Block time": "Час блоку", "From arriving at the station to your last stop. Closest to the hours Amazon pays for.": "Від прибуття на станцію до останньої зупинки. Найближче до годин, які оплачує Amazon.", "Route only": "Лише маршрут", "From leaving the station to your last stop. Shows how fast you deliver.": "Від виїзду зі станції до останньої зупинки. Показує, як швидко ви доставляєте.", "Owned outright": "Повністю своя", "Fully paid off. Your main hidden cost is the value the car loses as you add miles.": "Повністю виплачена. Головна прихована витрата — вартість, яку авто втрачає з кожною милею.", "Loan": "Кредит", "You're paying it off. The car still loses value, and only the interest part of your payment is a cost.": "Ви її виплачуєте. Авто все одно втрачає вартість, а витратою є лише відсотки в платежі.", "Lease": "Лізинг", "You don't own it. The lease payment takes the place of depreciation.": "Авто не ваше. Лізинговий платіж замінює амортизацію.", "Per-mile estimate (recommended)": "Оцінка за милю (рекомендовано)", "Net uses your true cost per mile. Gas, repairs, insurance and payments you log are kept as records, not counted twice.": "Чистий прибуток рахується за реальною вартістю милі. Бензин, ремонт, страховка й платежі, які ви вносите, зберігаються як записи й не рахуються двічі.", "My logged expenses": "Мої внесені витрати", "Net uses the gas, repairs, insurance and payments you log, plus depreciation. Pick this only if you log every receipt.": "Чистий прибуток рахується за внесеними витратами на бензин, ремонт, страховку й платежі, плюс амортизація. Обирайте, лише якщо вносите кожен чек.", "Hi-vis": "Сигнальна", "Ocean": "Океан", "Mint": "М'ята", "Grape": "Виноград", "Rose": "Троянда", "Graphite": "Графіт", "Sunset": "Захід сонця", "Forest": "Ліс", "Amber": "Бурштин", "Sky": "Небо", "Lagoon": "Лагуна", "Cobalt": "Кобальт", "Gas": "Бензин", "Maintenance": "Обслуговування", "Insurance": "Страховка", "Car payment": "Платіж за авто", "Car wash": "Мийка", "Phone": "Телефон", "Parking & tolls": "Паркування й платні дороги", "Equipment": "Обладнання", "Food & drink": "Їжа й напої", "Other": "Інше", "Fuel": "Пальне", "Wear and maintenance": "Знос і обслуговування", "Depreciation": "Амортизація", "Insurance, payment, fees": "Страховка, платежі, збори", "Gate": "Ворота", "Building": "Будинок", "Door": "Двері", "Locker": "Локер", "Mailroom": "Поштова кімната", "Elevator": "Ліфт", "North station": "Північна станція", "South station": "Південна станція", "Whole Foods pickup": "Видача Whole Foods", "Phone plan, business share": "Тариф телефону, робоча частка", "Car insurance": "Страховка авто", "Packages go in the mailroom left of the leasing office.": "Посилки — у поштову кімнату ліворуч від офісу оренди.", "Gate sticks, wait 5 seconds after the code.": "Ворота заїдають, зачекайте 5 секунд після коду.", "Use the Amazon Hub locker in the lobby.": "Використовуйте локер Amazon Hub у холі.", "Downtown meter": "Паркомат у центрі", "Lunch between stops": "Обід між зупинками", "Fill-up, 11.3 gal": "Заправка, 11,3 гал", "Monthly wash": "Щомісячна мийка", "Folding hand truck": "Складний візок", "Oil change": "Заміна оливи", "The last backup didn't go through. It will try again after your next change.": "Останнє резервне копіювання не вдалося. Повторимо після наступної зміни.", "Last backed up {d} at {t}. Nobody else can see it.": "Остання копія: {d} о {t}. Ніхто інший її не бачить.", "Backs up a few seconds after each change. Nobody else can see it.": "Копія зберігається за кілька секунд після кожної зміни. Ніхто інший її не бачить.", "Grabbed {n}d ahead": "Взято за {n} дн.", "Grabbed {n}h ahead": "Взято за {n} год", "Grabbed {n} min ahead": "Взято за {n} хв", "/hr": "/год", "/mi": "/милю", "Today": "Сьогодні", "Yesterday": "Учора", "Blocks": "Блоки", "Money": "Гроші", "Places": "Місця", "Settings": "Налаштування", "Sample data": "Приклад", "7 days": "7 днів", "30 days": "30 днів", "All time": "Увесь час", "Welcome to Flex Pulse": "Вітаємо у Flex Pulse", "You're looking at example blocks, expenses and places so you can see how it works. Your own data stays on your phone and in your own Telegram backup. Nobody else can see it.": "Тут приклади блоків, витрат і місць, щоб ви побачили, як усе працює. Ваші дані зберігаються на телефоні та у вашій власній копії в Telegram. Ніхто інший їх не бачить.", "Start fresh": "Почати з нуля", "Explore the example": "Переглянути приклад", "Start a block": "Почати блок", "Tap when you leave home. The app walks you through the station, your route, and back.": "Натисніть, коли виїжджаєте з дому. Застосунок проведе вас через станцію, маршрут і назад.", "You kept today": "Вам залишилось сьогодні", "You kept, last {n} days": "Вам залишилось за {n} днів", "You kept, all time": "Вам залишилось за весь час", "Using typical car costs · Set yours": "Типові витрати на авто · Вказати свої", "A tank of gas covers many blocks, so each block is charged only for the miles it drove.": "Одного баку вистачає на багато блоків, тож кожен блок платить лише за свої милі.", "Monthly bills are spread evenly over each month.": "Щомісячні рахунки рівномірно розподілені на весь місяць.", "Period": "Період", "Where your pay went": "Куди пішли ваші гроші", "Pay and tips · {n} {blocks}": "Оплата й чайові · {n} {blocks}", "Car cost · {mi}": "Витрати на авто · {mi}", "Other expenses": "Інші витрати", "You kept": "Вам залишилось", "No blocks today yet. Your money shows up here after your first block.": "Сьогодні ще немає блоків. Гроші з'являться тут після першого блоку.", "No blocks in this period yet.": "За цей період блоків ще немає.", "Bills and expenses in this period: {v}. They come off what you make once you drive.": "Рахунки й витрати за цей період: {v}. Вони віднімуться від заробітку, коли ви поїдете.", "Per hour": "За годину", "Above your {g} goal": "Вище за ціль {g}", "Below your {g} goal": "Нижче за ціль {g}", "Per mile": "За милю", "{mi} driven": "проїхано {mi}", "Before costs, per hour": "До витрат, за годину", "Put aside for taxes": "Відкласти на податки", "{pct}% of profit after deductions": "{pct}% прибутку після відрахувань", "Kept per day": "Залишилось за день", "last 7 days": "останні 7 днів", "More numbers": "Більше цифр", "Money kept on each of the last 7 days": "Скільки залишилось за кожен з останніх 7 днів", "All areas, A to Z": "Усі райони, від А до Я", "More…": "Ще…", "Up to {n} areas per block. Unselect one to add another.": "До {n} районів на блок. Зніміть позначку з одного, щоб додати інший.", "You already have this area.": "Цей район уже є.", "Tap a match above, or add it as a new area.": "Торкніться збігу вище або додайте як новий район.", "Tap Add to save this new area.": "Натисніть «Додати», щоб зберегти новий район.", "{n} selected": "Обрано: {n}", "Add": "Додати", "Choose {name}": "Обрати {name}", "Add \"{name}\"": "Додати «{name}»", "Where were you sent?": "Куди вас відправили?", "Tap every area this block went to. Optional.": "Позначте всі райони цього блоку. Необов'язково.", "New area: town, neighborhood or ZIP code": "Новий район: місто, район або ZIP-код", "{v} mi per stop": "{v} милі на зупинку", "{v} tips avg": "у середньому {v} чайових", "few blocks yet": "ще мало блоків", "Your areas": "Ваші райони", "When you finish a block, tap the areas it went to. After a few blocks, this shows which areas pay best.": "Коли завершуєте блок, позначте райони, де ви були. За кілька блоків тут буде видно, які райони платять найкраще.", "Common routes": "Часті маршрути", "areas in the same block": "райони в одному блоці", "best $/hr first": "спершу найкращі $/год", "Show fewer": "Показати менше", "Show all {n} areas": "Показати всі райони ({n})", "Kept per hour after car costs. $/hr shows after 3 blocks.": "Залишок за годину після витрат на авто. $/год з'являється після 3 блоків.", "A block that went to several areas counts in each of them.": "Блок із кількома районами рахується в кожному з них.", "Edit area names in Settings → Work.": "Назви районів редагуються в Налаштуваннях → Робота.", "Areas view": "Вигляд районів", "List": "Список", "Map": "Карта", "Name": "Назва", "Save": "Зберегти", "Cancel": "Скасувати", "Remove this area": "Видалити цей район", "Edit": "Змінити", "No area matches that.": "Такого району немає.", "No areas yet.": "Районів поки немає.", "Edit area names": "Редагувати назви районів", "Rename an area to fix a typo. Rename it to an area you already have and the two are joined.": "Перейменуйте район, щоб виправити помилку. Якщо дати назву району, який уже є, вони об'єднаються.", "Search areas": "Пошук районів", "Type a name.": "Введіть назву.", "Join with {name}?": "Об'єднати з {name}?", "Blocks that move: {n}. This can't be undone.": "Блоків, які перейдуть: {n}. Це не можна скасувати.", "Join": "Об'єднати", "Map of your areas": "Карта ваших районів", "Tap a circle to see that area.": "Торкніться кола, щоб побачити район.", "Usually in the same block with: {list}": "Зазвичай в одному блоці з: {list}", "Placed at: {p}": "Розміщено: {p}", "At or above goal": "На рівні цілі або вище", "Close": "Закрити", "Below": "Нижче", "bigger = more blocks": "більше коло = більше блоків", "No areas on the map yet.": "На карті ще немає районів.", "Not on the map yet: {list}": "Ще не на карті: {list}", "Open map and place areas": "Відкрити карту й розмістити райони", "Open full map": "Відкрити всю карту", "Areas map": "Карта районів", "Tap the map where {name} is.": "Торкніться карти там, де {name}.", "Map © OpenStreetMap contributors": "Карта © учасники OpenStreetMap", "Simple drawing of where your areas are. The map background shows when there is internet.": "Проста схема розташування районів. Фон карти з'явиться, коли буде інтернет.", "Not on the map yet": "Ще не на карті", "Place {n} areas on the map?": "Розмістити райони на карті ({n})?", "The app looks up area names (not addresses) on OpenStreetMap, a free public map. Your blocks and money stay private.": "Застосунок шукає назви районів (не адреси) на OpenStreetMap — безкоштовній відкритій карті. Ваші блоки й гроші залишаються приватними.", "Look them up": "Знайти", "Not now": "Не зараз", "Which one is it?": "Який саме?", "Put it where I tap": "Поставити, де торкнуся", "Couldn't find it. Tap the map to place it.": "Не знайдено. Торкніться карти, щоб розмістити.", "Couldn't find it. You can place it by hand when the map background loads.": "Не знайдено. Розмістити вручну можна, коли завантажиться фон карти.", "Looking it up…": "Шукаю…", "Waiting to look up": "Очікує пошуку", "Placed by hand": "Розміщено вручну", "Couldn't reach OpenStreetMap. Check your connection and open the map again.": "Не вдалося з'єднатися з OpenStreetMap. Перевірте інтернет і відкрийте карту знову.", "Skipped": "Пропущено", "odometer {n}": "одометр {n}", "Packages": "Посилки", "Stops on route": "Зупинок на маршруті", "Stops completed": "Виконано зупинок", "Packages returned": "Повернуто посилок", "Undeliverable, back to station": "Не доставлено, назад на станцію", "Next": "Далі", "Odometer now": "Одометр зараз", "Type the miles on your dashboard": "Введіть милі з приладової панелі", "Last reading {n}": "Останнє показання {n}", "+ Add packages and stops (optional)": "+ Додати посилки й зупинки (необов'язково)", "Skip this step": "Пропустити крок", "Cancel this block": "Скасувати цей блок", "Undo last step": "Повернути крок", "All steps done": "Усі кроки виконано", "Step {n} of {t}": "Крок {n} з {t}", "Block finished": "Блок завершено", "Block in progress": "Блок триває", "Block": "Блок", "Codes": "Коди", "This step": "Цей крок", "Kept so far": "Залишилось поки", "Show all steps": "Показати всі кроки", "Block steps": "Кроки блоку", "Block summary": "Підсумок блоку", "Tips ($)": "Чайові ($)", "Add them now, or later in Blocks": "Додайте зараз або пізніше в Блоках", "Save block": "Зберегти блок", "Details: pay, miles and time": "Деталі: оплата, милі й час", "Pay and tips": "Оплата й чайові", "Car cost": "Витрати на авто", "Miles": "Милі", "Total": "Разом", "Time": "Час", "Discard without saving": "Скасувати без збереження", "{mi} since home": "{mi} від дому", "{mi} on route": "{mi} на маршруті", "Miles counted at your last stop": "Милі порахуємо на останній зупинці", "Starts when you leave the station": "Почнеться, коли виїдете зі станції", "Type the odometer reading first. The app uses it to split your miles.": "Спершу введіть показник одометра. За ним застосунок ділить ваші милі.", "That's lower than your last reading of {n}. Check the number.": "Це менше за останнє показання {n}. Перевірте число.", "{n} miles since your last reading. Is that right?": "{n} миль від останнього показника. Це правильно?", "Fix it": "Виправити", "Yes, it's right": "Так, правильно", "Unselect an area, or clear the text box, to save.": "Щоб зберегти, зніміть позначку з одного району або очистьте поле.", "Tomorrow": "Завтра", "Pick your station, or type a new one, to continue.": "Щоб продовжити, оберіть станцію або введіть нову.", "Type the pay to continue.": "Щоб продовжити, введіть оплату.", "Type your odometer to continue.": "Щоб продовжити, введіть показник одометра.", "Type the pay to see what it works out to per hour.": "Введіть оплату, щоб побачити, скільки це за годину.", "Surge +{v}/hr": "Підвищена +{v}/год", "Surge": "Підвищена", "This station's base pay": "Базова оплата цієї станції", "Where are you working today?": "Де ви працюєте сьогодні?", "Station": "Станція", "Base {v}": "База {v}", "Type the station you work from. You only do this once.": "Введіть станцію, з якої ви працюєте. Це потрібно зробити лише раз.", "Or type a new station": "Або введіть нову станцію", "Station name": "Назва станції", "Save station": "Зберегти станцію", "The offer": "Пропозиція", "Offer pay ($)": "Оплата ($)", "The pay shown in the Flex app": "Оплата, яку показує застосунок Flex", "Block length": "Тривалість блоку", "More details (optional)": "Більше деталей (необов'язково)", "Starts at": "Початок о", "Grabbed at": "Взято о", "Helps the app spot surge pay. You can add it later in Blocks.": "Допомагає помітити підвищену оплату. Можна додати пізніше в Блоках.", "3 days ahead": "За 3 дні", "Clear": "Очистити", "Released 72 hours before the start. Usually base pay.": "Відкривається за 72 години до початку. Зазвичай базова оплата.", "Picked up close to the start, usually at a higher rate. The block is marked as surge.": "Взято незадовго до початку, зазвичай за вищою ставкою. Блок позначено як підвищений.", "Odometer": "Одометр", "What does your odometer say right now?": "Що показує одометр зараз?", "Last time you got home": "Коли ви востаннє повернулися додому", "Use it": "Використати", "Change it if you drove since then.": "Змініть, якщо відтоді їздили.", "Check your dashboard before you drive off.": "Подивіться на панель приладів перед виїздом.", "Leave home": "Виїжджаю з дому", "Step {n} of 3": "Крок {n} з 3", "Back": "Назад", "today": "сьогодні", "tomorrow": "завтра", "{h} hours left this week": "Цього тижня лишилось {h} год", "h left": "год лишилось", "Hours you can book": "Вільні години", "{h} h left this week": "Цього тижня лишилось {h} год", "Today you can still book {h} h": "Сьогодні можна ще взяти {h} год", "See the week in Blocks": "Тиждень у Блоках", "{w} h a week · {d} h a day": "{w} год/тиж · {d} год/день", "{r} h worked · {b} h booked ahead": "{r} год відпрацьовано · {b} год заброньовано", "+{h} h frees up {d} at {t}": "+{h} год звільниться {d} о {t}", "Hours you can still book each day this week": "Години, які ще можна взяти щодня цього тижня", "Each bar is the most you could book that day on its own. Booking on one day lowers what is left on the others.": "Кожен стовпчик — максимум, який можна взяти саме того дня. Бронювання в один день зменшує залишок в інші.", "Hours you can still book": "Можна ще взяти", "Worked or booked": "Відпрацьовано або заброньовано", "Worked and booked blocks both count, by block length, in any rolling 7 days. Amazon doesn't publish exact limits, so check the Flex app if an offer won't accept. Change the limits in Settings → Work.": "Відпрацьовані й заброньовані блоки рахуються за тривалістю в будь-яких 7 днях поспіль. Amazon не публікує точних лімітів, тож якщо пропозиція не приймається, перевірте застосунок Flex. Ліміти змінюються в Налаштуваннях → Робота.", "Coming up": "Найближчі блоки", "Add blocks you booked in the Flex app. Hours left stays accurate, and starting them is one tap.": "Додайте блоки, заброньовані у Flex. Залишок годин буде точним, а почати блок можна одним дотиком.", "Add a booked block": "Додати заброньований блок", "starts in {m} min": "почнеться за {m} хв", "started {m} min ago": "почався {m} хв тому", "Not logged yet": "Ще не внесено", "Leave home for this block": "Виїжджаю на цей блок", "See all {n} in Blocks": "Усі {n} у Блоках", "Booked block": "Заброньований блок", "New station name": "Назва нової станції", "e.g. North station": "напр. Північна станція", "Block starts": "Початок блоку", "When you accepted the offer": "Коли ви прийняли пропозицію", "Surge block": "Підвищений блок", "Mark it if you picked it up as surge": "Позначте, якщо взяли його як підвищений", "Add block": "Додати блок", "Save changes": "Зберегти зміни", "Log it as done": "Внести як виконаний", "Remove block": "Прибрати блок", "Choose a station, or add a new one.": "Оберіть станцію або додайте нову.", "Pick when the block starts.": "Оберіть, коли починається блок.", "Enter the offer pay.": "Введіть оплату.", "{h} block": "блок {h}", "net of {v}": "чисті з {v}", "Base": "Базовий", "+{v} tips": "+{v} чайові", "No blocks yet. Start one from Today, or add a past block to fill in your history.": "Ще немає блоків. Почніть блок на вкладці «Сьогодні» або додайте минулий, щоб заповнити історію.", "Add a past block": "Додати минулий блок", "Your blocks": "Ваші блоки", "Blocks, 30 days": "Блоки, 30 днів", "{n} surge": "{n} з підвищеною", "Average net / hr": "Середні чисті / год", "Goal {g}": "Ціль {g}", "No goal set": "Ціль не задана", "{v} net": "{v} чистими", "Surge means the offer pays at least 50¢/hr more than that station's base. Set a base in Settings → Work, or the app learns it from blocks grabbed 2+ days ahead.": "Підвищена — коли пропозиція платить щонайменше на 50¢/год більше за базову ставку станції. Вкажіть базову ставку в Налаштуваннях → Робота, або застосунок дізнається її з блоків, узятих за 2+ дні.", "Choose a station": "Оберіть станцію", "+ New station…": "+ Нова станція…", "Edit block": "Редагувати блок", "Start time on the offer": "Час початку в пропозиції", "Hours on the offer": "Годин у пропозиції", "Pay": "Оплата", "Stops": "Зупинки", "Miles by leg": "Милі за відрізками", "Not split": "Не розділено", "From before the app tracked legs": "З часу, коли застосунок ще не ділив відрізки", "Time in minutes": "Час у хвилинах", "Check-in log": "Журнал чекінів", "Delete block": "Видалити блок", "Costs by category": "Витрати за категоріями", "total cost": "усього витрат", "This month": "Цей місяць", "This year": "Цей рік", "Money view": "Перегляд грошей", "Costs": "Витрати", "Mileage": "Пробіг", "Taxes": "Податки", "Add an expense": "Додати витрату", "Your expenses": "Ваші витрати", "Filter by category": "Фільтр за категорією", "All": "Усі", "No expenses for this filter.": "Немає витрат для цього фільтра.", "Nothing logged yet. Tap a button above to add your first expense.": "Поки нічого не записано. Натисніть кнопку вище, щоб додати першу витрату.", "Already in your car cost": "Вже у вартості авто", "monthly": "щомісяця", "Where your money goes": "Куди йдуть гроші", "est.": "оцінка", "No costs yet for this period.": "За цей період витрат ще немає.", "\"est.\" comes from your car settings and block miles. Gas, maintenance, insurance and car payments you log are kept as records but not counted twice.": "«Оцінка» береться з налаштувань авто й миль блоків. Бензин, обслуговування, страховка й платежі за авто, які ви вносите, зберігаються як записи й не рахуються двічі.", "Using your logged expenses, plus depreciation from your car settings.": "Рахуються ваші внесені витрати плюс амортизація з налаштувань авто.", "Cost per month": "Витрати за місяць", "last 6 months": "останні 6 місяців", "Total driving cost for each of the last 6 months": "Загальні витрати на їзду за кожен з останніх 6 місяців", "Monthly payments": "Щомісячні платежі", "{v} a month": "{v} на місяць", "Every month on the {d}": "Щомісяця, {d}-го числа", "spotted by the app": "знайдено застосунком", "Not monthly? Undo": "Не щомісячний? Скасувати", "Bills that repeat, like a car payment or phone plan. Turn on \"Repeats every month\" when you add one, or the app spots them after 3 months on the same day.": "Рахунки, що повторюються, як-от платіж за авто чи тариф телефону. Увімкніть «Повторюється щомісяця», коли додаєте такий, або застосунок помітить його після 3 місяців того самого числа.", "Where your miles go": "Куди йдуть ваші милі", "Home to home": "Від дому до дому", "Everything you drove for blocks": "Усе, що ви проїхали для блоків", "Made up of": "З них", "Miles per stop": "Миль на зупинку", "{n} on route": "{n} на маршруті", "Route per block": "Маршрут на блок", "Mileage deduction": "Відрахування за пробіг", "Details in the Taxes tab": "Докладно у вкладці «Податки»", "Unpaid driving": "Неоплачувана їзда", "To station and home": "До станції й додому", "Miles per month": "Миль на місяць", "No blocks in this period yet. Miles appear here after your first block.": "За цей період ще немає блоків. Милі з'являться після першого блоку.", "Miles by block": "Милі за блоками", "Route part": "Частина маршруту", "{v} route": "{v} маршрут", "{r} of {t} on route": "{r} з {t} на маршруті", "Miles each month: home to home and route only": "Милі щомісяця: від дому до дому й лише маршрут", "Deductible on top of mileage": "Відраховується окремо від пробігу", "Costs the mileage rate doesn't cover. These lower your taxable profit.": "Витрати, які ставка за пробіг не покриває. Вони зменшують оподатковуваний прибуток.", "Covered by the mileage rate": "Покрито ставкою за пробіг", "Already part of the per-mile rate, so they aren't deducted again. Keep the receipts anyway.": "Уже входять у ставку за милю, тож повторно не відраховуються. Чеки все одно зберігайте.", "Ask a tax pro": "Спитайте податкового фахівця", "These depend on your situation. For a car loan, the interest part can sometimes count.": "Залежить від вашої ситуації. За кредитом на авто іноді враховуються відсотки.", "Usually not deductible": "Зазвичай не відраховується", "Meals while you drive locally aren't a business expense.": "Їжа під час місцевих поїздок не є робочою витратою.", "Other deductions": "Інші відрахування", "Taxable profit": "Оподатковуваний прибуток", "Tax year": "Податковий рік", "About {p}% of your taxable profit in {y}. Change the percent in Settings → Taxes.": "Приблизно {p}% оподатковуваного прибутку за {y}. Відсоток змінюється в Налаштуваннях → Податки.", "Tax year {y}": "Податковий рік {y}", "estimate": "оцінка", "taxable profit": "оподатковуваний прибуток", "How your income splits for taxes": "Як ваш дохід ділиться для податків", "Income": "Дохід", "Social Security & Medicare": "Соцстрах і Medicare", "Self-employment tax, estimated": "Податок самозайнятих, оцінка", "Deductible miles": "Милі до відрахування", "of {t} driven for blocks": "з {t}, проїханих для блоків", "What these numbers mean": "Що означають ці числа", "<b>Income</b> is everything Amazon paid you this year, tips included. Amazon reports it on a 1099 form, so the two should match.": "<b>Дохід</b> — усе, що Amazon заплатив вам цього року, разом із чайовими. Amazon вказує його у формі 1099, тож суми мають збігатися.", "<b>Mileage deduction</b> is your business miles times the IRS standard rate. It stands in for gas, repairs, insurance and depreciation, so those aren't deducted again.": "<b>Відрахування за пробіг</b> — ваші робочі милі, помножені на стандартну ставку IRS. Воно замінює бензин, ремонт, страховку й амортизацію, тож їх повторно не відраховують.", "<b>Other deductions</b> are costs the mileage rate doesn't cover, like parking, tolls, your phone's business share and equipment.": "<b>Інші відрахування</b> — витрати, які ставка за пробіг не покриває: паркування, платні дороги, робоча частка телефону й обладнання.", "<b>Taxable profit</b> is income minus deductions. Your taxes are worked out from this number.": "<b>Оподатковуваний прибуток</b> — дохід мінус відрахування. Податки рахуються саме з цього числа.", "<b>Self-employment tax</b> is Social Security and Medicare, which contractors pay themselves: about 15.3% of 92.35% of profit. Income tax comes on top.": "<b>Податок самозайнятих</b> — це Social Security і Medicare, які підрядники платять самі: близько 15,3% від 92,35% прибутку. Податок на дохід — додатково.", "<b>Quarterly payments:</b> if you expect to owe $1,000 or more for the year, the IRS expects estimated payments in April, June, September and January.": "<b>Квартальні платежі:</b> якщо за рік ви очікуєте заборгувати $1 000 або більше, IRS очікує авансові платежі у квітні, червні, вересні та січні.", "Offer pay": "Оплата за пропозиціями", "Tips": "Чайові", "Total income": "Усього доходу", "Compare the total with the 1099 form Amazon sends you early next year. If they differ, a block or tip may be missing here.": "Порівняйте суму з формою 1099, яку Amazon надішле на початку наступного року. Якщо вони різняться, тут може бракувати блоку чи чайових.", "Deducted": "Відраховується", "Not deducted": "Не відраховується", "Total, home to home": "Разом, від дому до дому", "Standard mileage deduction": "Стандартне відрахування за пробіг", "Work done": "Виконана робота", "Each block uses the IRS rate for its date: 72.5¢ a mile before July 1, 2026 and {r} after. Route miles almost always count. Driving between home and the station can count as commuting, so choose which legs to include in Settings → Taxes.": "Для кожного блоку береться ставка IRS на його дату: 72,5¢ за милю до 1 липня 2026 і {r} після. Милі маршруту майже завжди враховуються. Дорога між домом і станцією може вважатися дорогою на роботу, тож оберіть відрізки в Налаштування → Податки.", "Expenses": "Витрати", "No expenses logged this year.": "Цього року витрат не внесено.", "What your car really cost": "Скільки насправді коштувало авто", "Insurance, payment, fees share": "Частка страховки, платежів, зборів", "Your real cost of driving for blocks, from your Car settings. It's for your own planning. With the standard mileage rate these aren't deducted again.": "Ваша реальна вартість їзди для блоків за налаштуваннями авто. Це для вашого планування. При стандартній ставці за пробіг ці витрати повторно не відраховуються.", "Estimates to help you plan, not tax advice. A tax professional can confirm what applies to you.": "Оцінки для планування, а не податкова порада. Податковий фахівець підтвердить, що стосується саме вас.", "Add expense": "Додати витрату", "Edit expense": "Редагувати витрату", "Amount ($)": "Сума ($)", "Category": "Категорія", "Date": "Дата", "Note": "Примітка", "Optional": "Необов'язково", "Repeats every month": "Повторюється щомісяця", "The app spotted this as a monthly payment. Turn off if that's wrong.": "Застосунок визначив це як щомісячний платіж. Вимкніть, якщо це не так.", "Adds it automatically on the same day each month": "Додається автоматично того самого числа щомісяця", "Link to a block": "Прив'язати до блоку", "Counts against that block's net": "Віднімається від чистого прибутку блоку", "Not linked": "Не прив'язано", "Delete expense": "Видалити витрату", "Enter an amount above $0.": "Введіть суму більше $0.", "Pick a date.": "Оберіть дату.", "Search address, name or city": "Пошук за адресою, назвою чи містом", "Search places": "Пошук місць", "‹ Back to your block": "‹ Назад до блоку", "Save a place": "Зберегти місце", "Codes are hidden until you tap them. They stay on your phone and in your own Telegram backup.": "Коди приховані, доки ви їх не торкнетеся. Вони зберігаються на телефоні та у вашій копії в Telegram.", "No places yet. Save gate, building and locker codes by address so they're ready next time you're sent there.": "Ще немає місць. Зберігайте коди воріт, будинків і локерів за адресою, щоб вони були під рукою наступного разу.", "Nothing matches \"{q}\".": "Нічого не знайдено за «{q}».", "Used {n}×": "Використано {n}×", "{label} code, hidden, tap to show": "Код «{label}» прихований, торкніться, щоб показати", "Mark used": "Позначити використаним", "Code type": "Тип коду", "Code": "Код", "Remove code": "Видалити код", "Edit place": "Редагувати місце", "Address": "Адреса", "City": "Місто", "Complex or building, optional": "Комплекс чи будинок, необов'язково", "Add another code": "Додати ще код", "Notes": "Нотатки", "Where to leave packages, dogs, tricky gates": "Де залишати посилки, собаки, складні ворота", "Save place": "Зберегти місце", "Delete place": "Видалити місце", "App": "Застосунок", "Car": "Авто", "Work": "Робота", "Settings sections": "Розділи налаштувань", "Flex Pulse v0.12 prototype.": "Flex Pulse v0.12, прототип.", "Getting started": "З чого почати", "In <b>Car</b>, type your miles per gallon and gas price so your profit is real.": "В <b>Авто</b> введіть милі на галон і ціну пального, щоб прибуток був реальним.", "In <b>Work</b>, add your usual station and star it. Your $/hr goal and hour limits are there too.": "У <b>Роботі</b> додайте свою станцію й позначте її зірочкою. Там же ціль $/год і ліміти годин.", "On a block day, tap <b>Start a block</b> on Today when you leave home and follow the steps.": "У день блоку натисніть <b>Почати блок</b> на вкладці «Сьогодні», коли виїжджаєте з дому, і йдіть за кроками.", "Open <b>Money</b> to see costs and mileage. The Taxes tab has what you need at tax time.": "Відкрийте <b>Гроші</b>, щоб бачити витрати й пробіг. Вкладка Податки має все потрібне для податків.", "Help": "Довідка", "Show the guide": "Показати посібник", "A one-minute tour of how everything works": "Хвилинний огляд того, як усе працює", "Language": "Мова", "Appearance": "Вигляд", "Theme": "Тема", "Telegram": "Telegram", "System": "Системна", "Light": "Світла", "Dark": "Темна", "Colour palette": "Кольорова палітра", "Palette: {name}": "Палітра: {name}", "Glass effect": "Ефект скла", "Turn off for solid cards and longer battery life": "Вимкніть для суцільних карток і довшої роботи батареї", "Telegram follows the light or dark theme you use in Telegram.": "«Telegram» повторює світлу чи темну тему, яку ви використовуєте в Telegram.", "System follows your phone's light or dark setting.": "«Системна» повторює світлий чи темний режим телефона.", "Your data": "Ваші дані", "Saved on this phone and backed up to your Telegram account": "Збережено на цьому телефоні й скопійовано у ваш акаунт Telegram", "Saved on this device only": "Збережено лише на цьому пристрої", "Nobody else can see it. Friends who open the same link get their own empty tracker. Clearing this browser's data erases it.": "Ніхто інший їх не бачить. Друзі за тим самим посиланням отримують власний порожній трекер. Очищення даних браузера їх видалить.", "This browser blocks storage, so changes last until you close the page.": "Цей браузер блокує збереження, тож зміни діють, доки сторінка відкрита.", "Area map": "Карта районів", "Area names (not addresses) are looked up on OpenStreetMap to place them on the map.": "Назви районів (не адреси) шукаються на OpenStreetMap, щоб показати їх на карті.", "Turn off": "Вимкнути", "Back up now": "Зберегти копію зараз", "Remove sample data": "Видалити приклад", "Show sample data": "Показати приклад", "Erase everything": "Стерти все", "Ownership": "Володіння", "Learn from my records (recommended)": "Визначати з моїх записів (рекомендовано)", "Starts at a typical $0.08 a mile and shifts toward your own costs as you log maintenance and record odometer readings.": "Починається з типових $0,08 за милю й наближається до ваших реальних витрат, коли ви вносите обслуговування й показання одометра.", "Set it myself": "Задати самостійно", "Type your own cost per mile.": "Введіть власну вартість милі.", "Cost per mile": "Вартість милі", "Tires, oil, brakes, repairs. $0.06–0.10 is common.": "Шини, олива, гальма, ремонт. Зазвичай $0,06–0,10.", "from {m} of maintenance over {mi} of driving": "з {m} на обслуговування за {mi} їзди", "typical rate for now. Log oil changes, tires and repairs as Maintenance and it adjusts.": "поки що типова ставка. Вносьте заміну оливи, шини й ремонт як «Обслуговування», і вона підлаштується.", "Fixed costs": "Постійні витрати", "Dollars per month": "Доларів на місяць", "Registration and fees": "Реєстрація й збори", "Dollars per year": "Доларів на рік", "Lease payment": "Лізинговий платіж", "Loan interest": "Відсотки за кредитом", "Dollars per month. Your lender's statement shows it.": "Доларів на місяць. Це видно у виписці кредитора.", "Tip: add insurance and car payments as monthly expenses in Money too, so they show up in your records automatically.": "Порада: додайте страховку й платежі за авто як щомісячні витрати в «Грошах», щоб вони автоматично з'являлися в записах.", "All driving per month": "Увесь пробіг за місяць", "Learn from my odometer (recommended)": "Визначати з одометра (рекомендовано)", "Uses the odometer readings from your blocks, including personal driving in between.": "Використовує показання одометра з ваших блоків, включно з особистими поїздками між ними.", "Type your total monthly miles, personal driving included.": "Введіть увесь пробіг за місяць, разом з особистими поїздками.", "All driving, personal included": "Уся їзда, разом з особистою", "Used until the app has a week of odometer readings": "Використовується, доки застосунок не має показань одометра за тиждень", "a month, from {d} days of odometer readings": "на місяць, за {d} днів показань одометра", "Fixed costs are split by this number, so only your block share is charged to blocks.": "Постійні витрати діляться на це число, тож блокам нараховується лише їхня частка.", "Car's value today": "Вартість авто зараз", "Dollars. A quick check on a pricing site works.": "Доларів. Достатньо швидко глянути на сайті оцінки авто.", "Value when you sell": "Вартість при продажу", "Dollars, your best guess": "Доларів, ваше припущення", "Miles until you sell": "Миль до продажу", "Roughly how many more miles you'll put on it": "Приблизно скільки ще миль ви на ній проїдете", "The value it loses is spread over those miles. A gig car wears out by miles driven, not by months, so this is the fairest way.": "Втрачена вартість розподіляється на ці милі. Робоче авто зношується милями, а не місяцями, тож так найчесніше.", "How costs are counted": "Як рахуються витрати", "How car costs work": "Як рахуються витрати на авто", "Every mile has a cost: fuel, wear, the value your car loses, and a share of insurance and payments.": "Кожна миля має ціну: пальне, знос, вартість, яку втрачає авто, і частка страховки та платежів.", "The app adds these up into a <b>true cost per mile</b> and subtracts it from each block, so net profit is real money kept.": "Застосунок складає це в <b>реальну вартість милі</b> й віднімає її від кожного блоку, тож чистий прибуток — це гроші, які справді залишаються.", "Only your block miles are charged. Personal driving is left out.": "Рахуються лише милі блоків. Особисті поїздки не враховуються.", "Fuel is the part that matters most. The rest starts from typical values you can change under Advanced.": "Найважливіше — пальне. Решта починається з типових значень, які можна змінити в розділі Додатково.", "Fuel economy": "Витрата пального", "Miles per gallon. Check your dash or fill-up math.": "Миль на галон. Дивіться на панелі або порахуйте за заправками.", "Gas price": "Ціна бензину", "Dollars per gallon you usually pay": "Доларів за галон, які ви зазвичай платите", "Your true cost per mile": "Ваша реальна вартість милі", "Insurance, wear, payments and the value your car loses are under Advanced car costs.": "Страховка, знос, платежі та втрата вартості авто — у розділі Додаткові витрати на авто.", "Advanced car costs": "Додаткові витрати на авто", "Insurance and lease share": "Частка страховки й лізингу", "Insurance and interest share": "Частка страховки й відсотків", "Insurance and fees share": "Частка страховки й зборів", "True cost per mile": "Реальна вартість милі", "How the tax estimate works": "Як рахується податкова оцінка", "Each block's miles are multiplied by the IRS standard mileage rate for that date. That rate already includes gas, wear and depreciation.": "Милі кожного блоку множаться на стандартну ставку IRS за пробіг на ту дату. Ця ставка вже включає бензин, знос і амортизацію.", "Parking, tolls, phone and equipment can usually be deducted on top. Gas and repairs cannot when you use the standard rate.": "Паркування, платні дороги, телефон і обладнання зазвичай можна відрахувати додатково. Бензин і ремонт — ні, якщо ви використовуєте стандартну ставку.", "Every leg is tracked separately, so you or your tax pro can decide which legs count.": "Кожен відрізок рахується окремо, тож ви чи ваш податковий фахівець вирішите, які враховувати.", "This is an estimate to plan with, not tax advice.": "Це оцінка для планування, а не податкова порада.", "Money to put aside": "Гроші, які варто відкласти", "Put aside": "Відкладати", "Percent of your profit after deductions. Many gig drivers save 20–30%.": "Відсоток прибутку після відрахувань. Багато водіїв відкладають 20–30%.", "Shown in Money → Taxes, and on Today under More numbers.": "Показується в Гроші → Податки та на Сьогодні в розділі Більше цифр.", "Which legs to deduct": "Які відрізки відраховувати", "Delivery driving. Almost always deductible.": "Їзда з доставкою. Майже завжди відраховується.", "Can count as commuting. Ask your tax pro.": "Може вважатися дорогою на роботу. Спитайте податкового фахівця.", "Mileage rate": "Ставка за пробіг", "IRS business rate": "Бізнес-ставка IRS", "$0.76 per mile from July 1, 2026. Blocks from January to June use $0.725 automatically.": "$0,76 за милю з 1 липня 2026. Для блоків із січня по червень автоматично береться $0,725.", "Stations, goal and hour limits": "Станції, ціль і ліміти годин", "Add the station you work from and star it. It is picked for you when you start a block.": "Додайте свою станцію й позначте зірочкою. Вона обирається сама, коли ви починаєте блок.", "Each station has a <b>base pay</b> per hour. Offers paying at least 50¢/hr more are marked Surge. Leave it empty and the app learns it.": "Кожна станція має <b>базову оплату</b> за годину. Пропозиції, що платять щонайменше на 50¢/год більше, позначаються як підвищені. Залиште порожнім, і застосунок дізнається її сам.", "Your <b>$/hr goal</b> colours every rate: green at or above it, amber within 20%, red below.": "Ваша <b>ціль $/год</b> фарбує кожну ставку: зелений — на рівні чи вище, жовтий — у межах 20%, червоний — нижче.", "<b>Hour limits</b> power the \"hours left this week\" count on Today.": "<b>Ліміти годин</b> рахують «лишилось цього тижня» на екрані Сьогодні.", "Made a typo in an area name? Fix it under <b>Areas</b>.": "Помилилися в назві району? Виправте в розділі <b>Райони</b>.", "Your stations": "Ваші станції", "learned": "визначено", "Base pay not known yet": "Базова оплата ще невідома", "No stations yet. Add the one you usually work from.": "Ще немає станцій. Додайте ту, з якої зазвичай працюєте.", "Add station": "Додати станцію", "Areas": "Райони", "Areas saved: {n}": "Збережено районів: {n}", "Your goal": "Ваша ціль", "Net per hour goal": "Ціль чистих за годину", "Dollars you want to keep per hour, after car costs": "Скільки доларів за годину хочете залишати після витрат на авто", "Hour limits": "Ліміти годин", "Hours in any 7 days": "Годин за будь-які 7 днів", "Most US drivers report 40. It can rise during peak season.": "Більшість водіїв у США бачать 40. У пікові сезони може зростати.", "Hours in one day": "Годин за один день", "Often 8, sometimes up to 10 in peak season.": "Зазвичай 8, у пікові сезони іноді до 10.", "Amazon doesn't publish these limits, so match what your Flex app allows.": "Amazon не публікує ці ліміти, тож орієнтуйтеся на те, що дозволяє ваш застосунок Flex.", "What counts as work time": "Що вважати робочим часом", "Used for every per-hour number in the app.": "Використовується для всіх погодинних чисел у застосунку.", "Edit station": "Редагувати станцію", "Station code": "Код станції", "Optional, like the code in the Flex app": "Необов'язково, як код у застосунку Flex", "Base pay ($/hr)": "Базова оплата ($/год)", "Learned so far: {v}": "Визначено поки що: {v}", "Leave empty and the app learns it": "Залиште порожнім, і застосунок визначить її", "Favorite": "Улюблена", "Shown first when you start a block": "Показується першою, коли починаєте блок", "Delete station": "Видалити станцію", "Keep it": "Залишити", "Delete": "Видалити", "Start a block when you leave home": "Починайте блок, коли виїжджаєте з дому", "Tap <b>Start a block</b> on Today.": "Натисніть <b>Почати блок</b> на вкладці «Сьогодні».", "Pick your station, enter the offer pay and block length.": "Оберіть станцію, введіть оплату й тривалість блоку.", "Type your odometer and tap <b>Leave home</b>.": "Введіть показання одометра й натисніть <b>Виїжджаю з дому</b>.", "Tap each step as it happens": "Натискайте кожен крок, коли він відбувається", "One big button always shows the next step.": "Одна велика кнопка завжди показує наступний крок.", "The odometer is asked only 4 times: leaving home, leaving the station, last stop and back home.": "Одометр потрібен лише 4 рази: виїзд з дому, виїзд зі станції, остання зупинка й повернення додому.", "Two timers run for you: the whole trip, and your route from the station to the last stop.": "Два таймери працюють самі: уся поїздка і маршрут від станції до останньої зупинки.", "See what you really keep": "Бачите, що справді залишається", "Today shows what you kept after gas, wear and your car's other costs.": "Сьогодні показує, скільки вам залишилось після пального, зносу та інших витрат на авто.", "<b>Money</b> shows your costs, your miles, and how much to put aside for taxes.": "<b>Гроші</b> показують витрати, милі й скільки відкласти на податки.", "Save gate and locker codes": "Зберігайте коди воріт і локерів", "In <b>Places</b>, save codes by address for buildings you visit again.": "У розділі <b>Місця</b> зберігайте коди за адресою для будинків, куди повертаєтеся.", "During a block, the <b>Codes</b> button takes you straight there.": "Під час блоку кнопка <b>Коди</b> веде одразу туди.", "Offer": "Пропозиція", "Continue": "Продовжити", "Track every block like a business: time, miles, real costs and what you actually keep.": "Ведіть кожен блок як бізнес: час, милі, реальні витрати й те, що справді залишається.", "Begin with an empty tracker for your own blocks.": "Почніть з порожнього трекера для власних блоків.", "Look around with sample blocks first. Remove them anytime in Settings.": "Спершу подивіться на прикладах. Видалити їх можна будь-коли в Налаштуваннях.", "Want a quick tour?": "Короткий огляд?", "4 short screens. You can open it again anytime in Settings → App.": "4 короткі екрани. Відкрити знову можна будь-коли в Налаштуваннях → Застосунок.", "Show me around": "Покажіть мені", "Skip the tour": "Пропустити огляд", "Skip": "Пропустити", "Setup {n} of 2": "Налаштування {n} з 2", "Which station do you work from?": "З якої станції ви працюєте?", "Type its name, like \"North station\" or the code from the Flex app. You can add more later in Settings → Work.": "Введіть назву, наприклад «Північна станція», або код із застосунку Flex. Інші можна додати пізніше в Налаштуваннях → Робота.", "Your car": "Ваше авто", "These two numbers make your profit real. The rest starts from typical values. Change anything later in Settings → Car.": "Ці два числа роблять прибуток реальним. Решта починається з типових значень. Змінити все можна пізніше в Налаштуваннях → Авто.", "Miles per gallon": "Миль на галон", "Not sure? Leave them empty and the app uses typical values ({m} mpg, {g} a gallon).": "Не впевнені? Залиште порожнім, і застосунок візьме типові значення ({m} миль/галон, {g} за галон).", "Finish": "Готово", "Done": "Готово", "Set up in 1 minute": "Налаштувати за 1 хвилину", "Skip for now": "Поки пропустити", "Guide": "Посібник", "Remove this area?": "Видалити цей район?", "Blocks with this area: {n}. The blocks themselves stay.": "Блоків із цим районом: {n}. Самі блоки залишаться.", "Remove": "Видалити", "Cancel this block?": "Скасувати цей блок?", "Nothing is saved. Start again when you leave home.": "Нічого не збережеться. Почніть знову, коли виїжджатимете з дому.", "Cancel block": "Скасувати блок", "Discard this block?": "Видалити цей блок?", "Its time and miles won't be saved.": "Його час і милі не збережуться.", "Discard": "Видалити", "Enter the offer pay for this block.": "Введіть оплату за цей блок.", "Pick when you left home.": "Оберіть, коли ви виїхали з дому.", "Delete this block?": "Видалити цей блок?", "Expenses linked to it stay, but become unlinked.": "Прив'язані витрати залишаться, але без прив'язки.", "Delete this expense?": "Видалити цю витрату?", "Only this month is removed. The monthly payment keeps going.": "Видаляється лише цей місяць. Щомісячний платіж триває.", "Give the station a name.": "Дайте станції назву.", "Delete this station?": "Видалити цю станцію?", "Past blocks keep the station name.": "Минулі блоки збережуть назву станції.", "Add the address so you can find this place again.": "Додайте адресу, щоб знову знайти це місце.", "Delete this place?": "Видалити це місце?", "Its codes are removed from your phone and your backup.": "Його коди буде видалено з телефона й резервної копії.", "Erase all blocks, expenses, places and settings?": "Стерти всі блоки, витрати, місця й налаштування?", "This can't be undone.": "Це не можна скасувати.", "Remove this booked block?": "Прибрати цей заброньований блок?", "Cancel it in the Flex app too, so the hours free up there.": "Скасуйте його й у застосунку Flex, щоб години звільнилися і там.", "Checking your Telegram backup…": "Перевіряємо вашу копію в Telegram…"};
   function L(s, v) { let o = (lang === 'uk' && UK[s]) || s; if (v) o = o.replace(/\{(\w+)\}/g, (m, k) => (v[k] != null ? v[k] : m)); return o; }
   const PLURALS = { block: [['block', 'blocks'], ['блок', 'блоки', 'блоків']], stop: [['stop', 'stops'], ['зупинка', 'зупинки', 'зупинок']], mile: [['mi', 'mi'], ['миля', 'милі', 'миль']] };
   function plural(n, key) {
@@ -779,7 +854,7 @@ details.morebox.inner .steps { margin-top: 10px; }
       if (i) odo += 45;
       const b = makeBlock({ leave, stationId: s.id, station: s.name, hrs: x[3], pay: x[4], tips: x[5], legs: { to_station: x[6][0], route: x[6][1], home: x[6][2] },
         mins: { drive_to: x[7][0], load: x[7][1], deliver: x[7][2], return: x[7][3] }, packages: x[8], stops: x[9], odo, grabbed: new Date(+leave - x[10] * 3600e3) });
-      odo = b.odo.end; return b;
+      b.areas = [['a-tac', 'a-lkw', 'a-spw'], ['a-sum', 'a-bon', 'a-puy'], ['a-tac', 'a-lkw'], ['a-lkw', 'a-spw', 'a-tac'], ['a-puy', 'a-sum'], ['a-tac', 'a-lkw', 'a-spw']][i].map(id => ({ id, src: 'manual' })); odo = b.odo.end; return b;
     });
     const now = new Date();
     const mStart = monthKey(new Date(now.getFullYear(), now.getMonth() - 2, 1));
@@ -806,11 +881,12 @@ details.morebox.inner .steps { margin-top: 10px; }
       { id: 'b-s1', stationId: 's-north', station: st[0].name, start: iso(tmr), hrs: 3.5, pay: 84, grabbedAt: iso(+tmr - 72 * 3600e3), markedSurge: false, sample: true },
       { id: 'b-s2', stationId: 's-south', station: st[1].name, start: iso(d2), hrs: 3, pay: 90, grabbedAt: iso(+d2 - 2 * 3600e3), markedSurge: true, sample: true }
     ];
-    return { stations: st, blocks, places, expenses, recurring, scheduled };
+    const areas = [['a-tac', 'Tacoma', 47.253, -122.444], ['a-lkw', 'Lakewood', 47.172, -122.518], ['a-spw', 'Spanaway', 47.104, -122.435], ['a-puy', 'Puyallup', 47.185, -122.293], ['a-sum', 'Sumner', 47.203, -122.240], ['a-bon', 'Bonney Lake', 47.177, -122.186]].map(([id, n, lat, lng]) => ({ id, name: n, key: areaKey(n), aliases: [], kind: 'manual', created: iso(at(14, 9)), sample: true, geo: { lat, lng, label: n + ', Pierce County, WA', src: 'sample', status: 'ok' } }));
+    return { stations: st, blocks, places, expenses, recurring, scheduled, areas };
   }
   function seed() {
     const s = sampleData();
-    return { version: 4, stations: s.stations, blocks: s.blocks, expenses: s.expenses, places: s.places, recurring: s.recurring, scheduled: s.scheduled, active: null, settings: JSON.parse(JSON.stringify(DEFAULT_SETTINGS)), ui: {} };
+    return { version: 4, stations: s.stations, blocks: s.blocks, expenses: s.expenses, places: s.places, recurring: s.recurring, scheduled: s.scheduled, areas: s.areas, active: null, settings: JSON.parse(JSON.stringify(DEFAULT_SETTINGS)), ui: {} };
   }
 
   // ---------- migrate older saves ----------
@@ -837,7 +913,23 @@ details.morebox.inner .steps { margin-top: 10px; }
     st.ui = Object.assign({ tab: 'today', range: 'today', welcomed: false, onboarded: false, mPeriod: 'month', mCat: '', mView: 'costs', sTab: 'app', guides: {}, guideOpen: {}, guidesSeen: {}, more: {} }, st.ui || {});
     if (st.ui.sTab === 'stations') st.ui.sTab = 'work';
     st.ui.more = st.ui.more || {}; st.ui.guideOpen = st.ui.guideOpen || {}; st.ui.guidesSeen = st.ui.guidesSeen || {};
-    ['places', 'stations', 'expenses', 'blocks', 'recurring', 'scheduled'].forEach(k => { st[k] = st[k] || []; });
+    ['places', 'stations', 'expenses', 'blocks', 'recurring', 'scheduled', 'areas'].forEach(k => { st[k] = st[k] || []; });
+    st.areas.forEach(a => { a.key = a.key || areaKey(a.name); a.aliases = a.aliases || []; });
+    const migArea = (o) => {
+      if (!o || typeof o.area !== 'string') return;
+      const nm = normName(o.area);
+      if (nm) { const k = areaKey(nm); let ar = st.areas.find(x => x.key === k || x.aliases.includes(k)); if (!ar) { ar = { id: 'a-' + uid(), name: nm, key: k, aliases: [], kind: 'manual', created: o.start || new Date().toISOString() }; st.areas.push(ar); } o.areas = [{ id: ar.id, src: 'manual' }]; }
+      delete o.area;
+    };
+    st.blocks.forEach(migArea); migArea(st.active);
+    const firstByKey = {}; const remap = {};
+    st.areas.forEach(a => { if (firstByKey[a.key]) remap[a.id] = firstByKey[a.key].id; else firstByKey[a.key] = a; });
+    if (Object.keys(remap).length) {
+      const fix = (o) => { if (o && o.areas) o.areas = o.areas.map(x => ({ id: remap[x.id] || x.id, src: x.src })).filter((x, i, arr) => arr.findIndex(y => y.id === x.id) === i); };
+      st.blocks.forEach(fix); fix(st.active); st.areas = st.areas.filter(a => !remap[a.id]);
+    }
+    const usedAreas = new Set(); st.blocks.forEach(b => (b.areas || []).forEach(x => usedAreas.add(x.id))); if (st.active) (st.active.areas || []).forEach(x => usedAreas.add(x.id));
+    st.areas = st.areas.filter(a => usedAreas.has(a.id) || Date.parse(a.created || 0) > Date.now() - DAY);
     if (st.active && !st.active.ms) st.active = null;
     return st;
   }
@@ -1191,6 +1283,7 @@ details.morebox.inner .steps { margin-top: 10px; }
     else if (t === 'money') renderMoney();
     else if (t === 'places') renderPlaces();
     else renderSettings();
+    mountInlineMap();
   }
   function refresh() { applyAppearance(); render(); }
 
@@ -1253,6 +1346,522 @@ details.morebox.inner .steps { margin-top: 10px; }
     }).join('')}</div>`;
   }
 
+  // ---------- areas (towns, neighborhoods, ZIP codes a block went to) ----------
+  // state.areas = [{ id, name, key, aliases[], kind: 'manual' | 'gps', created, sample? }]
+  // block.areas = [{ id, src: 'manual' | 'gps' }]  (ids, so renaming and merging touch one record)
+  const AREA_MAX = 6;
+  function areaKey(s) { return String(s || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim(); }
+  function normName(s) { return String(s || '').replace(/\s+/g, ' ').trim().slice(0, 40); }
+  const areaById = (id) => state.areas.find(a => a.id === id);
+  const blockAreaIds = (b) => [...new Set((b && b.areas || []).map(x => x.id))].filter(id => areaById(id));
+  const areaNames = (b) => blockAreaIds(b).map(id => areaById(id).name);
+  function findArea(name, exceptId) {
+    const k = areaKey(name); if (!k) return null;
+    return state.areas.find(a => a.id !== exceptId && a.key === k) || state.areas.find(a => a.id !== exceptId && (a.aliases || []).includes(k)) || null;
+  }
+  // A name now in use as a visible name is removed from every other area's old names
+  function releaseAlias(key, ownerId) { state.areas.forEach(a => { if (a.id !== ownerId && a.aliases && a.aliases.includes(key)) a.aliases = a.aliases.filter(k => k !== key); }); }
+  function createArea(name) {
+    const a = { id: 'a-' + uid(), name: normName(name), key: areaKey(name), aliases: [], kind: 'manual', created: new Date().toISOString() };
+    releaseAlias(a.key, a.id); state.areas.push(a); return a;
+  }
+  function areaStats() {
+    if (_cache.areaStats) return _cache.areaStats;
+    const st = {}; const now = Date.now();
+    state.blocks.forEach(b => {
+      const t = Date.parse(b.start) || 0;
+      blockAreaIds(b).forEach(id => {
+        const s = st[id] || (st[id] = { n: 0, n90: 0, last: 0, by: {} });
+        s.n++; if (t > now - 90 * DAY) s.n90++; s.last = Math.max(s.last, t);
+        if (b.stationId) s.by[b.stationId] = (s.by[b.stationId] || 0) + 1;
+      });
+    });
+    return (_cache.areaStats = st);
+  }
+  // Suggestion order: last block's areas, then this station's, then most used lately, then the rest.
+  // One-off names unused for 30 days drop out of suggestions (typos age out) but stay under More.
+  function areaSuggest(stationId) {
+    const st = areaStats(); const now = Date.now();
+    const usable = state.areas.filter(a => st[a.id] || Date.parse(a.created || 0) > now - DAY);
+    const s = (a) => st[a.id] || { n: 0, n90: 0, last: Date.parse(a.created || 0) || 0, by: {} };
+    const aged = (a) => s(a).n <= 1 && s(a).last < now - 30 * DAY;
+    const lastB = [...state.blocks].filter(b => blockAreaIds(b).length).sort((x, y) => Date.parse(y.start) - Date.parse(x.start))[0];
+    const pool = usable.filter(a => !aged(a)).sort((x, y) =>
+      ((s(y).by[stationId] ? 1 : 0) - (s(x).by[stationId] ? 1 : 0)) || (s(y).n90 - s(x).n90) || (s(y).n - s(x).n) || (s(y).last - s(x).last));
+    const top = [...new Set([...(lastB ? blockAreaIds(lastB) : []), ...pool.map(a => a.id)])].slice(0, AREA_MAX);
+    const rest = usable.filter(a => !top.includes(a.id)).sort((x, y) => x.name.localeCompare(y.name)).map(a => a.id);
+    return { top, rest };
+  }
+
+  // One picker used in the block summary ('sum') and the block edit sheet ('edit').
+  const AP = { order: {}, all: {} };
+  let sheetAreas = [], sheetDraft = '', sheetStation = '', sheetToken = '';
+  const apSel = (ctx) => ctx === 'sum' ? (state.active.areas = state.active.areas || []) : sheetAreas;
+  const apDraft = (ctx) => ctx === 'sum' ? (state.active.areaDraft || '') : sheetDraft;
+  function apSetDraft(ctx, v) { if (ctx === 'sum') state.active.areaDraft = v; else sheetDraft = v; }
+  function apOrder(ctx) {
+    const token = ctx === 'sum' ? state.active.ms.home_end || 'x' : sheetToken;
+    if (ctx === 'sum' && state.active.apOrder && state.active.apOrder.token === token) AP.order.sum = state.active.apOrder;
+    if (!AP.order[ctx] || AP.order[ctx].token !== token) {
+      AP.order[ctx] = Object.assign({ token }, areaSuggest(ctx === 'sum' ? state.active.stationId : sheetStation)); AP.all[ctx] = false;
+      if (ctx === 'sum') state.active.apOrder = AP.order.sum;
+    }
+    return AP.order[ctx];
+  }
+  function apMatches(ctx) {
+    const dk = areaKey(apDraft(ctx)); if (!dk) return [];
+    return state.areas.filter(a => a.key.includes(dk) || (a.aliases || []).some(k => k.includes(dk)));
+  }
+  // What Add (or Save) would do with the typed text: choose an existing area, or make a new one
+  function apChoice(ctx) {
+    const name = normName(apDraft(ctx)); if (!name) return null;
+    return findArea(name);
+  }
+  function apChip(ctx, id) {
+    const a = areaById(id); if (!a) return '';
+    const on = apSel(ctx).some(x => x.id === id);
+    return `<button type="button" class="achip" data-apchip="${id}" data-apctx="${ctx}" aria-pressed="${on}">${on ? `<span class="ack">${CHECK}</span>` : ''}${esc(a.name)}</button>`;
+  }
+  function apChipsHtml(ctx) {
+    const sel = apSel(ctx).map(x => x.id).filter(id => areaById(id));
+    if (areaKey(apDraft(ctx))) {
+      const ids = [...new Set([...sel, ...apMatches(ctx).map(a => a.id)])].slice(0, 12);
+      return ids.map(id => apChip(ctx, id)).join('');
+    }
+    const o = apOrder(ctx); const showAll = AP.all[ctx];
+    // At most 6 chips before "More…" (so Save stays on screen): selected chips always show,
+    // unselected suggestions fill what's left in their original order; the rest move under More.
+    const front = sel.filter(id => !o.top.includes(id) && !(showAll && o.rest.includes(id)));
+    let slots = Math.max(AREA_MAX, sel.length) - front.length - o.top.filter(id => sel.includes(id)).length;
+    const topShown = o.top.filter(id => { if (sel.includes(id)) return true; if (slots > 0) { slots--; return true; } return false; });
+    const restAll = [...o.rest, ...o.top.filter(id => !topShown.includes(id))].filter(id => areaById(id)).sort((x, y) => areaById(x).name.localeCompare(areaById(y).name));
+    let html = [...front, ...topShown].map(id => apChip(ctx, id)).join('');
+    if (restAll.length) html += showAll ? `<div class="aall">${L('All areas, A to Z')}</div>${restAll.filter(id => !front.includes(id)).map(id => apChip(ctx, id)).join('')}` : `<button type="button" class="achip more" data-apmore="${ctx}">${L('More…')}</button>`;
+    return html;
+  }
+  const apFull = (ctx) => apSel(ctx).length >= AREA_MAX && !apChoiceSelected(ctx);
+  function apChoiceSelected(ctx) { const c = apChoice(ctx); return !!(c && apSel(ctx).some(x => x.id === c.id)); }
+  function apHint(ctx) {
+    const n = apSel(ctx).length;
+    if (n >= AREA_MAX) return L('Up to {n} areas per block. Unselect one to add another.', { n: AREA_MAX });
+    if (areaKey(apDraft(ctx))) return apChoice(ctx) ? L('You already have this area.') : apMatches(ctx).length ? L('Tap a match above, or add it as a new area.') : L('Tap Add to save this new area.');
+    return n ? L('{n} selected', { n }) : '';
+  }
+  function apAddLabel(ctx) {
+    if (!normName(apDraft(ctx))) return L('Add');
+    const c = apChoice(ctx); return c ? L('Choose {name}', { name: esc(c.name) }) : L('Add "{name}"', { name: esc(normName(apDraft(ctx))) });
+  }
+  function areaPicker(ctx) {
+    const draft = apDraft(ctx); const hint = apHint(ctx);
+    return `<div class="areapick" data-apctx="${ctx}">
+      <div class="alab">${L('Where were you sent?')}<small>${L('Tap every area this block went to. Optional.')}</small></div>
+      <div class="achips" id="ap-chips-${ctx}">${apChipsHtml(ctx)}</div>
+      <label class="anewlab" for="ap-in-${ctx}">${L('New area: town, neighborhood or ZIP code')}</label>
+      <div class="aadd"><input id="ap-in-${ctx}" data-apin="${ctx}" type="text" enterkeyhint="done" autocomplete="off" autocapitalize="words" maxlength="40" value="${esc(draft)}" ${apFull(ctx) ? 'disabled' : ''}><button class="btn small glassy" type="button" data-apadd="${ctx}" id="ap-add-${ctx}" ${normName(draft) && !apFull(ctx) ? '' : 'disabled'}>${apAddLabel(ctx)}</button></div>
+      <div class="ahint" id="ap-hint-${ctx}" ${hint ? '' : 'hidden'}>${hint}</div>
+    </div>`;
+  }
+  function apRefresh(ctx) {
+    const c = document.getElementById('ap-chips-' + ctx); if (c) c.innerHTML = apChipsHtml(ctx);
+    const b = document.getElementById('ap-add-' + ctx); if (b) { b.innerHTML = apAddLabel(ctx); b.disabled = !normName(apDraft(ctx)) || apFull(ctx); }
+    const inp = document.getElementById('ap-in-' + ctx); if (inp) inp.disabled = apFull(ctx) && !normName(apDraft(ctx));
+    const h = document.getElementById('ap-hint-' + ctx); if (h) { const t = apHint(ctx); h.textContent = t; h.hidden = !t; }
+  }
+  function apPersist(ctx, full) { if (ctx === 'sum') { if (full) save(); else persistLocal(); } }
+  function apToggle(ctx, id) {
+    const sel = apSel(ctx); const i = sel.findIndex(x => x.id === id);
+    if (i >= 0) sel.splice(i, 1);
+    else if (sel.length >= AREA_MAX) { apRefresh(ctx); return; }
+    else sel.push({ id, src: 'manual' });
+    if (normName(apDraft(ctx))) { apSetDraft(ctx, ''); const inp = document.getElementById('ap-in-' + ctx); if (inp) inp.value = ''; }
+    apPersist(ctx, true); apRefresh(ctx); haptic('light');
+  }
+  // Turns typed text into a selected area. Used by Add, Enter, and Save (so typed text is never lost).
+  function apCommit(ctx, onSave) {
+    const name = normName(apDraft(ctx)); if (!name) return true;
+    const sel = apSel(ctx); let target = apChoice(ctx);
+    const dk = areaKey(name);
+    if (onSave && !target && sel.some(x => { const a = areaById(x.id); return a && (a.key.startsWith(dk) || (a.aliases || []).some(k => k.startsWith(dk))); })) {
+      apSetDraft(ctx, ''); const i0 = document.getElementById('ap-in-' + ctx); if (i0) i0.value = ''; apPersist(ctx, false); return true;
+    }
+    if (sel.length >= AREA_MAX && !(target && sel.some(x => x.id === target.id))) return false;
+    if (!target) target = createArea(name);
+    if (!sel.some(x => x.id === target.id)) sel.push({ id: target.id, src: 'manual' });
+    apSetDraft(ctx, ''); const inp = document.getElementById('ap-in-' + ctx); if (inp) inp.value = '';
+    bust(); apPersist(ctx, true); return true;
+  }
+
+  // Stats: a block counts in full in every area it touched. Routes group by the set of areas.
+  function areaGroupStats(bs) {
+    const net = bs.reduce((s, b) => s + blockNet(b), 0); const mins = bs.reduce((s, b) => s + basisMins(b.mins || {}, S().basis), 0);
+    const route = bs.reduce((s, b) => s + (Number((b.legs || {}).route) || 0), 0); const stops = bs.reduce((s, b) => s + (Number(b.stops) || 0), 0);
+    return { c: bs.length, hr: mins > 0 ? perHour(net, mins) : null, mps: stops ? route / stops : null, tips: bs.reduce((s, b) => s + Number(b.tips || 0), 0) / bs.length };
+  }
+  function areaRow(name, g) {
+    const few = g.c < 3 || g.hr == null;
+    const sub = [`${g.c} ${plural(g.c, 'block')}`, g.mps != null ? L('{v} mi per stop', { v: g.mps.toFixed(2) }) : '', g.tips >= 0.5 ? L('{v} tips avg', { v: money(g.tips, 0) }) : ''].filter(Boolean).join(' · ');
+    return `<div class="arow ${few ? 'few' : ''}"><span class="mid"><b>${name}</b><span>${sub}</span></span><span class="v">${few ? `<span class="fewtag">${L('few blocks yet')}</span>` : `<span class="chip ${rateClass(g.hr)}">${perHr(g.hr, 0)}</span>`}</span></div>`;
+  }
+  const rankRows = (rows) => rows.filter(r => r.g.c >= 3 && r.g.hr != null).sort((a, b) => b.g.hr - a.g.hr).concat(rows.filter(r => r.g.c < 3 || r.g.hr == null).sort((a, b) => b.g.c - a.g.c));
+  function areasCard() {
+    const tagged = state.blocks.filter(b => blockAreaIds(b).length);
+    if (!tagged.length) return `<section><h2><span>${L('Your areas')}</span></h2><div class="glass empty" style="text-align:left">${L('When you finish a block, tap the areas it went to. After a few blocks, this shows which areas pay best.')}</div></section>`;
+    const by = {}; const routes = {};
+    tagged.forEach(b => {
+      const ids = blockAreaIds(b);
+      ids.forEach(id => (by[id] = by[id] || []).push(b));
+      if (ids.length > 1) { const k = ids.slice().sort().join('|'); (routes[k] = routes[k] || []).push(b); }
+    });
+    const multi = tagged.filter(b => blockAreaIds(b).length > 1).length; const routesTop = multi / tagged.length >= 0.5;
+    const areaRows = rankRows(Object.entries(by).map(([id, bs]) => ({ name: esc(areaById(id).name), g: areaGroupStats(bs) })));
+    const routeRows = rankRows(Object.entries(routes).filter(([, bs]) => bs.length >= (routesTop ? 2 : 3)).map(([k, bs]) => ({ name: k.split('|').map(id => esc(areaById(id).name)).sort((x, y) => x.localeCompare(y)).join(' + '), g: areaGroupStats(bs) }))).slice(0, 6);
+    const routesHtml = routeRows.length ? `<section><h2><span>${L('Common routes')}</span><span>${L('areas in the same block')}</span></h2><div class="glass elist">${routeRows.map(r => areaRow(r.name, r.g)).join('')}</div></section>` : '';
+    const showAll = !!state.ui.more['areas-all']; const shown = showAll ? areaRows : areaRows.slice(0, 8);
+    const areasHtml = `<section><h2><span>${L('Your areas')}</span><span>${L('best $/hr first')}</span></h2><div class="glass elist">${shown.map(r => areaRow(r.name, r.g)).join('')}</div>
+      ${areaRows.length > 8 ? `<button class="addmore" type="button" data-act="areas-all" style="margin-top:8px">${showAll ? L('Show fewer') : L('Show all {n} areas', { n: areaRows.length })}</button>` : ''}
+      <p class="foot">${L('Kept per hour after car costs. $/hr shows after 3 blocks.')}${multi ? ' ' + L('A block that went to several areas counts in each of them.') : ''}</p>
+      <p class="foot" style="margin-top:4px">${L('Edit area names in Settings → Work.')}</p></section>`;
+    const view = state.ui.areaView === 'map' ? 'map' : 'list';
+    const sw = `<section><div class="seg glass" role="tablist" aria-label="${L('Areas view')}">${[['list', T('List')], ['map', T('Map')]].map(([k, n]) => `<button type="button" role="tab" data-areaview="${k}" aria-pressed="${view === k}" aria-selected="${view === k}">${L(n)}</button>`).join('')}</div></section>`;
+    if (view === 'map') return sw + mapInline() + routesHtml;
+    return sw + (routesTop ? routesHtml + areasHtml : areasHtml + routesHtml);
+  }
+
+  // Rename, merge and remove areas
+  let amEdit = null;
+  let amQuery = '';
+  function areaListHtml() {
+    const st = areaStats(); const q = areaKey(amQuery);
+    const list = [...state.areas].sort((a, b) => a.name.localeCompare(b.name)).filter(a => !q || a.key.includes(q) || (a.aliases || []).some(k => k.includes(q)) || a.id === amEdit);
+    return `<div class="glass group">${list.length ? list.map(a => {
+        const n = (st[a.id] || {}).n || 0;
+        if (amEdit === a.id) return `<div class="amedit"><label for="am-name">${L('Name')}</label><input id="am-name" type="text" maxlength="40" autocomplete="off" value="${esc(a.name)}"><p class="err" id="am-err" hidden></p><div class="btnrow"><button class="btn primary" type="button" data-act="am-save" data-id="${a.id}">${L('Save')}</button><button class="btn glassy" type="button" data-act="am-cancel">${L('Cancel')}</button></div><div id="am-del"><button class="btn danger small" type="button" data-act="am-askdel" data-id="${a.id}">${L('Remove this area')}</button></div></div>`;
+        return `<button class="row" type="button" data-amedit="${a.id}"><span class="stack"><span>${esc(a.name)}</span><span class="sub">${n} ${plural(n, 'block')}</span></span><span class="muted">${L('Edit')} ›</span></button>`;
+      }).join('') : `<div class="row"><span class="muted">${q ? L('No area matches that.') : L('No areas yet.')}</span></div>`}</div>`;
+  }
+  function areaSheet() {
+    openSheet(L('Edit area names'), `<p class="foot" style="margin-top:0">${L('Rename an area to fix a typo. Rename it to an area you already have and the two are joined.')}</p>
+      ${state.areas.length > 10 ? `<section><label class="anewlab" for="am-q">${L('Search areas')}</label><div class="aadd"><input id="am-q" type="search" autocomplete="off" value="${esc(amQuery)}"></div></section>` : ''}
+      <section id="am-list">${areaListHtml()}</section>`);
+  }
+  // Another area whose visible name is the same (aliases never cause a merge)
+  const sameNameArea = (name, exceptId) => { const k = areaKey(name); return state.areas.find(a => a.id !== exceptId && a.key === k) || null; };
+  function areaRename(id, raw, mergeOk) {
+    const a = areaById(id); const name = normName(raw);
+    if (!name) { showErr('am-err', L('Type a name.')); return false; }
+    const other = sameNameArea(name, id);
+    if (other && !mergeOk) {
+      const n = (areaStats()[id] || {}).n || 0;
+      document.getElementById('am-del').innerHTML = `<div class="confirm danger-zone"><strong>${L('Join with {name}?', { name: esc(other.name) })}</strong><span class="muted" style="font-size:14px">${L('Blocks that move: {n}. This can\'t be undone.', { n })}</span><div class="btnrow"><button class="btn glassy" type="button" data-act="am-cancel">${L('Cancel')}</button><button class="btn primary" type="button" data-act="am-merge" data-id="${id}">${L('Join')}</button></div></div>`;
+      return false;
+    }
+    if (other) { // merge into the existing area
+      state.blocks.forEach(b => { if (!b.areas) return; b.areas = b.areas.map(x => x.id === id ? Object.assign({}, x, { id: other.id }) : x).filter((x, i, arr) => arr.findIndex(y => y.id === x.id) === i); });
+      if (state.active && state.active.areas) state.active.areas = state.active.areas.map(x => x.id === id ? { id: other.id, src: x.src } : x).filter((x, i, arr) => arr.findIndex(y => y.id === x.id) === i);
+      other.aliases = [...new Set([...(other.aliases || []), a.key, ...(a.aliases || [])])].filter(k => k !== other.key);
+      if (!(other.geo && other.geo.status === 'ok') && a.geo && a.geo.status === 'ok') other.geo = a.geo;
+      delete other.sample;
+      state.areas = state.areas.filter(x => x.id !== id);
+    } else {
+      if (a.key !== areaKey(name) && a.geo && a.geo.src !== 'pin') delete a.geo;
+      a.name = name; a.key = areaKey(name); releaseAlias(a.key, a.id); a.aliases = a.aliases.filter(k => k !== a.key); delete a.sample;
+    }
+    return true;
+  }
+  function areaRemove(id) {
+    state.blocks.forEach(b => { if (b.areas) b.areas = b.areas.filter(x => x.id !== id); });
+    if (state.active && state.active.areas) state.active.areas = state.active.areas.filter(x => x.id !== id);
+    state.areas = state.areas.filter(x => x.id !== id);
+  }
+
+  // ---------- area map ----------
+  // area.geo = { lat, lng, label, src: 'search' | 'pin' | 'sample', status: 'ok' | 'ambiguous' | 'notfound', cands?: [{lat,lng,label}], at }
+  // Base layer is a plain SVG drawing (works offline and in previews). Real map tiles are layered on top
+  // in the full-screen view only, and only if they actually load.
+  const TILES = { url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', attr: '© OpenStreetMap contributors', max: 18 };
+  const LEAFLET = {
+    js: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js', jsSri: 'sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==',
+    css: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css', cssSri: 'sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w=='
+  };
+  const placed = (a) => !!(a && a.geo && a.geo.status === 'ok' && isFinite(a.geo.lat));
+  function mapData() {
+    const by = {}; const pair = {};
+    state.blocks.forEach(b => {
+      const ids = blockAreaIds(b);
+      ids.forEach(id => { (by[id] = by[id] || []).push(b); ids.forEach(o => { if (o !== id) { pair[id] = pair[id] || {}; pair[id][o] = (pair[id][o] || 0) + 1; } }); });
+    });
+    const used = state.areas.filter(a => by[a.id]);
+    const pts = used.filter(placed).map(a => ({ a, g: areaGroupStats(by[a.id]), pairs: pair[a.id] || {} })).sort((x, y) => y.g.c - x.g.c);
+    return { pts, used, unplaced: used.filter(a => !placed(a)) };
+  }
+  const bubbleColor = (g) => (g.c < 3 || g.hr == null) ? 'var(--muted)' : ({ good: 'var(--good)', warn: 'var(--warn)', bad: 'var(--bad)' }[rateClass(g.hr)] || 'var(--accent)');
+  const bubbleR = (g, maxC) => 9 + 17 * Math.sqrt(g.c / Math.max(1, maxC));
+  // Plain drawing: positions scaled by cos(latitude), labels placed so they don't overlap
+  function mapSvg(pts, selId, W, H) {
+    if (!pts.length) return '';
+    const lat0 = pts.reduce((s, p) => s + p.a.geo.lat, 0) / pts.length; const k = Math.cos(lat0 * Math.PI / 180);
+    const xs = pts.map(p => p.a.geo.lng * k), ys = pts.map(p => -p.a.geo.lat);
+    const pad = 46; const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+    const dx = Math.max(maxX - minX, 0.02), dy = Math.max(maxY - minY, 0.02);
+    const sc = Math.min((W - 2 * pad) / dx, (H - 2 * pad) / dy);
+    const ox = (W - dx * sc) / 2, oy = (H - dy * sc) / 2;
+    const pos = (p) => [ox + (p.a.geo.lng * k - minX - (maxX - minX - dx) / 2) * sc, oy + (-p.a.geo.lat - minY - (maxY - minY - dy) / 2) * sc];
+    const maxC = Math.max(...pts.map(p => p.g.c));
+    const P = pts.map(p => { const [x, y] = pos(p); return { p, x, y, r: bubbleR(p.g, maxC) }; });
+    const sel = P.find(q => q.p.a.id === selId);
+    let lines = '';
+    if (sel) Object.entries(sel.p.pairs).forEach(([id, n]) => { const o = P.find(q => q.p.a.id === id); if (o) lines += `<line x1="${sel.x.toFixed(1)}" y1="${sel.y.toFixed(1)}" x2="${o.x.toFixed(1)}" y2="${o.y.toFixed(1)}" stroke="var(--accent)" stroke-opacity="0.55" stroke-width="${Math.min(7, 1.5 + n)}" stroke-linecap="round"/>`; });
+    const bubbles = P.map(q => { const few = q.p.g.c < 3 || q.p.g.hr == null; const c = bubbleColor(q.p.g); const on = q.p.a.id === selId;
+      return `<g class="mbub" data-mapsel="${q.p.a.id}" role="button" tabindex="0" aria-label="${esc(q.p.a.name)}"><circle cx="${q.x.toFixed(1)}" cy="${q.y.toFixed(1)}" r="${Math.max(22, q.r)}" fill="transparent"/><circle cx="${q.x.toFixed(1)}" cy="${q.y.toFixed(1)}" r="${q.r.toFixed(1)}" fill="${c}" fill-opacity="${few ? 0.25 : 0.55}" stroke="${on ? 'var(--fg)' : c}" stroke-width="${on ? 3 : 2}" ${few ? 'stroke-dasharray="4 3"' : ''}/></g>`; }).join('');
+    // labels: top 3 by blocks and the selected one; try right, left, below, above
+    const boxes = P.map(q => [q.x - q.r, q.y - q.r, q.x + q.r, q.y + q.r]); const lab = [];
+    const want = P.filter((q, i) => P.length <= 8 || i < 3 || q.p.a.id === selId);
+    const hit = (b) => boxes.concat(lab).some(o => !(b[2] < o[0] || b[0] > o[2] || b[3] < o[1] || b[1] > o[3]));
+    let labels = '';
+    want.forEach(q => {
+      const w = q.p.a.name.length * 6.9 + 6, h = 15; const own = [q.x - q.r, q.y - q.r, q.x + q.r, q.y + q.r];
+      const opts = [[q.x + q.r + 5, q.y + 5, 'start', [q.x + q.r + 3, q.y - 9, q.x + q.r + 5 + w, q.y + 6]], [q.x - q.r - 5, q.y + 5, 'end', [q.x - q.r - 5 - w, q.y - 9, q.x - q.r - 3, q.y + 6]], [q.x, q.y + q.r + 15, 'middle', [q.x - w / 2, q.y + q.r + 2, q.x + w / 2, q.y + q.r + 2 + h]], [q.x, q.y - q.r - 6, 'middle', [q.x - w / 2, q.y - q.r - 4 - h, q.x + w / 2, q.y - q.r - 4]]];
+      const fit = opts.find(o => o[3][0] >= 2 && o[3][2] <= W - 2 && o[3][1] >= 2 && o[3][3] <= H - 2 && !boxes.filter(b => b !== own && b.join() !== own.join()).concat(lab).some(b => !(o[3][2] < b[0] || o[3][0] > b[2] || o[3][3] < b[1] || o[3][1] > b[3])));
+      const o = fit || (q.p.a.id === selId ? opts[0] : null); if (!o) return;
+      lab.push(o[3]); labels += `<text x="${o[0].toFixed(1)}" y="${o[1].toFixed(1)}" text-anchor="${o[2]}" class="mlab">${esc(q.p.a.name)}</text>`;
+    });
+    return `<svg class="mapsvg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${L('Map of your areas')}">${lines}${bubbles}${labels}</svg>`;
+  }
+  function mapCard(sel, pts) {
+    const q = pts.find(x => x.a.id === sel); if (!q) return `<div class="mapcard muted">${L('Tap a circle to see that area.')}</div>`;
+    const g = q.g; const few = g.c < 3 || g.hr == null;
+    const pairs = Object.entries(q.pairs).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([id, n]) => areaById(id) ? `${esc(areaById(id).name)} (${n})` : '').filter(Boolean).join(', ');
+    return `<div class="mapcard"><div class="mctop"><b>${esc(q.a.name)}</b>${few ? `<span class="fewtag">${L('few blocks yet')}</span>` : `<span class="chip ${rateClass(g.hr)}">${perHr(g.hr, 0)}</span>`}</div>
+      <div class="mcsub">${[`${g.c} ${plural(g.c, 'block')}`, g.mps != null ? L('{v} mi per stop', { v: g.mps.toFixed(2) }) : '', g.tips >= 0.5 ? L('{v} tips avg', { v: money(g.tips, 0) }) : ''].filter(Boolean).join(' · ')}</div>
+      ${pairs ? `<div class="mcsub">${L('Usually in the same block with: {list}', { list: pairs })}</div>` : ''}
+      ${q.a.geo.label ? `<div class="mcsub small">${L('Placed at: {p}', { p: esc(q.a.geo.label) })}</div>` : ''}</div>`;
+  }
+  // Inline: a still picture (no drag, no zoom) so one-finger scrolling keeps scrolling the page
+  function mapInline() {
+    const d = mapData(); const sel = state.ui.mapSel;
+    const legend = `<div class="legend" style="margin-top:8px"><span><i style="background:var(--good)"></i>${L('At or above goal')}</span><span><i style="background:var(--warn)"></i>${L('Close')}</span><span><i style="background:var(--bad)"></i>${L('Below')}</span><span><i style="background:transparent;border:1.5px dashed var(--muted)"></i>${L('few blocks yet')}</span></div>`;
+    return `<section><h2><span>${L('Your areas')}</span><span>${L('bigger = more blocks')}</span></h2>
+      ${d.pts.length ? `<div class="mapwrap mapsolid" id="im-host"><div class="imsvg" id="im-svg" ${IM && IM.tilesOk ? 'style="visibility:hidden"' : ''}>${mapSvg(d.pts, sel, 360, 260)}</div></div>` : `<div class="mapwrap mapsolid"><div class="mapempty">${L('No areas on the map yet.')}</div></div>`}
+      ${d.pts.length ? `<div id="im-card">${mapCard(sel, d.pts)}</div>` : ''}${d.pts.length ? legend : ''}
+      ${d.unplaced.length ? `<p class="foot">${L('Not on the map yet: {list}', { list: d.unplaced.slice(0, 5).map(a => esc(a.name)).join(', ') + (d.unplaced.length > 5 ? '…' : '') })}</p>` : ''}
+      <div class="rowbtns"><button class="btn small primary" type="button" data-act="map-open">${d.unplaced.length ? L('Open map and place areas') : L('Open full map')}</button></div><p class="foot">${L('Edit area names in Settings → Work.')}</p></section>`;
+  }
+
+  // Full-screen map view
+  let MV = null; // { lmap, layers, tilesOk, pinFor, busy, note }
+  const mvEl = document.createElement('div'); mvEl.className = 'mapview'; mvEl.hidden = true; mvEl.setAttribute('role', 'dialog'); mvEl.setAttribute('aria-modal', 'true');
+  document.body.appendChild(mvEl);
+  let leafletP = null;
+  function loadLeaflet() {
+    if (window.L && window.L.map) return Promise.resolve(window.L);
+    if (leafletP) return leafletP;
+    leafletP = new Promise((res, rej) => {
+      const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = LEAFLET.css; css.integrity = LEAFLET.cssSri; css.crossOrigin = 'anonymous'; document.head.appendChild(css);
+      const s = document.createElement('script'); s.src = LEAFLET.js; s.integrity = LEAFLET.jsSri; s.crossOrigin = 'anonymous';
+      s.onload = () => (window.L && window.L.map ? res(window.L) : rej(new Error('no leaflet')));
+      s.onerror = () => { leafletP = null; rej(new Error('blocked')); };
+      document.head.appendChild(s); setTimeout(() => rej(new Error('timeout')), 9000);
+    });
+    return leafletP;
+  }
+  function openMap() {
+    destroyInline();
+    MV = { lmap: null, layers: null, tilesOk: false, pinFor: null, busy: false, note: '' };
+    mvEl.hidden = false; document.body.classList.add('onb-open');
+    if (tg && tgAtLeast('6.1')) { try { tg.BackButton.show(); } catch (e) {} }
+    mvRender(); tryTiles(); geoMaybeStart();
+  }
+  function closeMap() {
+    if (!MV) return;
+    if (MV.lmap) { try { MV.lmap.remove(); } catch (e) {} }
+    MV = null; mvEl.hidden = true; mvEl.innerHTML = ''; document.body.classList.remove('onb-open');
+    if (tg && tgAtLeast('6.1')) { try { tg.BackButton.hide(); } catch (e) {} }
+    render();
+  }
+  function mvRender() {
+    if (!MV) return;
+    const d = mapData(); const sel = state.ui.mapSel;
+    mvEl.innerHTML = `<div class="mvtop"><b>${L('Areas map')}</b><button class="linkbtn" type="button" data-act="map-close">${L('Close')}</button></div>
+      <div class="mvmap mapwrap"><div class="mvsvg" id="mv-svg" ${MV.tilesOk ? 'hidden' : ''}>${d.pts.length ? mapSvg(d.pts, sel, 360, 430) : `<div class="mapempty">${L('No areas on the map yet.')}</div>`}</div><div class="mvleaf" id="mv-leaf" ${MV.tilesOk ? '' : 'hidden'}></div>
+        ${MV.pinFor ? `<div class="pinbar">${L('Tap the map where {name} is.', { name: esc(areaById(MV.pinFor) ? areaById(MV.pinFor).name : '') })} <button class="linkbtn" type="button" data-act="pin-cancel">${L('Cancel')}</button></div>` : ''}</div>
+      <div class="mvbottom">${MV.note ? `<div class="mvnote">${MV.note}</div>` : ''}${d.pts.length ? mapCard(sel, d.pts) : ''}${mvPlacePanel(d)}
+        <div class="mvattr">${MV.tilesOk ? L('Map © OpenStreetMap contributors') : L('Simple drawing of where your areas are. The map background shows when there is internet.')}</div></div>`;
+    if (MV.lmap) {
+      const host = document.getElementById('mv-leaf'); host.hidden = false; host.style.visibility = MV.tilesOk ? '' : 'hidden';
+      host.appendChild(MV.lmap.getContainer()); MV.lmap.invalidateSize(); if (MV.tilesOk) drawLeafletLayers();
+    }
+  }
+  function mvPlacePanel(d) {
+    const need = d.unplaced; if (!need.length) return '';
+    if (state.ui.geoConsent !== true && MV.declined) return `<div class="mvplace"><b>${L('Not on the map yet')}</b><span>${need.map(a => esc(a.name)).join(', ')}</span></div>`;
+    if (state.ui.geoConsent !== true) return `<div class="mvplace"><b>${L('Place {n} areas on the map?', { n: need.length })}</b><span>${L('The app looks up area names (not addresses) on OpenStreetMap, a free public map. Your blocks and money stay private.')}</span><div class="btnrow"><button class="btn primary" type="button" data-act="geo-yes">${L('Look them up')}</button><button class="btn glassy" type="button" data-act="geo-no">${L('Not now')}</button></div></div>`;
+    const rows = need.map(a => {
+      const g = a.geo || {};
+      if (g.status === 'ambiguous') return `<div class="mvrow"><b>${esc(a.name)}</b><span>${L('Which one is it?')}</span><div class="qchips">${(g.cands || []).map((c, i) => `<button type="button" class="qchip" data-geopick="${a.id}" data-i="${i}">${esc(c.label)}</button>`).join('')}${MV.tilesOk ? `<button type="button" class="qchip ghost" data-geopin="${a.id}">${L('Put it where I tap')}</button>` : ''}</div></div>`;
+      if (g.status === 'notfound') return `<div class="mvrow"><b>${esc(a.name)}</b><span>${MV.tilesOk ? L("Couldn't find it. Tap the map to place it.") : L("Couldn't find it. You can place it by hand when the map background loads.")}</span>${MV.tilesOk ? `<div class="qchips"><button type="button" class="qchip" data-geopin="${a.id}">${L('Put it where I tap')}</button></div>` : ''}</div>`;
+      return `<div class="mvrow"><b>${esc(a.name)}</b><span>${MV.busy ? L('Looking it up…') : L('Waiting to look up')}</span></div>`;
+    }).join('');
+    return `<div class="mvplace"><b>${L('Not on the map yet')}</b>${rows}</div>`;
+  }
+  function tryTiles() {
+    loadLeaflet().then((LL) => {
+      if (!MV || MV.lmap) return;
+      const box = document.createElement('div'); box.className = 'mvleafbox';
+      const off = document.getElementById('mv-leaf'); if (!off) return;
+      off.hidden = false; off.style.visibility = 'hidden'; off.appendChild(box);
+      const m = LL.map(box, { zoomControl: true, attributionControl: true, scrollWheelZoom: false, tap: true });
+      let loaded = 0, failed = 0;
+      const t = LL.tileLayer(TILES.url, { maxZoom: TILES.max, attribution: TILES.attr });
+      t.on('tileload', () => { loaded++; }); t.on('tileerror', () => { failed++; });
+      t.addTo(m); m.on('zoomend', () => { if (MV && MV.tilesOk) drawLeafletLayers(); });
+      const d = mapData(); if (d.pts.length) m.fitBounds(d.pts.map(p => [p.a.geo.lat, p.a.geo.lng]), { padding: [40, 40], maxZoom: 12 }); else m.setView([39.5, -98.35], 4);
+      m.on('click', (e) => { if (MV && MV.pinFor) placePin(MV.pinFor, e.latlng.lat, e.latlng.lng); });
+      MV.lmap = m;
+      setTimeout(() => {
+        if (!MV || MV.lmap !== m) return;
+        if (loaded > 0) { MV.tilesOk = true; tilesSeen = true; tilesFailed = false; mvRender(); }
+        else { try { m.remove(); } catch (e) {} MV.lmap = null; mvRender(); }
+      }, 4000);
+    }).catch(() => {});
+  }
+  function drawLeafletLayers() {
+    if (!MV || !MV.lmap) return;
+    if (MV.layers) MV.layers.remove();
+    MV.layers = drawBubbles(MV.lmap, (id) => { state.ui.mapSel = id; persistLocal(); mvRender(); });
+  }
+  function drawBubbles(m, onSelect, scale) {
+    const k = scale || 1;
+    const LL = window.L;
+    const g = LL.layerGroup().addTo(m);
+    const d = mapData(); const sel = state.ui.mapSel; const maxC = Math.max(1, ...d.pts.map(p => p.g.c));
+    const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v.replace(/var\((.*)\)/, '$1')).trim() || '#888';
+    const s = d.pts.find(p => p.a.id === sel);
+    if (s) Object.entries(s.pairs).forEach(([id, n]) => { const o = d.pts.find(p => p.a.id === id); if (o) LL.polyline([[s.a.geo.lat, s.a.geo.lng], [o.a.geo.lat, o.a.geo.lng]], { color: css('var(--accent)'), weight: Math.min(7, 1.5 + n), opacity: 0.6 }).addTo(g); });
+    const boxes = d.pts.map(p => { const pt = m.latLngToContainerPoint([p.a.geo.lat, p.a.geo.lng]); const r = bubbleR(p.g, maxC) * k; return { id: p.a.id, b: [pt.x - r, pt.y - r, pt.x + r, pt.y + r], pt, r }; });
+    const hitAny = (bx, self) => boxes.some(o => o.id !== self && !(bx[2] < o.b[0] || bx[0] > o.b[2] || bx[3] < o.b[1] || bx[1] > o.b[3]));
+    // labels: right, left, below, above; must stay inside the map and clear of the attribution strip
+    const size = m.getSize(); const inside = (bx) => bx[0] >= 2 && bx[1] >= 2 && bx[2] <= size.x - 2 && bx[3] <= size.y - 20;
+    // Greedy placement; if some labels don't fit, try again placing the left-out ones first, keep the best
+    const bubbleBoxes = boxes.slice();
+    const wanted = d.pts.filter((p, i) => d.pts.length <= 8 || i < 3 || p.a.id === sel);
+    const place = (order) => {
+      const bx = bubbleBoxes.slice(); const out = {};
+      const hit = (b, self) => bx.some(o => o.id !== self && !(b[2] < o.b[0] || b[0] > o.b[2] || b[3] < o.b[1] || b[1] > o.b[3]));
+      order.forEach(p => {
+        const o = bubbleBoxes.find(x => x.id === p.a.id); const w = p.a.name.length * 7.2 + 14; const x = o.pt.x, y = o.pt.y, r = o.r;
+        const opts = { right: [x + r + 4, y - 11, x + r + 4 + w, y + 11], left: [x - r - 4 - w, y - 11, x - r - 4, y + 11], bottom: [x - w / 2, y + r + 2, x + w / 2, y + r + 24], top: [x - w / 2, y - r - 24, x + w / 2, y - r - 2], 'bottom-right': [x + r * 0.6, y + r * 0.6, x + r * 0.6 + w, y + r * 0.6 + 22], 'top-right': [x + r * 0.6, y - r * 0.6 - 22, x + r * 0.6 + w, y - r * 0.6], 'bottom-left': [x - r * 0.6 - w, y + r * 0.6, x - r * 0.6, y + r * 0.6 + 22], 'top-left': [x - r * 0.6 - w, y - r * 0.6 - 22, x - r * 0.6, y - r * 0.6] };
+        const dir = Object.keys(opts).find(k => inside(opts[k]) && !hit(opts[k], p.a.id)) || (p.a.id === sel ? Object.keys(opts).find(k => inside(opts[k])) : null);
+        if (dir) { out[p.a.id] = dir; bx.push({ id: 'lab-' + p.a.id, b: opts[dir] }); }
+      });
+      return out;
+    };
+    let labelDir = place(wanted);
+    for (let tries = 0; tries < 4 && Object.keys(labelDir).length < wanted.length; tries++) {
+      const missing = wanted.filter(p => !labelDir[p.a.id]);
+      const alt = place(missing.concat(wanted.filter(p => labelDir[p.a.id])).sort((a, b) => (a.a.id === sel ? -1 : 0) - (b.a.id === sel ? -1 : 0)));
+      if (Object.keys(alt).length > Object.keys(labelDir).length) labelDir = alt; else break;
+    }
+    d.pts.forEach((p, i) => {
+      const few = p.g.c < 3 || p.g.hr == null; const c = css(bubbleColor(p.g));
+      const mk = LL.circleMarker([p.a.geo.lat, p.a.geo.lng], { radius: bubbleR(p.g, maxC) * k, color: p.a.id === sel ? css('var(--fg)') : c, weight: p.a.id === sel ? 3 : 2, fillColor: c, fillOpacity: few ? 0.25 : 0.55, dashArray: few ? '4 3' : null }).addTo(g);
+      const dir = labelDir[p.a.id]; const rr = bubbleR(p.g, maxC) * k;
+      const D = { right: ['right', [rr, 0]], left: ['left', [-rr, 0]], bottom: ['bottom', [0, rr]], top: ['top', [0, -rr]], 'bottom-right': ['right', [rr * 0.6, rr * 0.6 + 11]], 'top-right': ['right', [rr * 0.6, -rr * 0.6 - 11]], 'bottom-left': ['left', [-rr * 0.6, rr * 0.6 + 11]], 'top-left': ['left', [-rr * 0.6, -rr * 0.6 - 11]] };
+      if (dir) mk.bindTooltip(esc(p.a.name), { permanent: true, direction: D[dir][0], className: 'mlabel', offset: D[dir][1] });
+      mk.on('click', () => onSelect(p.a.id));
+    });
+    return g;
+  }
+
+  // Inline map: one Leaflet map per visit to Blocks → Map, kept between re-renders (no flicker, few tile requests).
+  // It's a still picture: no drag, no zoom, so the page scrolls over it. The drawing stays underneath as the fallback.
+  let IM = null; let tilesSeen = false; let tilesFailed = false;
+  function destroyInline() {
+    if (!IM) return;
+    try { IM.map.remove(); } catch (e) {}
+    try { IM.box.remove(); } catch (e) {}
+    IM = null; const s = document.getElementById('im-svg'); if (s) s.style.visibility = '';
+  }
+  function inlineWanted() { return state.ui.tab === 'blocks' && state.ui.areaView === 'map' && !MV && mapData().pts.length > 0; }
+  function mountInlineMap() {
+    const host = document.getElementById('im-host');
+    if (!host || !inlineWanted()) { destroyInline(); return; }
+    if (IM) { host.appendChild(IM.box); IM.map.invalidateSize(); imLayers(); imShow(); return; }
+    if (tilesFailed) return;
+    loadLeaflet().then((LL) => {
+      if (IM || !inlineWanted()) return;
+      const h = document.getElementById('im-host'); if (!h) return;
+      const box = document.createElement('div'); box.className = 'imleaf'; if (!tilesSeen) box.style.visibility = 'hidden'; h.appendChild(box);
+      const m = LL.map(box, { dragging: false, touchZoom: false, doubleClickZoom: false, scrollWheelZoom: false, boxZoom: false, keyboard: false, tap: false, zoomControl: false, attributionControl: true, zoomSnap: 0.25 });
+      IM = { map: m, box, tilesOk: tilesSeen, layers: null };
+      const t = LL.tileLayer(TILES.url, { maxZoom: TILES.max, attribution: TILES.attr });
+      t.on('tileload', () => { if (IM && IM.map === m && !IM.tilesOk) { IM.tilesOk = true; tilesSeen = true; imShow(); } });
+      t.addTo(m); imFit(); imLayers();
+      setTimeout(() => { if (IM && IM.map === m && !IM.tilesOk) { tilesFailed = true; destroyInline(); } }, 4000);
+    }).catch(() => {});
+  }
+  function imFit() { const d = mapData(); if (IM && d.pts.length) IM.map.fitBounds(d.pts.map(p => [p.a.geo.lat, p.a.geo.lng]), { paddingTopLeft: [40, 30], paddingBottomRight: [60, 46], maxZoom: 11.5 }); }
+  function imLayers() { if (!IM) return; if (IM.layers) IM.layers.remove(); IM.layers = drawBubbles(IM.map, (id) => { state.ui.mapSel = state.ui.mapSel === id ? null : id; persistLocal(); refreshInlineMap(); haptic('light'); }, 0.75); }
+  function imShow() { if (!IM || !IM.tilesOk) return; IM.box.style.visibility = ''; const s = document.getElementById('im-svg'); if (s) s.style.visibility = 'hidden'; }
+  // A bubble tap redraws only the bubbles and the card, never the page
+  function refreshInlineMap() {
+    const d = mapData(); const sel = state.ui.mapSel;
+    const s = document.getElementById('im-svg'); if (s) s.innerHTML = mapSvg(d.pts, sel, 360, 260);
+    const c = document.getElementById('im-card'); if (c) c.innerHTML = mapCard(sel, d.pts);
+    imLayers();
+  }
+  function placePin(id, lat, lng) {
+    const a = areaById(id); if (!a) return;
+    a.geo = { lat: +lat.toFixed(3), lng: +lng.toFixed(3), label: L('Placed by hand'), src: 'pin', status: 'ok', at: new Date().toISOString() };
+    MV.pinFor = null; state.ui.mapSel = id; save(); mvRender();
+  }
+
+  // Geocoding with OpenStreetMap Nominatim: only names, one request at a time, at most one per second,
+  // only while the map is open and after the user agrees. Results are kept on the area (and backed up).
+  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+  const kmBetween = (a, b) => { const R = 6371, t = Math.PI / 180; const dLat = (b.lat - a.lat) * t, dLng = (b.lng - a.lng) * t; const h = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * t) * Math.cos(b.lat * t) * Math.sin(dLng / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+  function placeLabel(r) { const ad = r.address || {}; const town = ad.city || ad.town || ad.village || ad.hamlet || ad.suburb || ad.postcode || (r.display_name || '').split(',')[0]; return [town, ad.county, ad.state].filter(Boolean).join(', '); }
+  async function geocode(a, center) {
+    const base = 'https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=3&countrycodes=us';
+    let url = /^\d{5}$/.test(a.name.trim()) ? `${base}&postalcode=${encodeURIComponent(a.name.trim())}` : `${base}&q=${encodeURIComponent(a.name)}`;
+    if (center) url += `&viewbox=${center.lng - 0.6},${center.lat + 0.4},${center.lng + 0.6},${center.lat - 0.4}&bounded=0`;
+    const r = await fetch(url, { headers: { 'Accept-Language': 'en' } });
+    if (!r.ok) throw new Error('http ' + r.status);
+    return (await r.json()).map(x => ({ lat: +(+x.lat).toFixed(3), lng: +(+x.lon).toFixed(3), label: placeLabel(x) }));
+  }
+  let geoNextAt = 0; // earliest time the next request may start, shared by every loop
+  let geoRun = Promise.resolve(); // a new loop waits for an older one to finish its request
+  async function geoMaybeStart() {
+    const mv = MV;
+    if (!mv || mv.busy || state.ui.geoConsent !== true) return;
+    mv.busy = true;
+    const prev = geoRun; let done; geoRun = new Promise(r => { done = r; });
+    try {
+      await prev;
+      for (;;) {
+        if (MV !== mv) return;
+        const a = mapData().unplaced.find(x => !x.geo || !x.geo.status); if (!a) break;
+        mvRender();
+        const wait = geoNextAt - Date.now(); if (wait > 0) await sleep(wait);
+        if (MV !== mv) return;
+        geoNextAt = Date.now() + 1100;
+        const okPts = state.areas.filter(placed);
+        const center = okPts.length ? { lat: okPts.reduce((s, x) => s + x.geo.lat, 0) / okPts.length, lng: okPts.reduce((s, x) => s + x.geo.lng, 0) / okPts.length } : null;
+        let res;
+        try { res = await geocode(a, center); } catch (e) { mv.note = L("Couldn't reach OpenStreetMap. Check your connection and open the map again."); break; }
+        if (!areaById(a.id)) continue;
+        if (!res.length) a.geo = { status: 'notfound', at: new Date().toISOString() };
+        else {
+          const far = center && kmBetween(center, res[0]) > 80;
+          // the very first area is always confirmed (there's nothing nearby to compare with yet)
+          if (!center || far) a.geo = { status: 'ambiguous', cands: res, at: new Date().toISOString() };
+          else a.geo = Object.assign({}, res[0], { src: 'search', status: 'ok', at: new Date().toISOString() });
+        }
+        save();
+        if (!center && a.geo.status === 'ambiguous') break;
+      }
+    } finally { mv.busy = false; done(); if (MV === mv) mvRender(); }
+  }
+
   // ---------- live block ----------
   const nextStepIndex = (a) => STEPS.findIndex(s => !a.ms[s.id] && !(a.skipped || []).includes(s.id));
   const latestOdo = (a) => { const vals = Object.values(a.odo).filter(v => v != null); return vals.length ? Math.max(...vals) : null; };
@@ -1289,7 +1898,7 @@ details.morebox.inner .steps { margin-top: 10px; }
     const stepsOpen = !!(state.ui.more && state.ui.more.steps);
     const stepsLabel = a.confirming ? L('All steps done') : L('Step {n} of {t}', { n: Math.min(doneN + 1, STEPS.length), t: STEPS.length });
     return `<section><div class="glass live">
-      <div class="head"><div class="who"><span class="tag"><span class="dot"></span>${L('Block in progress')}</span><span class="meta">${esc(a.station || L('Block'))} · ${hrs(a.scheduledHrs)} · ${money(a.basePay, 0)}</span></div><button class="codesbtn" type="button" data-go="places">${KEYICON}<span>${L('Codes')}</span></button></div>
+      <div class="head"><div class="who"><span class="tag"><span class="dot"></span>${a.confirming ? L('Block finished') : L('Block in progress')}</span><span class="meta">${esc(a.station || L('Block'))} · ${hrs(a.scheduledHrs)} · ${money(a.basePay, 0)}</span></div><button class="codesbtn" type="button" data-go="places">${KEYICON}<span>${L('Codes')}</span></button></div>
       ${action}
       ${a.confirming ? '' : `<div class="timers">
         <div class="timer"><div class="k">${L('Whole trip')}</div><div class="clock" id="lv-trip">0:00:00</div><div class="s" id="lv-tripmi"></div></div>
@@ -1309,21 +1918,24 @@ details.morebox.inner .steps { margin-top: 10px; }
     const m = minsFromMs(a.ms, Date.parse(a.ms.home_end || new Date().toISOString())); PHASES.forEach(p => { m[p.id] = Math.round(m[p.id]); });
     const legs = legsFromOdo(a.odo, latestOdo(a));
     return { id: uid(), start: a.ms.station_arrive || a.ms.home_start, leave: a.ms.home_start, stationId: a.stationId, station: a.station, scheduledHrs: a.scheduledHrs, basePay: a.basePay, tips: Number(a.tips) || 0,
-      grabbedAt: a.grabbedAt, markedSurge: !!a.markedSurge, blockStart: a.blockStart, legs, miles: legs.to_station + legs.route + legs.home, mins: m, packages: a.packages || 0, stops: a.stops || 0, returned: a.returned || 0, ms: a.ms, odo: a.odo, status: 'done' };
+      grabbedAt: a.grabbedAt, markedSurge: !!a.markedSurge, blockStart: a.blockStart, legs, miles: legs.to_station + legs.route + legs.home, mins: m, packages: a.packages || 0, stops: a.stops || 0, returned: a.returned || 0, areas: (a.areas || []).map(x => ({ id: x.id, src: x.src || 'manual' })), ms: a.ms, odo: a.odo, status: 'done' };
   }
   function draftNet(b) { state.blocks.push(b); bust(); const n = blockNet(b); state.blocks.pop(); bust(); return n; }
   function finishSummary() {
     const a = state.active; const b = buildBlockFromActive(); const m = b.mins; const legs = b.legs;
     const net = draftNet(b); const g = gross(b);
-    return `<div class="confirm"><strong style="font-family:var(--font-round);font-size:18px">${L('Block summary')}</strong>
+    const det = !!(state.ui.more && state.ui.more.sumdetails);
+    return `<div class="confirm" aria-label="${L('Block summary')}">
       <div class="inline"><label for="sum-tips">${L('Tips ($)')}<small>${L('Add them now, or later in Blocks')}</small></label><input class="sm" id="sum-tips" type="number" inputmode="decimal" min="0" step="0.01" value="${a.tips || ''}"></div>
-      <div class="sumgrid">
-        <div class="hd">${L('Money')}</div>${kv(L('Pay and tips'), `<span id="sum-gross">${money(g)}</span>`)}${kv(L('Car cost'), `<span id="sum-car">−${money(g - net)}</span>`)}${kv(L('You kept'), `<span id="sum-net">${money(net)}</span>`, 'tot')}
+      ${areaPicker('sum')}
+      <div class="keptline"><span>${L('You kept')}</span><b id="sum-net">${money(net)}</b></div>
+      <button class="btn primary block big" type="button" data-act="save-block">${L('Save block')}</button>
+      <div class="linkrow quiet"><button class="linkbtn" type="button" data-act="undo-step">${L('Undo last step')}</button><span></span></div>
+      <details class="morebox inner" data-more="sumdetails" ${det ? 'open' : ''}><summary><span>${L('Details: pay, miles and time')}</span>${CHEV}</summary><div class="sumgrid" style="margin-top:10px">
+        <div class="hd">${L('Money')}</div>${kv(L('Pay and tips'), `<span id="sum-gross">${money(g)}</span>`)}${kv(L('Car cost'), `<span id="sum-car">−${money(g - net)}</span>`)}
         <div class="hd">${L('Miles')}</div>${kv(L('Home to station'), mi(legs.to_station))}${kv(L('Station to last stop'), mi(legs.route))}${kv(L('Last stop to home'), mi(legs.home))}${kv(L('Total'), mi(b.miles))}
         <div class="hd">${L('Time')}</div>${PHASES.map(p => kv(L(p.name), dur(m[p.id]))).join('')}${kv(L('Whole trip'), dur(sumMins(m)))}
-      </div>
-      <button class="btn primary block big" type="button" data-act="save-block">${L('Save block')}</button>
-      <div class="linkrow"><button class="linkbtn" type="button" data-act="undo-step">${L('Undo last step')}</button><span></span></div>
+      </div></details>
       <div id="discard-slot" class="discard"><button class="btn danger small" type="button" data-act="ask-discard">${L('Discard without saving')}</button></div></div>`;
   }
   function updateSummaryMoney() {
@@ -1384,7 +1996,9 @@ details.morebox.inner .steps { margin-top: 10px; }
   }
   function saveActive() {
     const tv = document.getElementById('sum-tips'); if (tv) state.active.tips = Math.max(0, parseFloat(tv.value) || 0);
-    state.blocks.push(buildBlockFromActive());
+    if (!apCommit('sum', true)) { apRefresh('sum'); const h = document.getElementById('ap-hint-sum'); if (h) { h.hidden = false; h.textContent = L('Unselect an area, or clear the text box, to save.'); h.scrollIntoView({ block: 'center' }); } return; } // typed text is saved, never dropped
+    const nb = buildBlockFromActive(); nb.areas.forEach(x => { const ar = areaById(x.id); if (ar) delete ar.sample; });
+    state.blocks.push(nb);
     state.active = null; state.ui.range = 'today'; save(); haptic('heavy'); render(); window.scrollTo(0, 0);
   }
 
@@ -1616,7 +2230,7 @@ details.morebox.inner .steps { margin-top: 10px; }
       <div class="top"><div class="who"><b>${esc(b.station || L('Block'))}</b><span>${timeLabel(leave)} – ${timeLabel(end)} · ${b.scheduledHrs ? L('{h} block', { h: hrs(b.scheduledHrs) }) : L('Block').toLowerCase()}</span></div>
       <div class="amt"><b class="${n < 0 ? 'neg' : ''}">${money(n)}</b><span>${L('net of {v}', { v: money(gross(b)) })}</span></div></div>
       ${timelineBar(b.mins)}
-      <div class="chips"><span class="chip ${rateClass(hr)}">${perHr(hr, 0)}</span>${bt.kind === 'surge' ? `<span class="chip surge">${bt.diff > 0 ? L('Surge +{v}/hr', { v: money(bt.diff, 0) }) : L('Surge')}</span>` : bt.kind === 'base' ? `<span class="chip">${L('Base')}</span>` : ''}${lead ? `<span class="chip">${lead}</span>` : ''}<span class="chip">${mi(blockMiles(b))}</span>${b.stops ? `<span class="chip">${b.stops} ${plural(b.stops, 'stop')}</span>` : ''}${b.tips ? `<span class="chip tip">${L('+{v} tips', { v: money(b.tips, 0) })}</span>` : ''}</div>
+      <div class="chips"><span class="chip ${rateClass(hr)}">${perHr(hr, 0)}</span>${bt.kind === 'surge' ? `<span class="chip surge">${bt.diff > 0 ? L('Surge +{v}/hr', { v: money(bt.diff, 0) }) : L('Surge')}</span>` : bt.kind === 'base' ? `<span class="chip">${L('Base')}</span>` : ''}${lead ? `<span class="chip">${lead}</span>` : ''}${(() => { const ns = areaNames(b); return ns.slice(0, 2).map(n => `<span class="chip area">${esc(n)}</span>`).join('') + (ns.length > 2 ? `<span class="chip area">+${ns.length - 2}</span>` : ''); })()}<span class="chip">${mi(blockMiles(b))}</span>${b.stops ? `<span class="chip">${b.stops} ${plural(b.stops, 'stop')}</span>` : ''}${b.tips ? `<span class="chip tip">${L('+{v} tips', { v: money(b.tips, 0) })}</span>` : ''}</div>
     </button>`;
   }
   function renderBlocks() {
@@ -1631,6 +2245,7 @@ details.morebox.inner .steps { margin-top: 10px; }
       <div class="glass tile"><span class="k">${L('Blocks, 30 days')}</span><span class="v">${all.count}</span><span class="s">${L('{n} surge', { n: surge })} · ${dur(all.mins)}</span></div>
       <div class="glass tile"><span class="k">${L('Average net / hr')}</span><span class="v">${money(perHour(all.net, all.mins))}</span><span class="s">${S().goal ? L('Goal {g}', { g: money(S().goal, 0) }) : L('No goal set')}</span></div>
     </div></section>`;
+    html += areasCard();
     html += `<div class="legend" aria-hidden="true">${PHASES.map(p => `<span><i style="background:${p.color}"></i>${L(p.name)}</span>`).join('')}</div>`;
     const sorted = [...state.blocks].sort((a, b) => Date.parse(b.start) - Date.parse(a.start));
     const groups = [];
@@ -1647,6 +2262,7 @@ details.morebox.inner .steps { margin-top: 10px; }
     const isNew = !b; const fav = state.stations.find(s => s.fav);
     b = b || Object.assign({ id: null, leave: new Date(Date.now() - 5 * 3600e3).toISOString(), stationId: fav ? fav.id : '', scheduledHrs: 3.5, basePay: '', tips: 0, grabbedAt: null, blockStart: null, legs: { to_station: '', route: '', home: '' }, mins: { drive_to: 25, load: 20, deliver: 150, return: 25 }, packages: '', stops: '' }, pre || {});
     const legs = b.legs || { unsplit: b.miles };
+    sheetAreas = (b.areas || []).map(x => ({ id: x.id, src: x.src || 'manual' })).filter(x => areaById(x.id)); sheetDraft = ''; sheetStation = b.stationId; sheetToken = 'e' + (b.id || '') + Date.now();
     const msList = b.ms ? STEPS.filter(s => b.ms[s.id]).map(s => `<div class="row"><span>${L(s.label)}</span><span class="val">${timeLabel(b.ms[s.id])}</span></div>`).join('') : '';
     openSheet(isNew ? L('Add a past block') : L('Edit block'), `
       <section><h2><span>${L('Block')}</span></h2><div class="glass group">
@@ -1658,6 +2274,7 @@ details.morebox.inner .steps { margin-top: 10px; }
         <div class="field"><label for="f-grab">${L('Grabbed at')}<small>${L('When you accepted the offer')}</small></label><input id="f-grab" type="datetime-local" value="${toLocalInput(b.grabbedAt)}"></div>
         <div class="field"><label for="f-surge">${L('Surge block')}<small>${L('Mark it if you picked it up as surge')}</small></label><input id="f-surge" type="checkbox" ${b.markedSurge ? 'checked' : ''}></div>
       </div></section>
+      <section><div class="glass group" style="padding:14px 16px">${areaPicker('edit')}</div></section>
       <section><h2><span>${L('Pay')}</span></h2><div class="glass group">
         <div class="field"><label for="f-pay">${L('Offer pay ($)')}</label><input id="f-pay" type="number" inputmode="decimal" step="0.01" min="0" value="${b.basePay}"></div>
         <div class="field"><label for="f-tips">${L('Tips ($)')}</label><input id="f-tips" type="number" inputmode="decimal" step="0.01" min="0" value="${b.tips}"></div>
@@ -1977,7 +2594,7 @@ details.morebox.inner .steps { margin-top: 10px; }
     let html = header(L('Settings'));
     html += `<section><div class="seg glass" role="tablist" aria-label="${L('Settings sections')}">${STABS.map(([k, n]) => `<button type="button" role="tab" data-stab="${k}" aria-pressed="${tab === k}" aria-selected="${tab === k}">${L(n)}</button>`).join('')}</div></section>`;
     html += tab === 'car' ? settingsCar() : tab === 'taxes' ? settingsTaxes() : tab === 'work' ? settingsWork() : settingsApp();
-    html += `<section><p class="foot">${L('Flex Pulse v0.9 prototype.')}</p></section>`;
+    html += `<section><p class="foot">${L('Flex Pulse v0.12 prototype.')}</p></section>`;
     app.innerHTML = html;
   }
   function settingsApp() {
@@ -1994,6 +2611,7 @@ details.morebox.inner .steps { margin-top: 10px; }
       </div><p class="foot">${tg ? L('Telegram follows the light or dark theme you use in Telegram.') : L("System follows your phone's light or dark setting.")}</p></section>
     <section><h2><span>${L('Your data')}</span></h2><div class="glass group">
         <div class="row"><span class="stack"><span>${cloud ? L('Saved on this phone and backed up to your Telegram account') : L('Saved on this device only')}</span><span class="sub" id="backup-status">${cloud ? backupLine() : (storageOk ? L("Nobody else can see it. Friends who open the same link get their own empty tracker. Clearing this browser's data erases it.") : L('This browser blocks storage, so changes last until you close the page.'))}</span></span></div>
+        ${state.ui.geoConsent === true ? `<div class="row"><span class="stack"><span>${L('Area map')}</span><span class="sub">${L('Area names (not addresses) are looked up on OpenStreetMap to place them on the map.')}</span></span><button class="linkbtn" type="button" data-act="geo-off">${L('Turn off')}</button></div>` : ''}
         ${cloud ? `<button class="row" type="button" data-act="backup-now"><span>${L('Back up now')}</span><span class="muted">›</span></button>` : ''}
       </div><div class="btnrow" style="margin-top:12px">${hasSample() ? `<button class="btn glassy" type="button" data-act="clear-sample">${L('Remove sample data')}</button>` : `<button class="btn glassy" type="button" data-act="load-sample">${L('Show sample data')}</button>`}<button class="btn danger" type="button" data-act="ask-reset">${L('Erase everything')}</button></div><div id="reset-slot"></div></section>`;
   }
@@ -2050,9 +2668,10 @@ details.morebox.inner .steps { margin-top: 10px; }
   }
   function settingsWork() {
     const s = S();
-    return `${guide('stations', T('Stations, goal and hour limits'), [T('Add the station you work from and star it. It is picked for you when you start a block.'), T('Each station has a <b>base pay</b> per hour. Offers paying at least 50¢/hr more are marked Surge. Leave it empty and the app learns it.'), T('Your <b>$/hr goal</b> colours every rate: green at or above it, amber within 20%, red below.'), T('<b>Hour limits</b> power the "hours left this week" count on Today.')])}
+    return `${guide('stations', T('Stations, goal and hour limits'), [T('Add the station you work from and star it. It is picked for you when you start a block.'), T('Each station has a <b>base pay</b> per hour. Offers paying at least 50¢/hr more are marked Surge. Leave it empty and the app learns it.'), T('Your <b>$/hr goal</b> colours every rate: green at or above it, amber within 20%, red below.'), T('<b>Hour limits</b> power the "hours left this week" count on Today.'), T('Made a typo in an area name? Fix it under <b>Areas</b>.')])}
     <section><h2><span>${L('Your stations')}</span></h2><div class="glass group">${state.stations.length ? state.stations.map(st => { const b = stationBase(st.id); const n = state.blocks.filter(x => x.stationId === st.id).length; return `<button class="row" type="button" data-station="${st.id}"><span class="stack"><span>${st.fav ? '<span class="star">★</span> ' : ''}${esc(st.name)}${st.code ? ' <span class="muted">' + esc(st.code) + '</span>' : ''}</span><span class="sub">${b ? L('Base {v}', { v: perHr(b.rate) }) + (b.from === 'history' ? ', ' + L('learned') : '') : L('Base pay not known yet')} · ${n} ${plural(n, 'block')}</span></span><span class="muted">›</span></button>`; }).join('') : `<div class="row"><span class="muted">${L('No stations yet. Add the one you usually work from.')}</span></div>`}</div>
       <button class="btn glassy small" type="button" data-act="add-station" style="margin-top:10px;align-self:flex-start">${L('Add station')}</button></section>
+    <section><h2><span>${L('Areas')}</span></h2><div class="glass group"><button class="row" type="button" data-act="areas-fix"><span class="stack"><span>${L('Edit area names')}</span><span class="sub">${L('Areas saved: {n}', { n: state.areas.length })}</span></span><span class="muted">›</span></button></div></section>
     <section><h2><span>${L('Your goal')}</span></h2><div class="glass group">
         <div class="field"><label for="s-goal">${L('Net per hour goal')}<small>${L('Dollars you want to keep per hour, after car costs')}</small></label><input id="s-goal" data-set="goal" type="number" inputmode="decimal" step="1" min="0" value="${s.goal}"></div>
       </div></section>
@@ -2083,10 +2702,10 @@ details.morebox.inner .steps { margin-top: 10px; }
     scrim.hidden = false;
     if (tg && tgAtLeast('6.1')) { try { tg.BackButton.show(); } catch (e) {} }
   }
-  function closeSheet() { scrim.hidden = true; scrim.innerHTML = ''; wiz = null; if (tg && tgAtLeast('6.1')) { try { tg.BackButton.hide(); } catch (e) {} } }
-  if (tg && tgAtLeast('6.1')) { try { tg.BackButton.onClick(() => { if (onb) { if (onb.step === 'lang' && onb.mode !== 'first') closeOnboarding(); else onbBack(); return; } if (wiz && wiz.step > 1) { wiz.step--; renderWizard(); } else closeSheet(); }); } catch (e) {} }
+  function closeSheet() { scrim.hidden = true; scrim.innerHTML = ''; wiz = null; amEdit = null; if (tg && tgAtLeast('6.1')) { try { tg.BackButton.hide(); } catch (e) {} } }
+  if (tg && tgAtLeast('6.1')) { try { tg.BackButton.onClick(() => { if (MV) { closeMap(); return; } if (onb) { if (onb.step === 'lang' && onb.mode !== 'first') closeOnboarding(); else onbBack(); return; } if (wiz && wiz.step > 1) { wiz.step--; renderWizard(); } else closeSheet(); }); } catch (e) {} }
   scrim.addEventListener('click', (e) => { if (e.target === scrim) closeSheet(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !scrim.hidden) closeSheet(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && MV) { closeMap(); return; } if (e.key === 'Escape' && !scrim.hidden) closeSheet(); });
   const num = (id) => { const el = document.getElementById(id); return el ? parseFloat(el.value) : NaN; };
   const val = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
   const showErr = (id, msg) => { const el = document.getElementById(id); if (el) { el.textContent = msg; el.hidden = false; } };
@@ -2097,6 +2716,8 @@ details.morebox.inner .steps { margin-top: 10px; }
     state.blocks = state.blocks.filter(b => !b.sample); state.expenses = state.expenses.filter(x => !x.sample);
     state.places = state.places.filter(p => !p.sample); state.recurring = state.recurring.filter(r => !r.sample); state.scheduled = state.scheduled.filter(x => !x.sample);
     state.stations = state.stations.filter(s => !s.sample || state.blocks.some(b => b.stationId === s.id));
+    const used = new Set(); state.blocks.forEach(b => (b.areas || []).forEach(x => used.add(x.id))); if (state.active) (state.active.areas || []).forEach(x => used.add(x.id));
+    state.areas = state.areas.filter(a => !a.sample || used.has(a.id));
   }
 
   // ---------- onboarding guide ----------
@@ -2264,6 +2885,13 @@ details.morebox.inner .steps { margin-top: 10px; }
     if (d.place) { placeSheet(state.places.find(p => p.id === d.place)); return; }
     if (d.reveal) { revealed.has(d.reveal) ? revealed.delete(d.reveal) : revealed.add(d.reveal); document.getElementById('pl-list').innerHTML = placeList(); return; }
     if (d.used) { const p = state.places.find(x => x.id === d.used); p.uses = (p.uses || 0) + 1; p.lastUsed = new Date().toISOString(); save(); document.getElementById('pl-list').innerHTML = placeList(); haptic('light'); return; }
+    if (d.areaview) { state.ui.areaView = d.areaview; persistLocal(); render(); return; }
+    if (d.geopick) { const a = areaById(d.geopick); const c = a && a.geo && a.geo.cands && a.geo.cands[+d.i]; if (c) { a.geo = Object.assign({}, c, { src: 'search', status: 'ok', at: new Date().toISOString() }); state.ui.mapSel = a.id; save(); mvRender(); geoMaybeStart(); } return; }
+    if (d.geopin) { if (MV) { MV.pinFor = d.geopin; mvRender(); } return; }
+    if (d.apchip) { apToggle(d.apctx, d.apchip); return; }
+    if (d.apmore) { AP.all[d.apmore] = true; apRefresh(d.apmore); return; }
+    if (d.apadd) { const ok = apCommit(d.apadd); apRefresh(d.apadd); if (ok) { const i = document.getElementById('ap-in-' + d.apadd); if (i) i.focus(); } return; }
+    if (d.amedit) { amEdit = d.amedit; areaSheet(); const i = document.getElementById('am-name'); if (i) i.focus(); return; }
     if (d.wodo) { wiz.odo = Number(d.wodo); renderWizard(); return; }
     if (d.sched) { schedSheet(state.scheduled.find(x => x.id === d.sched)); return; }
     if (d.schedstart) { startFromSchedule(d.schedstart); return; }
@@ -2281,6 +2909,19 @@ details.morebox.inner .steps { margin-top: 10px; }
       case 'w-addst': { wiz.newst = val('w-newst'); if (!wiz.newst) { document.getElementById('w-newst').focus(); return; } wizAddStation(); renderWizard(); break; }
       case 'next-step': nextStep(); break;
       case 'next-step-force': nextStep(true); break;
+      case 'areas-fix': amQuery = ''; amEdit = null; areaSheet(); break;
+      case 'am-cancel': amEdit = null; areaSheet(); break;
+      case 'am-save': if (areaRename(d.id, val('am-name'))) { amEdit = null; save(); areaSheet(); render(); } break;
+      case 'am-merge': if (areaRename(d.id, val('am-name'), true)) { amEdit = null; save(); areaSheet(); render(); } break;
+      case 'areas-all': state.ui.more['areas-all'] = !state.ui.more['areas-all']; persistLocal(); render(); break;
+      case 'map-open': openMap(); break;
+      case 'map-close': closeMap(); break;
+      case 'geo-yes': state.ui.geoConsent = true; persistLocal(); mvRender(); geoMaybeStart(); break;
+      case 'geo-no': if (MV) { MV.declined = true; mvRender(); } break;
+      case 'geo-off': state.ui.geoConsent = false; persistLocal(); render(); break;
+      case 'pin-cancel': if (MV) { MV.pinFor = null; mvRender(); } break;
+      case 'am-askdel': { const n = (areaStats()[d.id] || {}).n || 0; document.getElementById('am-del').innerHTML = `<div class="confirm danger-zone"><strong>${L('Remove this area?')}</strong><span class="muted" style="font-size:14px">${L('Blocks with this area: {n}. The blocks themselves stay.', { n })}</span><div class="btnrow"><button class="btn glassy" type="button" data-act="am-cancel">${L('Keep it')}</button><button class="btn danger" type="button" data-act="am-del" data-id="${d.id}">${L('Remove')}</button></div></div>`; break; }
+      case 'am-del': areaRemove(d.id); amEdit = null; save(); areaSheet(); render(); break;
       case 'fix-odo': { document.getElementById('lv-warn').innerHTML = ''; const o = document.getElementById('lv-odo'); if (o) { o.focus(); o.select(); } break; }
       case 'ask-cancel': document.getElementById('cancel-slot').innerHTML = `<div class="confirm danger-zone"><strong>${L('Cancel this block?')}</strong><span class="muted" style="font-size:14px">${L('Nothing is saved. Start again when you leave home.')}</span><div class="btnrow"><button class="btn glassy" type="button" data-act="keep-cancel">${L('Keep it')}</button><button class="btn danger" type="button" data-act="discard-block">${L('Cancel block')}</button></div></div>`; break;
       case 'keep-cancel': document.getElementById('cancel-slot').innerHTML = ''; break;
@@ -2293,6 +2934,7 @@ details.morebox.inner .steps { margin-top: 10px; }
       case 'show-extra': { const x = document.getElementById('lv-extra'); if (x) x.hidden = false; t.remove(); const f = x && x.querySelector('input'); if (f) f.focus(); break; }
       case 'add-past': blockSheet(null); break;
       case 'save-sheet-block': {
+        if (!apCommit('edit', true)) { apRefresh('edit'); return; }
         const pay = num('f-pay');
         if (val('f-pay') === '' || !(pay >= 0)) { showErr('f-err', L('Enter the offer pay for this block.')); return; }
         const leaveV = val('f-leave'); if (!leaveV) { showErr('f-err', L('Pick when you left home.')); return; }
@@ -2300,7 +2942,7 @@ details.morebox.inner .steps { margin-top: 10px; }
         const mins = {}; PHASES.forEach(p => { mins[p.id] = Math.max(0, num('f-' + p.id) || 0); });
         const legs = {}; ['to_station', 'route', 'home'].forEach(k => { legs[k] = Math.max(0, num('f-leg-' + k) || 0); }); if (document.getElementById('f-leg-unsplit')) legs.unsplit = Math.max(0, num('f-leg-unsplit') || 0);
         const leave = fromLocalInput(leaveV); const start = new Date(Date.parse(leave) + mins.drive_to * 6e4).toISOString();
-        const data = { leave, start, stationId: st ? st.id : '', station: st ? st.name : '', scheduledHrs: num('f-sched') || 0, basePay: pay, tips: Math.max(0, num('f-tips') || 0), grabbedAt: fromLocalInput(val('f-grab')), markedSurge: document.getElementById('f-surge').checked, blockStart: fromLocalInput(val('f-bstart')) || start, packages: parseInt(val('f-pk')) || 0, stops: parseInt(val('f-stops')) || 0, legs, mins };
+        const data = { areas: sheetAreas.slice(), leave, start, stationId: st ? st.id : '', station: st ? st.name : '', scheduledHrs: num('f-sched') || 0, basePay: pay, tips: Math.max(0, num('f-tips') || 0), grabbedAt: fromLocalInput(val('f-grab')), markedSurge: document.getElementById('f-surge').checked, blockStart: fromLocalInput(val('f-bstart')) || start, packages: parseInt(val('f-pk')) || 0, stops: parseInt(val('f-stops')) || 0, legs, mins };
         data.miles = blockMiles(data);
         if (d.id) { const b = state.blocks.find(x => x.id === d.id); Object.assign(b, data); delete b.sample; } else state.blocks.push(Object.assign({ id: uid(), status: 'done' }, data));
         if (d.from) state.scheduled = state.scheduled.filter(x => x.id !== d.from);
@@ -2334,7 +2976,7 @@ details.morebox.inner .steps { margin-top: 10px; }
       case 'ask-del-place': confirmDelete(L('Delete this place?'), L('Its codes are removed from your phone and your backup.'), 'del-place', scrim.querySelector('[data-act="save-place"]').dataset.id); break;
       case 'del-place': state.places = state.places.filter(p => p.id !== d.id); save(); closeSheet(); render(); break;
       case 'clear-sample': clearSample(); state.ui.welcomed = true; save(); render(); break;
-      case 'load-sample': { const s = sampleData(); state.stations = state.stations.concat(s.stations.filter(x => !stationById(x.id))); state.blocks = state.blocks.concat(s.blocks); state.expenses = state.expenses.concat(s.expenses); state.places = state.places.concat(s.places); state.recurring = state.recurring.concat(s.recurring.filter(r => !state.recurring.some(x => x.id === r.id))); state.scheduled = state.scheduled.concat(s.scheduled.filter(r => !state.scheduled.some(x => x.id === r.id))); syncAll(); save(); render(); break; }
+      case 'load-sample': { const s = sampleData(); state.stations = state.stations.concat(s.stations.filter(x => !stationById(x.id))); state.areas = state.areas.concat(s.areas.filter(a => !areaById(a.id))); state.blocks = state.blocks.concat(s.blocks); state.expenses = state.expenses.concat(s.expenses); state.places = state.places.concat(s.places); state.recurring = state.recurring.concat(s.recurring.filter(r => !state.recurring.some(x => x.id === r.id))); state.scheduled = state.scheduled.concat(s.scheduled.filter(r => !state.scheduled.some(x => x.id === r.id))); syncAll(); save(); render(); break; }
       case 'ask-reset': document.getElementById('reset-slot').innerHTML = `<div class="confirm" style="margin-top:12px"><strong>${L('Erase all blocks, expenses, places and settings?')}</strong><span class="muted" style="font-size:14px">${L("This can't be undone.")}</span><div class="btnrow"><button class="btn glassy" type="button" data-act="cancel-reset">${L('Cancel')}</button><button class="btn danger" type="button" data-act="reset">${L('Erase everything')}</button></div></div>`; break;
       case 'cancel-reset': document.getElementById('reset-slot').innerHTML = ''; break;
       case 'reset': { const prefs = {}; ['theme', 'palette', 'glass'].forEach(k => { prefs[k] = state.settings[k]; }); state = seed(); Object.assign(state.settings, prefs); state = initState(state); save(); refresh(); openOnboarding('first'); break; }
@@ -2347,6 +2989,11 @@ details.morebox.inner .steps { margin-top: 10px; }
       case 'close-sheet': closeSheet(); break;
     }
   });
+  document.addEventListener('click', (e) => {
+    const g = e.target && e.target.closest && e.target.closest('[data-mapsel]'); if (!g) return;
+    state.ui.mapSel = state.ui.mapSel === g.dataset.mapsel ? null : g.dataset.mapsel; persistLocal();
+    if (MV) mvRender(); else refreshInlineMap(); haptic('light');
+  });
   document.addEventListener('toggle', (e) => {
     const g = e.target; if (!g || !g.dataset) return;
     if (g.dataset.guide) { if (g.open !== (g.dataset.init === '1')) { state.ui.guideOpen[g.dataset.guide] = g.open; g.dataset.init = g.open ? '1' : '0'; persistLocal(); } return; }
@@ -2354,6 +3001,11 @@ details.morebox.inner .steps { margin-top: 10px; }
   }, true);
   // Tapping a prefilled number selects it, so typing replaces it.
   document.addEventListener('focusin', (e) => { const t = e.target; if (t && t.tagName === 'INPUT' && t.type === 'number' && t.value) setTimeout(() => { try { t.select(); } catch (x) {} }, 0); });
+  document.addEventListener('keydown', (e) => {
+    const t = e.target; if (e.key !== 'Enter' || !t || !t.dataset) return;
+    if (t.dataset.apin) { e.preventDefault(); const c = t.dataset.apin; apCommit(c); apRefresh(c); }
+    if (t.id === 'am-name') { e.preventDefault(); const b = document.querySelector('[data-act="am-save"]'); if (b) b.click(); }
+  });
   document.addEventListener('change', (e) => {
     const t = e.target;
     if (t.id === 'f-station') { const row = document.getElementById('f-newst-row'); if (row) row.hidden = t.value !== '__new'; }
@@ -2371,6 +3023,8 @@ details.morebox.inner .steps { margin-top: 10px; }
       if (t.id === 'w-newst') { wiz.newst = t.value; if (t.value.trim() && wiz.stationId) { wiz.stationId = ''; document.querySelectorAll('[data-wst]').forEach(b => { b.setAttribute('aria-checked', 'false'); const rd = b.querySelector('.rd'); if (rd) rd.innerHTML = ''; }); } }
       wizCheck();
     }
+    if (t.id === 'am-q') { amQuery = t.value; const l = document.getElementById('am-list'); if (l) l.innerHTML = areaListHtml(); return; }
+    if (t.dataset && t.dataset.apin) { apSetDraft(t.dataset.apin, t.value); apPersist(t.dataset.apin, false); apRefresh(t.dataset.apin); return; }
     if (t.id === 'lv-odo') { const er = document.getElementById('lv-err'); if (er) er.hidden = true; }
     if (t.id === 'sum-tips' && state.active) { state.active.tips = Math.max(0, parseFloat(t.value) || 0); save(); updateSummaryMoney(); return; }
     if (t.id === 'pl-q') { state.ui.plq = t.value; document.getElementById('pl-list').innerHTML = placeList(); return; }

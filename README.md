@@ -8,6 +8,7 @@ A tracker for Amazon Flex drivers, built as a Telegram Mini App.
 - Surge vs base per station, and how far ahead each block was grabbed
 - Expenses, a mileage view and a tax-year summary
 - Booked blocks, and how many hours you can still book this week and today
+- Areas you were sent to (several per block), which areas and routes pay best, and a map of them
 - Saved gate, building and locker codes by address
 - English and Ukrainian, with a short first-launch guide and 1-minute setup
 
@@ -19,3 +20,6 @@ Each user's data is saved on their phone and backed up to their own Telegram acc
 
 ## Publishing an update
 Replace `index.html` and commit to `main`. Pages redeploys in about a minute, and users get it the next time they open the app.
+
+## Map
+The area map draws on OpenStreetMap tiles (© OpenStreetMap contributors) through Leaflet. Area names are looked up on OpenStreetMap Nominatim only after the user agrees; addresses are never sent. Without internet the app shows a simple drawing instead.
