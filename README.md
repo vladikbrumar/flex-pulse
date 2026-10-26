@@ -23,3 +23,14 @@ Replace `index.html` and commit to `main`. Pages redeploys in about a minute, an
 
 ## Map
 The area map draws on OpenStreetMap tiles (© OpenStreetMap contributors) through Leaflet. Area names are looked up on OpenStreetMap Nominatim only after the user agrees; addresses are never sent. Without internet the app shows a simple drawing instead.
+
+## Old version
+`/flex-pulse/classic/` is v0.17, frozen. It shares the same data as the main app (same origin and storage), and the `ocr/`, `places/` and `zips/` folders. Only its three data paths point one level up (`../ocr/`, `../places/`, `../zips/`). Settings has an "Open the old version (v0.17)" link.
+
+### Rolling back
+From the mildest step:
+1. Settings -> App -> Design -> Classic (one tap, done by the user).
+2. Automatic: if the new design crashes, the app switches to Classic and says so.
+3. Settings -> "Open the old version (v0.17)": same data, frozen code.
+4. Owner: in BotFather, set the Mini App / menu button URL to `https://vladikbrumar.github.io/flex-pulse/classic/`. Everyone gets v0.17 on their next open; switching back is the same edit.
+5. Owner/dev: `git revert` the v0.18 commit. The `classic/` folder can stay.
