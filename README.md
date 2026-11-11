@@ -11,6 +11,7 @@ A tracker for Amazon Flex drivers, built as a Telegram Mini App.
 - Areas you were sent to (several per block), which areas and routes pay best, and a map of them
 - Saved gate, building and locker codes by address
 - English and Ukrainian, with a short first-launch guide and 1-minute setup
+- A Large text setting, a calm driving view during a block, and a 4-second Undo after each step
 
 ## How it runs
 `index.html` is the whole app: plain HTML, CSS and JavaScript, no build step. GitHub Pages serves it, and the Telegram bot opens it as a Mini App.
@@ -33,4 +34,4 @@ From the mildest step:
 2. Automatic: if the new design crashes, the app switches to Classic and says so.
 3. Settings -> "Open the old version (v0.17)": same data, frozen code.
 4. Owner: in BotFather, set the Mini App / menu button URL to `https://vladikbrumar.github.io/flex-pulse/classic/`. Everyone gets v0.17 on their next open; switching back is the same edit.
-5. Owner/dev: `git revert` the v0.18 commit. The `classic/` folder can stay.
+5. Owner/dev: `git revert` the v0.21 commit (back to v0.18), or the v0.18 commit as well. The `classic/` folder can stay.
