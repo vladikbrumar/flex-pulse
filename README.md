@@ -22,6 +22,14 @@ Each user's data is saved on their phone and backed up to their own Telegram acc
 ## Publishing an update
 Replace `index.html` and commit to `main`. Pages redeploys in about a minute, and users get it the next time they open the app.
 
+## Designs
+Three designs, picked in Settings -> Design:
+- **Classic**: the original look, kept as it was.
+- **Glass**: frosted panels.
+- **Bento**: tiles on a grid, with Geist Mono numbers.
+
+If a design fails to load or crashes, the app steps down one: Bento -> Glass -> Classic, and says so.
+
 ## Map
 The area map draws on OpenStreetMap tiles (© OpenStreetMap contributors) through Leaflet. Area names are looked up on OpenStreetMap Nominatim only after the user agrees; addresses are never sent. Without internet the app shows a simple drawing instead.
 
@@ -30,8 +38,12 @@ The area map draws on OpenStreetMap tiles (© OpenStreetMap contributors) throug
 
 ### Rolling back
 From the mildest step:
-1. Settings -> App -> Design -> Classic (one tap, done by the user).
-2. Automatic: if the new design crashes, the app switches to Classic and says so.
-3. Settings -> "Open the old version (v0.17)": same data, frozen code.
-4. Owner: in BotFather, set the Mini App / menu button URL to `https://vladikbrumar.github.io/flex-pulse/classic/`. Everyone gets v0.17 on their next open; switching back is the same edit.
-5. Owner/dev: `git revert` the v0.21 commit (back to v0.18), or the v0.18 commit as well. The `classic/` folder can stay.
+1. Settings -> Design -> Glass or Classic (one tap, done by the user).
+2. Open the app with `?design=classic` on the end of the link to force Classic for that visit.
+3. Automatic: if a design crashes, the app falls back (Bento -> Glass -> Classic).
+4. Settings -> "Open the old version (v0.17)": same data, frozen code.
+5. Owner: in BotFather, set the Mini App / menu button URL to `https://vladikbrumar.github.io/flex-pulse/classic/`. Everyone gets v0.17 on their next open; switching back is the same edit.
+6. Owner/dev: `git revert` the v0.22 commit (back to v0.21). The `classic/` folder and older `bento/` packs can stay.
+
+## Credits
+Geist Mono, © Vercel, SIL Open Font License 1.1 (licence text in `bento/OFL.txt`).
